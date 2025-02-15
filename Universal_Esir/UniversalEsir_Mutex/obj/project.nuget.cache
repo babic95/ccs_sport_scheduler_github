@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "FmxW8+kP2Ao=",
+  "success": true,
+  "projectFilePath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Mutex\\UniversalEsir_Mutex.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Babic\\.nuget\\packages\\system.security.accesscontrol\\6.0.0\\system.security.accesscontrol.6.0.0.nupkg.sha512",
+    "C:\\Users\\Babic\\.nuget\\packages\\system.threading.accesscontrol\\6.0.0\\system.threading.accesscontrol.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

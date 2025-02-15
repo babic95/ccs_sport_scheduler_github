@@ -1,0 +1,50 @@
+﻿/* Schedule.css */
+
+/* Stil za kalendar */
+.fc {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Stil za događaje */
+.fc-event {
+    background-color: #3788d8;
+    color: #fff;
+    border: 1px solid #3788d8;
+    border-radius: 3px;
+    padding: 2px 5px;
+}
+
+    .fc-event.lightcoral {
+        background-color: lightcoral;
+        border-color: lightcoral;
+    }
+
+    .fc-event.lightgreen {
+        background-color: lightgreen;
+        border-color: lightgreen;
+    }
+
+/* Stil za modal */
+.modal-content {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-footer {
+    border-top: 1px solid #e5e5e5;
+}
+
+.modal-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.modal-body {
+    font-size: 16px;
+}

@@ -1,0 +1,39 @@
+﻿{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://192.168.0.150:54172",
+      "sslPort": 44328
+    }
+  },
+  "profiles": {
+    "CcsSportScheduler_API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://192.168.0.150:7173;http://192.168.0.150:5123",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      },
+      "windowsAuthentication": true,
+      "anonymousAuthentication": true,
+      "dotnetRunMessages": true
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "applicationUrl": "https://192.168.0.150:7173",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
+      }
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true
+    }
+  }
+}

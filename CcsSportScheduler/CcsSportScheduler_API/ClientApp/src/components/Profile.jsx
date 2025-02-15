@@ -1,0 +1,336 @@
+﻿import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { TextField, Button, Typography, Box, Container, Modal } from '@mui/material';
+import './Profile.css';
+
+const Profile = ({ user }) => {
+    const [userData, setUserData] = useState({
+        id: user.id || null,
+        username: user.username || '',
+        fullName: user.fullName || '',
+        birthday: user.birthday ? user.birthday.split('T')[0] : '',
+        contact: user.contact || '',
+        email: user.email || '',
+        jmbg: user.jmbg || ''
+    });
+
+    const [financialData, setFinancialData] = useState({
+        totalZaduzenje: 0,
+        totalRazduzenje: 0,
+        items: [],
+        totalCount: 0
+    });
+
+    const [openPasswordModal, setOpenPasswordModal] = useState(false);
+    const [passwordData, setPasswordData] = useState({
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+    });
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(`/api/users/${user.id}`);
+                setUserData({
+                    id: user.id,
+                    username: response.data.username || '',
+                    fullName: response.data.fullName || '',
+                    birthday: response.data.birthday ? response.data.birthday.split('T')[0] : '',
+                    contact: response.data.contact || '',
+                    email: response.data.email || '',
+                    jmbg: response.data.jmbg || ''
+                });
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
+
+        if (user.id) {
+            fetchUserData();
+        }
+
+        fetchFinancialData();
+    }, [user.id]);
+
+    const fetchFinancialData = async () => {
+        try {
+            const response = await axios.get(`/api/users/financialCard/${user.id}`);
+            setFinancialData(response.data);
+        } catch (error) {
+            console.error('Error fetching financial data:', error);
+        }
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData((prevUserData) => ({
+            ...prevUserData,
+            [name]: value
+        }));
+    };
+
+    const handlePasswordChange = (e) => {
+        const { name, value } = e.target;
+        setPasswordData((prevPasswordData) => ({
+            ...prevPasswordData,
+            [name]: value
+        }));
+    };
+
+    const handleSave = async () => {
+        try {
+            await axios.put(`/api/users/${user.id}`, userData);
+            alert('Podaci uspešno ažurirani!');
+        } catch (error) {
+            console.error('Error updating user data:', error);
+            alert('Greška prilikom ažuriranja podataka.');
+        }
+    };
+
+    const handlePasswordSave = async () => {
+        if (passwordData.newPassword !== passwordData.confirmPassword) {
+            alert('Nove lozinke se ne podudaraju.');
+            return;
+        }
+
+        try {
+            await axios.post(`/api/users/changePassword/${user.id}`, {
+                idUser: user.id,
+                oldPassword: passwordData.oldPassword,
+                newPassword: passwordData.newPassword
+            });
+            alert('Lozinka uspešno promenjena!');
+            setOpenPasswordModal(false);
+        } catch (error) {
+            console.error('Error changing password:', error);
+            alert('Greška prilikom promene lozinke.');
+        }
+    };
+
+    const saldo = financialData.totalRazduzenje - financialData.totalZaduzenje;
+
+    return (
+        <Container component="main" maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Typography component="h1" variant="h4" color="primary" gutterBottom>
+                    Profil
+                </Typography>
+
+                <Typography variant="h6" gutterBottom>
+                    Ukupno zaduženje: {financialData.totalZaduzenje} RSD
+                </Typography>
+                <Typography variant="h6" gutterBottom>
+                    Ukupno razduženje: {financialData.totalRazduzenje} RSD
+                </Typography>
+                <Typography variant="h6" gutterBottom sx={{ color: saldo < 0 ? 'red' : saldo > 0 ? 'green' : 'inherit' }}>
+                    SALDO: {saldo} RSD
+                </Typography>
+
+                <Box component="form" sx={{ mt: 3 }}>
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        fullWidth
+                        id="username"
+                        label="Korisničko ime"
+                        name="username"
+                        autoComplete="username"
+                        value={userData.username || ''}
+                        InputLabelProps={{
+                            style: { color: '#000000' },
+                            shrink: true
+                        }}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                    />
+
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="fullName"
+                        label="Puno ime"
+                        name="fullName"
+                        autoComplete="name"
+                        value={userData.fullName || ''}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="birthday"
+                        label="Datum rođenja"
+                        type="date"
+                        id="birthday"
+                        InputLabelProps={{
+                            shrink: true,
+                            style: { color: '#000000' }
+                        }}
+                        value={userData.birthday || ''}
+                        onChange={handleChange}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="contact"
+                        label="Kontakt"
+                        name="contact"
+                        autoComplete="contact"
+                        value={userData.contact || ''}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="email"
+                        label="Email"
+                        name="email"
+                        autoComplete="email"
+                        value={userData.email || ''}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <TextField
+                        variant="outlined"
+                        margin="normal"
+                        required
+                        fullWidth
+                        id="jmbg"
+                        label="JMBG"
+                        name="jmbg"
+                        autoComplete="jmbg"
+                        value={userData.jmbg || ''}
+                        onChange={handleChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={handleSave}
+                    >
+                        Sačuvaj
+                    </Button>
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ mt: 1 }}
+                        onClick={() => setOpenPasswordModal(true)}
+                    >
+                        Promena lozinke
+                    </Button>
+                </Box>
+            </Box>
+            <Modal
+                open={openPasswordModal}
+                onClose={() => setOpenPasswordModal(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    width: 400,
+                    bgcolor: 'background.paper',
+                    border: '2px solid #000',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Promena lozinke
+                    </Typography>
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="oldPassword"
+                        label="Stara lozinka"
+                        type="password"
+                        id="oldPassword"
+                        autoComplete="current-password"
+                        value={passwordData.oldPassword || ''}
+                        onChange={handlePasswordChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="newPassword"
+                        label="Nova lozinka"
+                        type="password"
+                        id="newPassword"
+                        value={passwordData.newPassword || ''}
+                        onChange={handlePasswordChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <TextField
+                        margin="normal"
+                        required
+                        fullWidth
+                        name="confirmPassword"
+                        label="Potvrda nove lozinke"
+                        type="password"
+                        id="confirmPassword"
+                        value={passwordData.confirmPassword || ''}
+                        onChange={handlePasswordChange}
+                        InputLabelProps={{
+                            style: { color: '#000000' }
+                        }}
+                    />
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={handlePasswordSave}
+                    >
+                        Sačuvaj
+                    </Button>
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="outlined"
+                        color="secondary"
+                        sx={{ mt: 1 }}
+                        onClick={() => setOpenPasswordModal(false)}
+                    >
+                        Odustani
+                    </Button>
+                </Box>
+            </Modal>
+        </Container>
+    );
+};
+
+export default Profile;

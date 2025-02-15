@@ -1,0 +1,472 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\UniversalEsir_Printer.csproj": {}
+  },
+  "projects": {
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj",
+        "projectName": "UniversalEsir_Common",
+        "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj",
+        "packagesPath": "C:\\Users\\Babic\\.nuget\\packages\\",
+        "outputPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Babic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows7.0",
+            "projectReferences": {
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Logging\\UniversalEsir_Logging.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Logging\\UniversalEsir_Logging.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows7.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            },
+            "QRCoder": {
+              "target": "Package",
+              "version": "[1.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\UniversalEsir_Database.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\UniversalEsir_Database.csproj",
+        "projectName": "UniversalEsir_Database",
+        "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\UniversalEsir_Database.csproj",
+        "packagesPath": "C:\\Users\\Babic\\.nuget\\packages\\",
+        "outputPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Babic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows7.0",
+            "projectReferences": {
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows7.0",
+          "dependencies": {
+            "Microsoft.Data.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[6.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Logging\\UniversalEsir_Logging.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Logging\\UniversalEsir_Logging.csproj",
+        "projectName": "UniversalEsir_Logging",
+        "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Logging\\UniversalEsir_Logging.csproj",
+        "packagesPath": "C:\\Users\\Babic\\.nuget\\packages\\",
+        "outputPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Logging\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Babic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "Easy.Logger": {
+              "target": "Package",
+              "version": "[3.7.5, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.14, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\UniversalEsir_Printer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\UniversalEsir_Printer.csproj",
+        "projectName": "UniversalEsir_Printer",
+        "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\UniversalEsir_Printer.csproj",
+        "packagesPath": "C:\\Users\\Babic\\.nuget\\packages\\",
+        "outputPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Babic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows7.0",
+            "projectReferences": {
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Report\\UniversalEsir_Report.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Report\\UniversalEsir_Report.csproj"
+              },
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\UniversalEsir_Settings.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\UniversalEsir_Settings.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows7.0",
+          "dependencies": {
+            "System.Drawing.Common": {
+              "target": "Package",
+              "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Report\\UniversalEsir_Report.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Report\\UniversalEsir_Report.csproj",
+        "projectName": "UniversalEsir_Report",
+        "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Report\\UniversalEsir_Report.csproj",
+        "packagesPath": "C:\\Users\\Babic\\.nuget\\packages\\",
+        "outputPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Report\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Babic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows7.0",
+            "projectReferences": {
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj"
+              },
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\UniversalEsir_Database.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\UniversalEsir_Database.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\UniversalEsir_Settings.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\UniversalEsir_Settings.csproj",
+        "projectName": "UniversalEsir_Settings",
+        "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\UniversalEsir_Settings.csproj",
+        "packagesPath": "C:\\Users\\Babic\\.nuget\\packages\\",
+        "outputPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\Babic\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0-windows7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0-windows7.0": {
+            "targetAlias": "net9.0-windows7.0",
+            "projectReferences": {
+              "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj": {
+                "projectPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\UniversalEsir_Common.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0-windows7.0": {
+          "targetAlias": "net9.0-windows7.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
