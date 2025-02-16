@@ -666,6 +666,10 @@ namespace CcsSportScheduler_Database
                     .HasMaxLength(45)
                     .HasColumnName("username");
 
+                entity.Property(e => e.ProfileImageUrl)
+                    .HasMaxLength(255)
+                    .HasColumnName("profileImageUrl");
+
                 entity.HasOne(d => d.Klub)
                     .WithMany(p => p.Users)
                     .HasForeignKey(d => d.KlubId)

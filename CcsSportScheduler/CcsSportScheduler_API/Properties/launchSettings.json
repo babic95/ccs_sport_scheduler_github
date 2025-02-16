@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://192.168.0.150:54172",
+      "applicationUrl": "http://localhost:54172",
       "sslPort": 44328
     }
   },
@@ -11,7 +11,7 @@
     "CcsSportScheduler_API": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://192.168.0.150:7173;http://192.168.0.150:5123",
+      "applicationUrl": "https://localhost:7173;http://localhost:5123",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"
@@ -23,7 +23,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "applicationUrl": "https://192.168.0.150:7173",
+      "applicationUrl": "https://localhost:7173",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"

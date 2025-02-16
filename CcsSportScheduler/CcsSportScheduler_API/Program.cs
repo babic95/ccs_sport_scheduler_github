@@ -1,7 +1,10 @@
-﻿using CcsSportScheduler_API.Models.Background;
+﻿using Amazon.Runtime;
+using Amazon.S3;
+using CcsSportScheduler_API.Models.Background;
 using CcsSportScheduler_Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +33,10 @@ builder.Services.AddDbContext<SportSchedulerContext>(options =>
 
 builder.Services.AddHostedService<BackgroundRefresh>();
 
-
+var awsOption = builder.Configuration.GetAWSOptions("service2");
+awsOption.Credentials = new BasicAWSCredentials(builder.Configuration["AWS:AccessKey"], builder.Configuration["AWS:SecretKey"]);
+builder.Services.AddDefaultAWSOptions(awsOption);
+builder.Services.AddAWSService<IAmazonS3>();
 
 builder.Services.AddCors(options =>
 {

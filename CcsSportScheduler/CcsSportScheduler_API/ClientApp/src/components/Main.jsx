@@ -1,22 +1,33 @@
 ﻿import React, { useState, useEffect } from 'react';
-import { Route, Routes, Link, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Schedule from './Schedule';
 import Profile from './Profile';
 import FinancialCard from './FinancialCard';
 import axios from 'axios';
 import './Main.css';
-import { IconButton, Badge, Menu, MenuItem, Modal, Typography, AppBar, Toolbar, Drawer, List, ListItem, ListItemText, Box, Button } from '@mui/material';
+import { IconButton, Badge, Menu, MenuItem, Modal, Typography, AppBar, Toolbar, Drawer, List, ListItem, ListItemText, Box, Avatar, Button } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../assets/logo.png'; // assuming you have a logo.png in your project
 
-const Header = ({ toggleSidebar, unreadCount, handleNotificationClick, anchorEl, openMenu, closeMenu, notifications, user }) => (
+const Header = ({ toggleSidebar, unreadCount, handleNotificationClick, anchorEl, openMenu, closeMenu, notifications, user, navigate }) => (
     <AppBar position="static" sx={{ backgroundColor: '#4caf50' }}>
         <Toolbar>
             <IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleSidebar}>
                 <MenuIcon />
             </IconButton>
+
+            <IconButton edge="end" color="inherit" onClick={() => {
+                navigate('/schedule', { state: { user } });
+            }}>
+                <img src={logo} alt="Logo" style={{ width: '40px', height: '40px' }} />
+            </IconButton>
+
             <Box sx={{ flexGrow: 1 }} />
+            {user.profileImageUrl && (
+                <Avatar src={user.profileImageUrl} alt="Profile" sx={{ width: 40, height: 40, marginRight: 2 }} />
+            )}
             <Typography variant="body1" sx={{ color: '#000000', marginRight: 2 }}>
                 {user.fullName || 'Korisnik'}
             </Typography>
@@ -150,6 +161,7 @@ const Main = () => {
                 handleNotificationClick={handleNotificationClick}
                 notifications={notifications}
                 user={user}
+                navigate={navigate}
             />
             <Sidebar isOpen={isSidebarOpen} closeSidebar={closeSidebar} navigate={navigate} user={user} />
             <main className={`main-content ${isSidebarOpen ? 'sidebar-open' : ''}`}>

@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Container, Modal } from '@mui/material';
+import { TextField, Button, Typography, Box, Container, Modal, Avatar } from '@mui/material';
 import './Profile.css';
 
 const Profile = ({ user }) => {
@@ -11,7 +11,8 @@ const Profile = ({ user }) => {
         birthday: user.birthday ? user.birthday.split('T')[0] : '',
         contact: user.contact || '',
         email: user.email || '',
-        jmbg: user.jmbg || ''
+        jmbg: user.jmbg || '',
+        profileImageUrl: user.profileImageUrl || ''
     });
 
     const [financialData, setFinancialData] = useState({
@@ -28,6 +29,8 @@ const Profile = ({ user }) => {
         confirmPassword: ''
     });
 
+    const [selectedFile, setSelectedFile] = useState(null);
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -39,7 +42,8 @@ const Profile = ({ user }) => {
                     birthday: response.data.birthday ? response.data.birthday.split('T')[0] : '',
                     contact: response.data.contact || '',
                     email: response.data.email || '',
-                    jmbg: response.data.jmbg || ''
+                    jmbg: response.data.jmbg || '',
+                    profileImageUrl: response.data.profileImageUrl || ''
                 });
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -62,12 +66,33 @@ const Profile = ({ user }) => {
         }
     };
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUserData((prevUserData) => ({
-            ...prevUserData,
-            [name]: value
-        }));
+    const handleFileChange = (e) => {
+        setSelectedFile(e.target.files[0]);
+    };
+
+    const handleSave = async () => {
+        try {
+            if (selectedFile) {
+                const formData = new FormData();
+                formData.append('file', selectedFile);
+                const uploadResponse = await axios.post(`/api/users/uploadProfileImage/${user.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (uploadResponse.data && uploadResponse.data.profileImageUrl) {
+                    setUserData((prevUserData) => ({
+                        ...prevUserData,
+                        profileImageUrl: uploadResponse.data.profileImageUrl
+                    }));
+                }
+            }
+            alert('Slika uspešno ažurirana!');
+        } catch (error) {
+            console.error('Error uploading profile image:', error);
+            alert('Greška prilikom ažuriranja slike.');
+        }
     };
 
     const handlePasswordChange = (e) => {
@@ -76,16 +101,6 @@ const Profile = ({ user }) => {
             ...prevPasswordData,
             [name]: value
         }));
-    };
-
-    const handleSave = async () => {
-        try {
-            await axios.put(`/api/users/${user.id}`, userData);
-            alert('Podaci uspešno ažurirani!');
-        } catch (error) {
-            console.error('Error updating user data:', error);
-            alert('Greška prilikom ažuriranja podataka.');
-        }
     };
 
     const handlePasswordSave = async () => {
@@ -117,6 +132,30 @@ const Profile = ({ user }) => {
                     Profil
                 </Typography>
 
+                {userData.profileImageUrl && (
+                    <Box sx={{ mb: 2 }}>
+                        <Avatar src={userData.profileImageUrl} alt="Profile" sx={{ width: 100, height: 100 }} />
+                    </Box>
+                )}
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    style={{ display: 'block', marginBottom: '1rem' }}
+                />
+
+                <Button
+                    type="button"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    sx={{ mt: 1, mb: 2 }}
+                    onClick={handleSave}
+                >
+                    Sačuvaj sliku
+                </Button>
+
                 <Typography variant="h6" gutterBottom>
                     Ukupno zaduženje: {financialData.totalZaduzenje} RSD
                 </Typography>
@@ -145,26 +184,25 @@ const Profile = ({ user }) => {
                             readOnly: true,
                         }}
                     />
-
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="fullName"
                         label="Puno ime"
                         name="fullName"
                         autoComplete="name"
                         value={userData.fullName || ''}
-                        onChange={handleChange}
                         InputLabelProps={{
                             style: { color: '#000000' }
+                        }}
+                        InputProps={{
+                            readOnly: true,
                         }}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         name="birthday"
                         label="Datum rođenja"
@@ -175,63 +213,58 @@ const Profile = ({ user }) => {
                             style: { color: '#000000' }
                         }}
                         value={userData.birthday || ''}
-                        onChange={handleChange}
+                        InputProps={{
+                            readOnly: true,
+                        }}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="contact"
                         label="Kontakt"
                         name="contact"
                         autoComplete="contact"
                         value={userData.contact || ''}
-                        onChange={handleChange}
                         InputLabelProps={{
                             style: { color: '#000000' }
+                        }}
+                        InputProps={{
+                            readOnly: true,
                         }}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="email"
                         label="Email"
                         name="email"
                         autoComplete="email"
                         value={userData.email || ''}
-                        onChange={handleChange}
                         InputLabelProps={{
                             style: { color: '#000000' }
+                        }}
+                        InputProps={{
+                            readOnly: true,
                         }}
                     />
                     <TextField
                         variant="outlined"
                         margin="normal"
-                        required
                         fullWidth
                         id="jmbg"
                         label="JMBG"
                         name="jmbg"
                         autoComplete="jmbg"
                         value={userData.jmbg || ''}
-                        onChange={handleChange}
                         InputLabelProps={{
                             style: { color: '#000000' }
                         }}
+                        InputProps={{
+                            readOnly: true,
+                        }}
                     />
-                    <Button
-                        type="button"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleSave}
-                    >
-                        Sačuvaj
-                    </Button>
                     <Button
                         type="button"
                         fullWidth

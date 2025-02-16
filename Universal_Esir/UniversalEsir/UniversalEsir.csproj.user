@@ -40,6 +40,9 @@
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Calculation\AddCaclulationWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddEditClanWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Driver\AllIsporukeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -229,6 +232,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Calculation\AddCaclulationWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddEditClanWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Driver\AllIsporukeWindow.xaml">

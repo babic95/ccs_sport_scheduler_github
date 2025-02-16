@@ -27,6 +27,7 @@ namespace CcsSportScheduler_Database.Models
         public string Email { get; set; } = null!;
         public string Jmbg { get; set; } = null!;
         public int FreeTermin { get; set; }
+        public string? ProfileImageUrl { get; set; }
 
         [JsonIgnore]
         public virtual Klub Klub { get; set; } = null!;

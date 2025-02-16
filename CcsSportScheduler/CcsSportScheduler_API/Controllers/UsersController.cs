@@ -12,6 +12,9 @@ using CcsSportScheduler_API.Enumeration;
 using CcsSportScheduler_API.Models.Response.FinancialCard;
 using CcsSportScheduler_API.Models.Requests.User;
 using CcsSportScheduler_API.Models.Requests.Racun;
+using Amazon.S3.Model;
+using Amazon.S3.Util;
+using Amazon.S3;
 
 namespace CcsSportScheduler_API.Controllers
 {
@@ -20,10 +23,16 @@ namespace CcsSportScheduler_API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly SportSchedulerContext _context;
+        private readonly IAmazonS3 _s3Client;
 
-        public UsersController(SportSchedulerContext context)
+        private const string _bucketName = "ccs";
+        private const string _imageFolderName = "CcsSportScheduler";
+        private readonly string _cdnEndpoint = "https://ccs.fra1.cdn.digitaloceanspaces.com"; // Pravi CDN endpoint
+
+        public UsersController(SportSchedulerContext context, IAmazonS3 s3Client)
         {
             _context = context;
+            _s3Client = s3Client;
         }
 
         // GET: api/Users/GetAllUsersFromKlub/5
@@ -182,23 +191,97 @@ namespace CcsSportScheduler_API.Controllers
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] LoginRequest login)
         {
-            var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username &&
-            u.Password == login.Password);
-
-            if (userDB == null)
+            try
             {
-                return BadRequest(new ErrorResponse
+                var userDB = await _context.Users.FirstOrDefaultAsync(u => u.Username == login.Username &&
+                u.Password == login.Password);
+
+                if (userDB == null)
+                {
+                    return BadRequest(new ErrorResponse
+                    {
+                        Controller = "UsersController",
+                        Message = "Ne postoji korisnik.",
+                        Code = ErrorEnumeration.NotFound,
+                        Action = "Login"
+                    });
+                }
+
+                return Ok(userDB);
+            }
+            catch(Exception ex)
+            {
+                return Conflict(new ErrorResponse
                 {
                     Controller = "UsersController",
-                    Message = "Ne postoji korisnik.",
-                    Code = ErrorEnumeration.NotFound,
+                    Message = $"{ex.Message}",
+                    Code = ErrorEnumeration.Exception,
                     Action = "Login"
                 });
             }
-
-            return Ok(userDB);
         }
+        // POST: api/Users/uploadProfileImage/5
+        [HttpPost("uploadProfileImage/{userId}")]
+        public async Task<IActionResult> UploadProfileImage(int userId, [FromForm] IFormFile file)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(userId);
+                if (user == null)
+                {
+                    return NotFound(new { Message = "User not found" });
+                }
 
+                if (file == null || file.Length == 0)
+                {
+                    return BadRequest(new { Message = "Invalid file" });
+                }
+
+                if (!string.IsNullOrEmpty(user.ProfileImageUrl))
+                {
+                    var deleteObjectRequest = new DeleteObjectRequest
+                    {
+                        BucketName = _bucketName,
+                        Key = user.ProfileImageUrl.Replace($"{_cdnEndpoint}/", "")
+                    };
+                    await _s3Client.DeleteObjectAsync(deleteObjectRequest);
+                }
+
+                var bucketExists = await AmazonS3Util.DoesS3BucketExistV2Async(_s3Client, _bucketName);
+                if (!bucketExists)
+                {
+                    var bucketRequest = new PutBucketRequest()
+                    {
+                        BucketName = _bucketName,
+                        UseClientRegion = true
+                    };
+                    await _s3Client.PutBucketAsync(bucketRequest);
+                }
+
+                string key = $"{_imageFolderName}/{user.Username}_{file.FileName}";
+                var objectRequest = new PutObjectRequest()
+                {
+                    BucketName = _bucketName,
+                    Key = key,
+                    InputStream = file.OpenReadStream(),
+                    CannedACL = S3CannedACL.PublicRead // Postavljanje javnog pristupa
+                };
+                var response = await _s3Client.PutObjectAsync(objectRequest);
+
+                if (response != null)
+                {
+                    user.ProfileImageUrl = $"{_cdnEndpoint}/{key}";
+                    _context.Users.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+
+                return Ok(new { user.ProfileImageUrl });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest($"Error: {ex.Message}");
+            }
+        }
         // PUT: api/Users/5
         [Route("{id}")]
         [HttpPut]
@@ -450,8 +533,32 @@ namespace CcsSportScheduler_API.Controllers
 
                 financialCardResponse.TotalCount = items.Count;
 
-                financialCardResponse.Items = items.OrderByDescending(i => i.Date)
-                                                   .Skip((pageNumber - 1) * pageSize)
+                var neplaceni = items.Where(i => i.Razduzenje != i.Zaduzenje);
+                var placeni = items.Where(i => i.Razduzenje == i.Zaduzenje);
+
+                if(neplaceni.Any())
+                {
+                    neplaceni = neplaceni.OrderByDescending(i => i.Date);
+                }
+                else
+                {
+                    neplaceni = new List<FinancialCardItemResponse>();
+                }
+
+                if (placeni.Any())
+                {
+                    placeni = placeni.OrderByDescending(i => i.Date);
+                }
+                else
+                {
+                    placeni = new List<FinancialCardItemResponse>();
+                }
+
+                var resultItems = new List<FinancialCardItemResponse>();
+                resultItems.AddRange(neplaceni);
+                resultItems.AddRange(placeni);
+
+                financialCardResponse.Items = resultItems.Skip((pageNumber - 1) * pageSize)
                                                    .Take(pageSize)
                                                    .ToList();
             }

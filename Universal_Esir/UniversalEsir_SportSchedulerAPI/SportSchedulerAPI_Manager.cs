@@ -20,7 +20,7 @@ namespace UniversalEsir_SportSchedulerAPI
     {
         #region Fields
 #if DEBUG
-        private string _url = @"https://192.168.0.150:7173";
+        private string _url = @"https://localhost:7173";
 #else
         private string _url = @"";
 #endif
