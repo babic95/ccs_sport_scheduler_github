@@ -5,7 +5,6 @@ import Pagination from '@mui/material/Pagination';
 
 const FinancialCard = ({ user }) => {
     const userId = user.id;
-
     const [financialData, setFinancialData] = useState({
         totalZaduzenje: 0,
         totalRazduzenje: 0,
@@ -117,7 +116,7 @@ const FinancialCard = ({ user }) => {
 
         if (item.zaduzenje === item.razduzenje) {
             return 'green';
-        } else{
+        } else {
             return 'red';
         }
     };
@@ -125,7 +124,7 @@ const FinancialCard = ({ user }) => {
     const getTypeLabel = (type) => {
         switch (type) {
             case 0:
-                return 'Račun';
+                return 'Kafić';
             case 1:
                 return 'Termin';
             case 2:
@@ -168,7 +167,7 @@ const FinancialCard = ({ user }) => {
                         label="Filtriraj Tip"
                     >
                         <MenuItem value="-1">Svi Tipovi</MenuItem>
-                        <MenuItem value="0">Račun</MenuItem>
+                        <MenuItem value="0">Kafić</MenuItem>
                         <MenuItem value="1">Termin</MenuItem>
                         <MenuItem value="2">Uplata</MenuItem>
                         <MenuItem value="3">Poklon</MenuItem>

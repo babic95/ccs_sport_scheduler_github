@@ -3,6 +3,7 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Schedule from './Schedule';
 import Profile from './Profile';
 import FinancialCard from './FinancialCard';
+import FinancialCardAll from './FinancialCardAll';
 import axios from 'axios';
 import './Main.css';
 import { IconButton, Badge, Menu, MenuItem, Modal, Typography, AppBar, Toolbar, Drawer, List, ListItem, ListItemText, Box, Avatar, Button } from '@mui/material';
@@ -91,6 +92,14 @@ const Sidebar = ({ isOpen, closeSidebar, navigate, user }) => (
                 }}>
                     <ListItemText primary="Finansijska Kartica" />
                 </ListItem>
+                {user.type === 6 && (
+                    <ListItem button onClick={() => {
+                        closeSidebar();
+                        navigate('/financialCardAll', { state: { user } });
+                    }}>
+                        <ListItemText primary="Sve Finansijske Kartice" />
+                    </ListItem>
+                )}
             </List>
         </Box>
         <div className="backdrop" onClick={closeSidebar}></div>
@@ -169,6 +178,9 @@ const Main = () => {
                     <Route path="/schedule" element={<Schedule user={user} />} />
                     <Route path="/profile" element={<Profile user={user} />} />
                     <Route path="/financial-card" element={<FinancialCard user={user} />} />
+                    {user.type === 6 && (
+                        <Route path="/financialCardAll" element={<FinancialCardAll user={user} />} />
+                    )}
                 </Routes>
             </main>
             {selectedNotification && (

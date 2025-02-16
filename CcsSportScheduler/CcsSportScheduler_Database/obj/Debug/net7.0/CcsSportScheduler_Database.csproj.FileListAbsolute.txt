@@ -1,0 +1,15 @@
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\bin\Debug\net7.0\CcsSportScheduler_Database.deps.json
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\bin\Debug\net7.0\CcsSportScheduler_Database.runtimeconfig.json
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\bin\Debug\net7.0\CcsSportScheduler_Database.dll
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\bin\Debug\net7.0\CcsSportScheduler_Database.pdb
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.csproj.AssemblyReference.cache
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.AssemblyInfoInputs.cache
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.AssemblyInfo.cs
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.csproj.CoreCompileInputs.cache
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.sourcelink.json
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.dll
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\refint\CcsSportScheduler_Database.dll
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.pdb
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\CcsSportScheduler_Database.genruntimeconfig.cache
+C:\Git_Private\ccs_sport_scheduler\CcsSportScheduler\CcsSportScheduler_Database\obj\Debug\net7.0\ref\CcsSportScheduler_Database.dll

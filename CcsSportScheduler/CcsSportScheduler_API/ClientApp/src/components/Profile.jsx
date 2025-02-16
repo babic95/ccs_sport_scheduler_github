@@ -1,9 +1,11 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, Button, Typography, Box, Container, Modal, Avatar } from '@mui/material';
+import { TextField, Button, Typography, Box, Container, Modal, Avatar, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import './Profile.css';
 
 const Profile = ({ user }) => {
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(user);
     const [userData, setUserData] = useState({
         id: user.id || null,
         username: user.username || '',
@@ -32,11 +34,24 @@ const Profile = ({ user }) => {
     const [selectedFile, setSelectedFile] = useState(null);
 
     useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('/api/users/getAllUsersFromKlub/1');
+                setUsers(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+    useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await axios.get(`/api/users/${user.id}`);
+                const response = await axios.get(`/api/users/${selectedUser.id}`);
                 setUserData({
-                    id: user.id,
+                    id: selectedUser.id,
                     username: response.data.username || '',
                     fullName: response.data.fullName || '',
                     birthday: response.data.birthday ? response.data.birthday.split('T')[0] : '',
@@ -50,16 +65,16 @@ const Profile = ({ user }) => {
             }
         };
 
-        if (user.id) {
+        if (selectedUser.id) {
             fetchUserData();
         }
 
         fetchFinancialData();
-    }, [user.id]);
+    }, [selectedUser]);
 
     const fetchFinancialData = async () => {
         try {
-            const response = await axios.get(`/api/users/financialCard/${user.id}`);
+            const response = await axios.get(`/api/users/financialCard/${selectedUser.id}`);
             setFinancialData(response.data);
         } catch (error) {
             console.error('Error fetching financial data:', error);
@@ -123,6 +138,12 @@ const Profile = ({ user }) => {
         }
     };
 
+    const handleUserChange = (event) => {
+        const userId = event.target.value;
+        const selected = users.find(u => u.id === userId);
+        setSelectedUser(selected);
+    };
+
     const saldo = financialData.totalRazduzenje - financialData.totalZaduzenje;
 
     return (
@@ -132,39 +153,64 @@ const Profile = ({ user }) => {
                     Profil
                 </Typography>
 
+                <FormControl fullWidth variant="outlined" sx={{ mb: 3 }}>
+                    <InputLabel id="user-select-label" sx={{ color: '#000000' }}>Izaberite korisnika</InputLabel>
+                    <Select
+                        labelId="user-select-label"
+                        value={selectedUser ? selectedUser.id : ''}
+                        onChange={handleUserChange}
+                        label="Izaberite korisnika"
+                        sx={{ color: '#000000' }}
+                    >
+                        {users.map(user => (
+                            <MenuItem key={user.id} value={user.id}>
+                                {user.fullName || user.username}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+
                 {userData.profileImageUrl && (
                     <Box sx={{ mb: 2 }}>
                         <Avatar src={userData.profileImageUrl} alt="Profile" sx={{ width: 100, height: 100 }} />
                     </Box>
                 )}
 
-                <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFileChange}
-                    style={{ display: 'block', marginBottom: '1rem' }}
-                />
+                {selectedUser.id === user.id && (
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        style={{ display: 'block', marginBottom: '1rem' }}
+                    />
+                )}
 
-                <Button
-                    type="button"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    sx={{ mt: 1, mb: 2 }}
-                    onClick={handleSave}
-                >
-                    Sačuvaj sliku
-                </Button>
+                {selectedUser.id === user.id && (
+                    <Button
+                        type="button"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        sx={{ mt: 1, mb: 2 }}
+                        onClick={handleSave}
+                    >
+                        Sačuvaj sliku
+                    </Button>
+                )}
 
-                <Typography variant="h6" gutterBottom>
-                    Ukupno zaduženje: {financialData.totalZaduzenje} RSD
-                </Typography>
-                <Typography variant="h6" gutterBottom>
-                    Ukupno razduženje: {financialData.totalRazduzenje} RSD
-                </Typography>
-                <Typography variant="h6" gutterBottom sx={{ color: saldo < 0 ? 'red' : saldo > 0 ? 'green' : 'inherit' }}>
-                    SALDO: {saldo} RSD
-                </Typography>
+                {user.type === 6 || selectedUser.id === user.id ? (
+                    <>
+                        <Typography variant="h6" gutterBottom>
+                            Ukupno zaduženje: {financialData.totalZaduzenje} RSD
+                        </Typography>
+                        <Typography variant="h6" gutterBottom>
+                            Ukupno razduženje: {financialData.totalRazduzenje} RSD
+                        </Typography>
+                        <Typography variant="h6" gutterBottom sx={{ color: saldo < 0 ? 'red' : saldo > 0 ? 'green' : 'inherit' }}>
+                            SALDO: {saldo} RSD
+                        </Typography>
+                    </>
+                ) : null}
 
                 <Box component="form" sx={{ mt: 3 }}>
                     <TextField
@@ -265,16 +311,18 @@ const Profile = ({ user }) => {
                             readOnly: true,
                         }}
                     />
-                    <Button
-                        type="button"
-                        fullWidth
-                        variant="outlined"
-                        color="secondary"
-                        sx={{ mt: 1 }}
-                        onClick={() => setOpenPasswordModal(true)}
-                    >
-                        Promena lozinke
-                    </Button>
+                    {selectedUser.id === user.id && (
+                        <Button
+                            type="button"
+                            fullWidth
+                            variant="outlined"
+                            color="secondary"
+                            sx={{ mt: 1 }}
+                            onClick={() => setOpenPasswordModal(true)}
+                        >
+                            Promena lozinke
+                        </Button>
+                    )}
                 </Box>
             </Box>
             <Modal
