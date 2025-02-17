@@ -43,6 +43,27 @@ const Schedule = ({ user }) => {
         totalCount: 0
     });
 
+    const handleWindowResize = () => {
+        if (calendarRef.current && calendarRef.current.el) {
+            const calendarEl = calendarRef.current.el;
+            const calendarWidth = calendarEl.scrollWidth || calendarEl.offsetWidth; // Proveri oba svojstva
+            const containerWidth = calendarEl.parentNode.offsetWidth;
+            const scale = Math.min(1, containerWidth / calendarWidth);
+            calendarEl.style.transform = `scale(${scale})`;
+            calendarEl.style.transformOrigin = '0 0';
+        }
+    };
+
+    useEffect(() => {
+        if (calendarRef.current) {
+            handleWindowResize();
+            window.addEventListener('resize', handleWindowResize);
+        }
+        return () => {
+            window.removeEventListener('resize', handleWindowResize);
+        };
+    }, [calendarRef]);
+
     const fetchTermini = async (startDate, endDate) => {
         try {
             const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}`, {
@@ -261,11 +282,52 @@ const Schedule = ({ user }) => {
         });
     };
 
+    const eventClassNames = (eventInfo) => {
+        switch (eventInfo.event.extendedProps.type) {
+            case 'fiksni':
+                return 'event-fiksni';
+            case 'plivajuci':
+                return 'event-plivajuci';
+            case 'trenerski':
+                return 'event-trenerski';
+            case 'vanredni':
+                return 'event-vanredni';
+            case 'neclanski':
+                return 'event-neclanski';
+            case 'klupski':
+                return 'event-klupski';
+            default:
+                return '';
+        }
+    };
+
+    const Legend = () => (
+        <Box className="legend-container">
+            <div className="legend-item">
+                <div className="legend-color event-fiksni"></div> Fiksni
+            </div>
+            <div className="legend-item">
+                <div className="legend-color event-plivajuci"></div> Plivajući
+            </div>
+            <div className="legend-item">
+                <div className="legend-color event-trenerski"></div> Trenerski
+            </div>
+            <div className="legend-item">
+                <div className="legend-color event-vanredni"></div> Vanredni
+            </div>
+            <div className="legend-item">
+                <div className="legend-color event-neclanski"></div> Nečlanski
+            </div>
+            <div className="legend-item">
+                <div className="legend-color event-klupski"></div> Klupski
+            </div>
+        </Box>
+    );
+
     const saldo = financialData.totalRazduzenje - financialData.totalZaduzenje;
 
     return (
         <Container component="main" maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
-
             <Typography variant="h6" align="center" gutterBottom>
                 Ukupno zaduženje: {financialData.totalZaduzenje} RSD
             </Typography>
@@ -294,8 +356,12 @@ const Schedule = ({ user }) => {
                 </Select>
             </FormControl>
 
-            <div className="zoom-container" style={{ overflowX: 'auto' }}>
-                <div ref={calendarRef} style={{ width: '100%' }}>
+            <div className="centerContainer">
+                <Legend />
+            </div>
+
+            <div className="zoom-container">
+                <div className="zoom-content" ref={calendarRef}>
                     <FullCalendar
                         plugins={[timeGridPlugin, interactionPlugin]}
                         initialView="timeGridWeek"
@@ -312,6 +378,7 @@ const Schedule = ({ user }) => {
                         events={termini}
                         dateClick={handleDateClick}
                         eventClick={handleEventClick}
+                        eventClassNames={eventClassNames} // Dodato za prilagođene klase
                         initialDate={selectedDate} // Postavljanje početnog datuma na današnji dan
                         validRange={{ start: startOfWeek, end: endOfWeek }}
                         views={{
