@@ -277,27 +277,26 @@ namespace CcsSportScheduler_API.Controllers
         }
 
         // Get: api/klubs/naplataTermina/{idKlub}
-        [Route("naplataTermina/{idKlub}")]
+        [Route("naplataTermina/{idUser}")]
         [HttpGet]
-        public async Task<IActionResult> GetNaplataTermina(int idKlub)
+        public async Task<IActionResult> GetNaplataTermina(int idUser)
         {
-            var klubDB = await _context.Klubs.FindAsync(idKlub);
+            var userDB = await _context.Users.FindAsync(idUser);
 
-            if (klubDB == null)
+            if (userDB == null)
             {
                 return BadRequest(new ErrorResponse
                 {
                     Controller = "KlubsController",
-                    Message = "Klub ne postoji u bazi podataka.",
+                    Message = "Ne postoji korisnik u bazi.",
                     Code = ErrorEnumeration.NotFound,
                     Action = "GetNaplataTermina",
                 });
             }
 
-            var cenaTermina = _context.Naplataterminas.Where(n => n.KlubId == idKlub);
+            var cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == userDB.Type);
 
-            if (cenaTermina == null || 
-                !cenaTermina.Any())
+            if (cenaTermina == null)
             {
                 return BadRequest(new ErrorResponse
                 {
@@ -308,7 +307,7 @@ namespace CcsSportScheduler_API.Controllers
                 });
             }
 
-            return Ok(await cenaTermina.ToListAsync());
+            return Ok(cenaTermina);
         }
 
         // POST: api/Klubs/NaplataTermina
@@ -329,31 +328,14 @@ namespace CcsSportScheduler_API.Controllers
                 });
             }
 
-            var naplataTerminaDB = await _context.Naplataterminas.FirstOrDefaultAsync(n =>
-            (n.StartTime < naplataTermina.StartTime && n.EndTime > naplataTermina.StartTime) ||
-            (n.StartTime < naplataTermina.EndTime && n.EndTime > naplataTermina.EndTime));
-
-            if (naplataTerminaDB != null)
-            {
-                return BadRequest(new ErrorResponse
-                {
-                    Controller = "KlubsController",
-                    Message = $"Uneti termin se poklapa sa postojećim - {naplataTerminaDB.Name}",
-                    Code = ErrorEnumeration.BadRequest,
-                    Action = "PostNaplataTermina",
-                });
-            }
-
             try
             {
-                naplataTerminaDB = new NaplataTermina()
+                NaplataTermina naplataTerminaDB = new NaplataTermina()
                 {
+                    Id = naplataTermina.Id,
                     KlubId = naplataTermina.KlubId,
                     Name = naplataTermina.Name,
                     Price = naplataTermina.Price,
-                    Vikend = naplataTermina.Vikend,
-                    StartTime = naplataTermina.StartTime,
-                    EndTime = naplataTermina.EndTime,
                 };
 
                 await _context.Naplataterminas.AddAsync(naplataTerminaDB);
@@ -402,9 +384,7 @@ namespace CcsSportScheduler_API.Controllers
                 });
             }
 
-            var ntDB = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id != idNaplataTermina &&
-            ((n.StartTime < naplataTermina.StartTime && n.EndTime > naplataTermina.StartTime) ||
-            (n.StartTime < naplataTermina.EndTime && n.EndTime > naplataTermina.EndTime)));
+            var ntDB = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id != idNaplataTermina);
 
             if (ntDB != null)
             {
@@ -433,9 +413,6 @@ namespace CcsSportScheduler_API.Controllers
             try
             {
                 naplataTerminaDB.Price = naplataTermina.Price;
-                naplataTerminaDB.Vikend = naplataTermina.Vikend;
-                naplataTerminaDB.StartTime = naplataTermina.StartTime;
-                naplataTerminaDB.EndTime = naplataTermina.EndTime;
                 naplataTerminaDB.Name = naplataTermina.Name;
                 
                 _context.Naplataterminas.Update(naplataTerminaDB);

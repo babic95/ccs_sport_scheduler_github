@@ -167,10 +167,6 @@ namespace CcsSportScheduler_Database
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.EndTime)
-                    .HasColumnType("time")
-                    .HasColumnName("endTime");
-
                 entity.Property(e => e.KlubId).HasColumnName("Klub_id");
 
                 entity.Property(e => e.Name)
@@ -180,12 +176,6 @@ namespace CcsSportScheduler_Database
                 entity.Property(e => e.Price)
                     .HasPrecision(10, 2)
                     .HasColumnName("price");
-
-                entity.Property(e => e.StartTime)
-                    .HasColumnType("time")
-                    .HasColumnName("startTime");
-
-                entity.Property(e => e.Vikend).HasColumnName("vikend");
 
                 entity.HasOne(d => d.Klub)
                     .WithMany(p => p.Naplataterminas)

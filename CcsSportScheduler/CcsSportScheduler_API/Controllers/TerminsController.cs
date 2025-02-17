@@ -29,9 +29,9 @@ namespace CcsSportScheduler_API.Controllers
         }
 
         // GET: api/Termins/zakazaniTermini/5
-        [Route("zakazaniTermini/{idTeren}")]
+        [Route("zakazaniTermini/{idTeren}/{idUser}")]
         [HttpGet]
-        public async Task<IActionResult> ZakazaniTermini(int idTeren, DateTime? startDate = null, DateTime? endDate = null)
+        public async Task<IActionResult> ZakazaniTermini(int idTeren, int idUser, DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
@@ -47,10 +47,22 @@ namespace CcsSportScheduler_API.Controllers
                         Action = "ZakazaniTermini"
                     });
                 }
+                var userDB = await _context.Users.FindAsync(idUser);
+
+                if (userDB == null)
+                {
+                    return NotFound(new ErrorResponse
+                    {
+                        Controller = "TerminsController",
+                        Message = "Ne postoji korisnik u bazi podataka.",
+                        Code = ErrorEnumeration.NotFound,
+                        Action = "ZakazaniTermini"
+                    });
+                }
 
                 // Dohvati cene termina sa API-ja
                 var client = _httpClientFactory.CreateClient("MyHttpClient");
-                var responseCenaTermina = await client.GetAsync($"/api/klubs/naplataTermina/{terenDB.KlubId}");
+                var responseCenaTermina = await client.GetAsync($"/api/klubs/naplataTermina/{idUser}");
 
                 if (!responseCenaTermina.IsSuccessStatusCode)
                 {
@@ -63,9 +75,8 @@ namespace CcsSportScheduler_API.Controllers
                     });
                 }
 
-                var cenaTermina = await responseCenaTermina.Content.ReadFromJsonAsync<List<NaplataTermina>>();
+                var cenaTermina = await responseCenaTermina.Content.ReadFromJsonAsync<NaplataTermina>();
 
-                var termini = _context.Termins.Where(t => t.TerenId == idTeren).Include(t => t.User).ToList();
 
                 if (startDate.HasValue && endDate.HasValue)
                 {
@@ -73,7 +84,8 @@ namespace CcsSportScheduler_API.Controllers
                     DateTime end = new DateTime(endDate.Value.Year, endDate.Value.Month, endDate.Value.Day, 22, 0, 0);
 
                     // Filtriranje termina u zadanom periodu
-                    termini = termini.Where(t => t.StartDateTime >= start && t.StartDateTime <= end).ToList();
+                    var termini = _context.Termins.Where(t => t.TerenId == idTeren &&
+                    t.StartDateTime >= start && t.StartDateTime <= end).Include(t => t.User).ToList();
 
                     // Generisanje svih mogućih termina u zadanom periodu
                     var allTermini = new List<Termin>();
@@ -91,9 +103,6 @@ namespace CcsSportScheduler_API.Controllers
                             // Ako termin nije zakazan, dodajemo nezakazani termin sa odgovarajućom cenom
                             var dayOfWeek = date.DayOfWeek;
                             var isWeekend = (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday);
-                            var cena = cenaTermina.FirstOrDefault(c => c.StartTime <= new TimeOnly(date.Hour, date.Minute, date.Second)
-                            && c.EndTime > new TimeOnly(date.Hour, date.Minute, date.Second) &&
-                            c.Vikend == (isWeekend ? 1 : 0));
 
                             allTermini.Add(new Termin
                             {
@@ -101,28 +110,24 @@ namespace CcsSportScheduler_API.Controllers
                                 EndDateTime = date.AddHours(1),
                                 TerenId = idTeren,
                                 User = null, // Oznaka da je termin nezakazan
-                                Price = cena?.Price ?? 0 // Postavljanje cene za nezakazane termine
+                                Price = cenaTermina == null ? 600 : cenaTermina.Price // Postavljanje cene za nezakazane termine
                             });
                         }
                         else
                         {
                             // Ako je termin zakazan, dodajemo ga
-                            existingTermin.Price = cenaTermina.FirstOrDefault(c =>
-                                c.StartTime <= new TimeOnly(existingTermin.StartDateTime.Hour, existingTermin.StartDateTime.Minute, existingTermin.StartDateTime.Second) &&
-                                c.EndTime > new TimeOnly(existingTermin.StartDateTime.Hour, existingTermin.StartDateTime.Minute, existingTermin.StartDateTime.Second) &&
-                                c.Vikend == ((existingTermin.StartDateTime.DayOfWeek == DayOfWeek.Saturday ||
-                                existingTermin.StartDateTime.DayOfWeek == DayOfWeek.Sunday) ? 1 : 0))?.Price ?? 0;
                             allTermini.Add(existingTermin);
                         }
                     }
 
                     // Uklonite duplirane termine
                     termini = allTermini.Distinct().ToList();
+
+                    // Sada `termini` sadrži sve termine, zakazane i nezakazane
+
+                    return Ok(termini);
                 }
-
-                // Sada `termini` sadrži sve termine, zakazane i nezakazane
-
-                return Ok(termini);
+                return BadRequest("Nema vremenski interval");
             }
             catch (Exception ex)
             {
@@ -340,15 +345,14 @@ namespace CcsSportScheduler_API.Controllers
                 {
                     var startTermin = new TimeOnly(terminRequest.StartDateTime.Hour, terminRequest.StartDateTime.Minute);
 
-                    var naplataTermina = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.StartTime <= startTermin &&
-                    n.EndTime > startTermin);
+                    var naplataTermina = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id == userDB.Type);
 
                     if (naplataTermina == null)
                     {
                         return NotFound(new ErrorResponse
                         {
                             Controller = "TerminsController",
-                            Message = "Nije definisana cena za navedeni termin.",
+                            Message = "Nije definisana cena za navedeni tip korisnika.",
                             Code = ErrorEnumeration.NotFound,
                             Action = "Post"
                         });

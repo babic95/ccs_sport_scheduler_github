@@ -6,7 +6,7 @@ import axios from 'axios';
 import { Modal, Button, Typography, Box, Container, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { styled } from '@mui/system';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Schedule.css';
+import './Schedule.css'; // Uverite se da je CSS datoteka pravilno importovana
 import srLocale from '@fullcalendar/core/locales/sr'; // Import Serbian locale
 import Notifications from './Notifications'; // Import Notification component
 
@@ -66,35 +66,36 @@ const Schedule = ({ user }) => {
 
     const fetchTermini = async (startDate, endDate) => {
         try {
-            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}`, {
+            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${user.id}`, {
                 params: {
                     startDate: startDate.toISOString(),
                     endDate: endDate.toISOString()
                 }
             });
 
-            console.log('Termini:', response.data);
+            console.log(response.data);
 
-            const zakazaniTermini = response.data.map(termin => ({
-                id: termin.id,
+            const zakazaniTermini = response.data.map((termin, i) => ({
+                id: termin.id ? termin.id : `slobodan-${cenaTermina.id}-${i}-${new Date(termin.startDateTime).getHours()}`,
                 title: termin.user ? `${termin.user.username}` : `${termin.price}`,
                 start: new Date(termin.startDateTime).toISOString(),
                 end: new Date(termin.endDateTime).toISOString(),
                 extendedProps: {
                     user: termin.user,
-                    price: termin.price
+                    price: termin.price,
+                    type: termin.user ? termin.user.type : null
                 },
-                backgroundColor: termin.user ? 'lightcoral' : 'white',
+                className: termin.user ? eventClassNames({ event: { extendedProps: { type: termin.user.type } } }) : '',
+                backgroundColor: termin.user ? eventBackgoundCollor({ event: { extendedProps: { type: termin.user.type } } }) : 'white', // Postavljanje bele boje za slobodne termine
                 textColor: 'black',
                 borderColor: 'black',
             }));
 
             setTermini([]);
 
-            const responseCenaTermina = await axios.get(`/api/klubs/naplataTermina/${terenId}`);
-            const slobodniTermini = generateSlobodniTermini(startDate, endDate, responseCenaTermina.data);
+            console.log(zakazaniTermini);
 
-            setTermini([...zakazaniTermini, ...slobodniTermini]);
+            setTermini(zakazaniTermini);
         } catch (error) {
             console.error('Error fetching termini:', error);
         }
@@ -106,31 +107,29 @@ const Schedule = ({ user }) => {
             const currentDate = new Date(startDate);
             currentDate.setDate(startDate.getDate() + i);
 
-            cenaTermina.forEach(cena => {
-                for (let hour = cena.startTime; hour < cena.endTime; hour++) {
-                    const startTime = new Date(currentDate);
-                    startTime.setHours(hour, 0, 0, 0);
-                    const endTime = new Date(startTime);
-                    endTime.setHours(hour + 1, 0, 0, 0);
+            for (let hour = 7; hour < 23; hour++) {
+                const startTime = new Date(currentDate);
+                startTime.setHours(hour, 0, 0, 0);
+                const endTime = new Date(startTime);
+                endTime.setHours(hour + 1, 0, 0, 0);
 
-                    if (!isNaN(startTime.getTime()) && !isNaN(endTime.getTime())) {
-                        slobodniTermini.push({
-                            id: `slobodan-${cena.id}-${i}-${hour}`,
-                            title: `${cena.price}`,
-                            start: startTime.toISOString(),
-                            end: endTime.toISOString(),
-                            extendedProps: {
-                                price: cena.price,
-                            },
-                            backgroundColor: 'white',
-                            textColor: 'black',
-                            borderColor: 'black',
-                        });
-                    } else {
-                        console.error('Invalid time value for slobodni termini:', startTime, endTime);
-                    }
+                if (!isNaN(startTime.getTime()) && !isNaN(endTime.getTime())) {
+                    slobodniTermini.push({
+                        id: `slobodan-${cenaTermina.id}-${i}-${hour}`,
+                        title: `${cenaTermina.price}`,
+                        start: startTime.toISOString(),
+                        end: endTime.toISOString(),
+                        extendedProps: {
+                            price: cenaTermina.price,
+                        },
+                        backgroundColor: 'white',
+                        textColor: 'black',
+                        borderColor: 'black',
+                    });
+                } else {
+                    console.error('Invalid time value for slobodni termini:', startTime, endTime);
                 }
-            });
+            }
         }
         return slobodniTermini;
     };
@@ -161,7 +160,6 @@ const Schedule = ({ user }) => {
     };
 
     const handleDateClick = (info) => {
-        console.log('Date clicked:', info);
         const startTime = new Date(info.dateStr);
         const endTime = new Date(startTime);
         endTime.setHours(startTime.getHours() + 1);
@@ -171,7 +169,6 @@ const Schedule = ({ user }) => {
         nextMonday.setDate(today.getDate() + 7);
 
         if (startTime < today || startTime > nextMonday) {
-            console.log('Invalid date selected. Only current week is selectable.');
             alert('Možete rezervisati termine samo u tekućoj nedelji.');
             return;
         }
@@ -197,7 +194,7 @@ const Schedule = ({ user }) => {
     };
 
     const handleEventClick = (clickInfo) => {
-        console.log('Event clicked:', clickInfo);
+        console.log(clickInfo.event.extendedProps);
         setSelectedEvent({
             start: new Date(clickInfo.event.startStr),
             end: new Date(clickInfo.event.endStr),
@@ -208,7 +205,6 @@ const Schedule = ({ user }) => {
     };
 
     const handleReservation = async () => {
-        console.log('Reservation data:', selectedEvent);
         if (selectedEvent) {
             try {
                 const reservationData = {
@@ -222,7 +218,6 @@ const Schedule = ({ user }) => {
                 alert('Termin rezervisan uspešno!');
 
                 setTermini([]);
-                // Osvežavanje liste termina nakon uspešne rezervacije
                 fetchTermini(startOfWeek, endOfWeek);
 
                 setSelectedEvent(null);
@@ -239,10 +234,7 @@ const Schedule = ({ user }) => {
         const startOfWeek = new Date(today);
         const endOfWeek = new Date(today);
 
-        // Start of the week is today
         startOfWeek.setDate(today.getDate());
-
-        // End of the week is next Monday
         endOfWeek.setDate(today.getDate() + 7);
 
         return { startOfWeek, endOfWeek };
@@ -284,18 +276,41 @@ const Schedule = ({ user }) => {
 
     const eventClassNames = (eventInfo) => {
         switch (eventInfo.event.extendedProps.type) {
-            case 'fiksni':
-                return 'event-fiksni';
-            case 'plivajuci':
-                return 'event-plivajuci';
-            case 'trenerski':
-                return 'event-trenerski';
-            case 'vanredni':
-                return 'event-vanredni';
-            case 'neclanski':
-                return 'event-neclanski';
-            case 'klupski':
-                return 'event-klupski';
+            case 0:
+                return 'event-fiksni'; // Fiksni
+            case 1:
+                return 'event-plivajuci'; // Plivajući
+            case 2:
+                return 'event-trenerski'; // Trenerski
+            case 3:
+                return 'event-vanredni'; // Vanredni
+            case 4:
+                return 'event-neclanski'; // Neclanski
+            case 5:
+                return 'event-klupski'; // Klupski
+            case 6:
+                return 'event-moderator'; // Moderator
+            default:
+                return '';
+        }
+    };
+
+    const eventBackgoundCollor = (eventInfo) => {
+        switch (eventInfo.event.extendedProps.type) {
+            case 0:
+                return 'gray'; // Fiksni
+            case 1:
+                return 'yellow'; // Plivajući
+            case 2:
+                return 'green'; // Trenerski
+            case 3:
+                return 'red'; // Vanredni
+            case 4:
+                return 'blue'; // Neclanski
+            case 5:
+                return 'brown'; // Klupski
+            case 6:
+                return 'purple'; // Moderator
             default:
                 return '';
         }
@@ -316,10 +331,13 @@ const Schedule = ({ user }) => {
                 <div className="legend-color event-vanredni"></div> Vanredni
             </div>
             <div className="legend-item">
-                <div className="legend-color event-neclanski"></div> Nečlanski
+                <div className="legend-color event-neclanski"></div> Neclanski
             </div>
             <div className="legend-item">
                 <div className="legend-color event-klupski"></div> Klupski
+            </div>
+            <div className="legend-item">
+                <div className="legend-color event-moderator"></div> Moderator
             </div>
         </Box>
     );

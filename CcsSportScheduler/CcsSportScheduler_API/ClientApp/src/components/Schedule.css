@@ -30,6 +30,11 @@
     color: white;
 }
 
+.event-moderator {
+    background-color: purple;
+    color: white;
+}
+
 .legend-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; /* Tri elementa po redu */
@@ -52,9 +57,10 @@
 
 /* Stil za kalendar */
 .fc {
-    width: 333.33%; /* Postavi kalendar da zauzima 200% širine kako bi se smanjio zoom */
-    margin: 0 auto;
-    transform: scale(0.3); /* Smanji zoom na 50% */
+    width: 333.33%; /* Povećaj širinu kalendara za 1.42857 da bi se smanjio na 70% */
+    height: 150%;
+    margin: 0;
+    transform: scale(0.3); /* Smanji zoom na 70% */
     transform-origin: top left; /* Postavi tačku porekla na gornji levi ugao */
 }
 
@@ -116,7 +122,7 @@
     display: flex;
     justify-content: center; /* Horizontalno centriranje */
     overflow: auto; /* Omogući pomeranje u oba smera */
-    width: 100%;
+    width: 100vw;
     white-space: nowrap; /* Spreči prelom linije */
 }
 

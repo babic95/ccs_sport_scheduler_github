@@ -34,10 +34,34 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Add DbContext
-var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase");
-builder.Services.AddDbContext<SportSchedulerContext>(options =>
-    options.UseMySql(connectionString, ServerVersion.Parse("8.0.26-mysql")));
+//// Add DbContext
+//var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase");
+//builder.Services.AddDbContext<SportSchedulerContext>(options =>
+//    options.UseMySql(connectionString, ServerVersion.Parse("8.0.26-mysql")));
+
+builder.Services.AddDbContext<SportSchedulerContext>((DbContextOptionsBuilder opt) =>
+{
+    IConfigurationRoot configuration = new ConfigurationBuilder()
+    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+    .AddJsonFile("appsettings.json")
+    .Build();
+
+    var connectionString = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ConnectionStrings")) ?
+    configuration.GetConnectionString("WebApiDatabase") :
+    Environment.GetEnvironmentVariable("ConnectionStrings");
+
+    opt.UseMySql(connectionString,
+        ServerVersion.Parse("8.0.26-mysql"),
+        mySqlOptions =>
+        {
+            mySqlOptions.EnableRetryOnFailure(
+            maxRetryCount: 10,
+            maxRetryDelay: TimeSpan.FromSeconds(5),
+            errorNumbersToAdd: null);
+        }
+    );
+});
+
 
 builder.Services.AddHostedService<BackgroundRefresh>();
 
