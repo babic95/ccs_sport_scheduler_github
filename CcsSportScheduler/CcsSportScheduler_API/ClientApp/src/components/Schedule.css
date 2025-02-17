@@ -102,22 +102,22 @@
     font-size: 16px;
 }
 
-/* Stilovi za kolone i kontejnere */
-.fc-col-header-cell {
-    width: calc(18ch); /* Širina kolona za dane i datume */
-    min-width: calc(18ch); /* Minimalna širina kolona */
-}
+ /*Stilovi za kolone i kontejnere */
+/*.fc-col-header-cell {
+    width: calc(18ch);*/  /*Širina kolona za dane i datume */
+    /*min-width: calc(18ch);*/  /*Minimalna širina kolona */
+/*}
 
 .fc-timegrid-col {
-    width: calc(18.5ch); /* Širina kolone određena sa 18.5 karaktera */
-    min-width: calc(18.5ch); /* Minimalna širina kolone */
-}
+    width: calc(18.5ch);*/  /*Širina kolone određena sa 18.5 karaktera */
+    /*min-width: calc(18.5ch);*/ /* Minimalna širina kolone */
+/*}*/
 
 .zoom-container {
     display: flex;
     justify-content: center; /* Horizontalno centriranje */
     overflow: hidden; /* Spreči horizontalno pomeranje */
-    width: 100vw;
+    width: 100%;
     white-space: nowrap; /* Spreči prelom linije */
 }
 

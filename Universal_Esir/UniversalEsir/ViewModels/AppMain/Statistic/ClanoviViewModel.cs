@@ -22,6 +22,8 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         private Racun _selectedRacun;
 
         private ObservableCollection<RacunItem> _racunItems;
+
+        private Clan _currentClan;
         #endregion Fields
 
         #region Constructors
@@ -52,9 +54,19 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         #endregion Constructors
 
         #region Properties internal
+        internal Window CurrentWindow { get; set; }
         #endregion Properties internal
 
         #region Properties
+        public Clan CurrentClan
+        {
+            get { return _currentClan; }
+            set
+            {
+                _currentClan = value;
+                OnPropertyChange(nameof(CurrentClan));
+            }
+        }
         public ObservableCollection<Clan> Clanovi
         {
             get { return _clanovi; }

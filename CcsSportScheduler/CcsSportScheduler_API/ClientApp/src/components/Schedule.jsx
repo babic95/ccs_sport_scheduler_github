@@ -48,9 +48,15 @@ const Schedule = ({ user }) => {
             const calendarEl = calendarRef.current.el;
             const containerWidth = calendarEl.parentNode.offsetWidth;
 
+            // Dodajte marginu kontejnera
+            const containerMargin = 32; // Primer margine u pikselima, prilagodite prema potrebi
+            const containerWidthWithMargin = containerWidth - containerMargin;
+
             // Formula for scaling
-            const desiredWidth = 18.5 * 7; // 18.5ch * 7 days
-            const scale = containerWidth / desiredWidth;
+            const columnWidth = 18.5;
+            const daysToShow = 7;
+            const desiredWidth = columnWidth * daysToShow;
+            const scale = containerWidthWithMargin / desiredWidth;
 
             calendarEl.style.transform = `scale(${scale})`;
             calendarEl.style.transformOrigin = '0 0';
@@ -75,6 +81,8 @@ const Schedule = ({ user }) => {
                     endDate: endDate.toISOString()
                 }
             });
+
+            console.log(response.data);
 
             const zakazaniTermini = response.data.map((termin, i) => ({
                 id: termin.id ? termin.id : `slobodan-${cenaTermina.id}-${i}-${new Date(termin.startDateTime).getHours()}`,

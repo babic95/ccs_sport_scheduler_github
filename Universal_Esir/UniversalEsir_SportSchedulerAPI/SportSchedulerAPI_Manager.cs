@@ -20,9 +20,9 @@ namespace UniversalEsir_SportSchedulerAPI
     {
         #region Fields
 #if DEBUG
-        private string _url = @"https://localhost:7173";
+        private string _url = @"https://localhost:44465";
 #else
-        private string _url = @"";
+        private string _url = @"https://tksirmium.com";
 #endif
         #endregion Fields
 
@@ -65,7 +65,7 @@ namespace UniversalEsir_SportSchedulerAPI
                 try
                 {
                     // Ovdje obradite uspešan odgovor
-                    var responseData = await response.Content.ReadAsStringAsync();
+                    var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var users = JsonConvert.DeserializeObject<IEnumerable<UserResponse>>(responseData);
 
                     return users;
@@ -91,7 +91,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/Users";
 
-                var response = await client.PostAsJsonAsync(requestUrl, userRequest);
+                var response = await client.PostAsJsonAsync(requestUrl, userRequest).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -116,7 +116,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/Users/{userRequest.Id}";
 
-                var response = await client.PutAsJsonAsync(requestUrl, userRequest);
+                var response = await client.PutAsJsonAsync(requestUrl, userRequest).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -127,7 +127,7 @@ namespace UniversalEsir_SportSchedulerAPI
                 try
                 {
                     // Ovdje obradite uspešan odgovor
-                    var responseData = await response.Content.ReadAsStringAsync();
+                    var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var user = JsonConvert.DeserializeObject<UserResponse>(responseData);
 
                     return true;
@@ -156,7 +156,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/all/Uplatas/{idUser}";
 
-                var response = await client.GetAsync(requestUrl);
+                var response = await client.GetAsync(requestUrl).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -167,7 +167,7 @@ namespace UniversalEsir_SportSchedulerAPI
                 try
                 {
                     // Ovdje obradite uspešan odgovor
-                    var responseData = await response.Content.ReadAsStringAsync();
+                    var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var uplate = JsonConvert.DeserializeObject<IEnumerable<UplataResponse>>(responseData);
 
                     return uplate;
@@ -193,7 +193,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/Uplatas";
 
-                var response = await client.PostAsJsonAsync(requestUrl, uplataRequest);
+                var response = await client.PostAsJsonAsync(requestUrl, uplataRequest).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -221,7 +221,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/Obavestenjas";
 
-                var response = await client.PostAsJsonAsync(requestUrl, obavestenjeRequest);
+                var response = await client.PostAsJsonAsync(requestUrl, obavestenjeRequest).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -249,7 +249,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/Racuns/all/{idUser}";
 
-                var response = await client.GetAsync(requestUrl);
+                var response = await client.GetAsync(requestUrl).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {
@@ -260,7 +260,7 @@ namespace UniversalEsir_SportSchedulerAPI
                 try
                 {
                     // Ovdje obradite uspešan odgovor
-                    var responseData = await response.Content.ReadAsStringAsync();
+                    var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var racuni = JsonConvert.DeserializeObject<IEnumerable<RacunResponse>>(responseData);
 
                     return racuni;
@@ -286,7 +286,7 @@ namespace UniversalEsir_SportSchedulerAPI
 
                 string requestUrl = $"{_url}/api/Racuns";
 
-                var response = await client.PostAsJsonAsync(requestUrl, racunRequest);
+                var response = await client.PostAsJsonAsync(requestUrl, racunRequest).ConfigureAwait(false);
 
                 if (!response.IsSuccessStatusCode)
                 {

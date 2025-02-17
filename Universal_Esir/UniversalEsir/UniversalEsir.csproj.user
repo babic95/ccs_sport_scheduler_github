@@ -169,6 +169,9 @@
     <Compile Update="Views\AppMain\Statistic\RefaundView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AppMain\Statistic\TereniView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AppMain\Statistic\ViewCalculationView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -361,6 +364,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\Statistic\RefaundView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\Statistic\TereniView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\Statistic\ViewCalculationView.xaml">

@@ -111,7 +111,7 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 OnPropertyChange(nameof(Contact));
             }
         }
-        public string? Email
+        public string Email
         {
             get { return _email; }
             set

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using UniversalEsir.ViewModels.AppMain.Statistic;
 
 namespace UniversalEsir.Views.AppMain.AuxiliaryWindows.Statistic.Clanovi
 {
@@ -19,9 +20,11 @@ namespace UniversalEsir.Views.AppMain.AuxiliaryWindows.Statistic.Clanovi
     /// </summary>
     public partial class AddEditClanWindow : Window
     {
-        public AddEditClanWindow()
+        public AddEditClanWindow(ClanoviViewModel clanoviViewModel)
         {
             InitializeComponent();
+
+            DataContext = clanoviViewModel;
         }
     }
 }

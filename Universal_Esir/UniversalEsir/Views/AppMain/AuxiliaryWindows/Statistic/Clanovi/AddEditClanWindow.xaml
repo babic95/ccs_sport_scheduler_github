@@ -4,9 +4,184 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UniversalEsir.Views.AppMain.AuxiliaryWindows.Statistic.Clanovi"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:enums="clr-namespace:UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations;assembly=UniversalEsir"
+        xmlns:statistic="clr-namespace:UniversalEsir.ViewModels.AppMain.Statistic" d:DataContext="{d:DesignInstance Type=statistic:ClanoviViewModel}"
         mc:Ignorable="d"
-        Title="AddEditClanWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Izmena/dodavanje člana"
+        Height="750" Width="850"
+        Background="{StaticResource BrushLogo2}"
+        WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="typesClanovi" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:ClanEnumeration"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid HorizontalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Label Foreground="Black"
+               FontSize="38"
+               Content="Izmena/dodavanje člana:"
+               Grid.Row="0"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               Margin="0 10"/>
+
+        <ScrollViewer Grid.Row="1"
+                      HorizontalScrollBarVisibility="Auto"
+                      VerticalScrollBarVisibility="Auto">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="0 10 0 0">
+                    <StackPanel Orientation="Vertical">
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*Ime i prezime:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*JMBG:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*Username:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*Password:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*Broj telefona:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*E-mail:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="*Datum rođenja:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="Tip člana:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical">
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.FullName}"/>
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.Jmbg}"/>
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.Username}"/>
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.Password}"/>
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.Contact}"/>
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.Email}"/>
+                        <DatePicker Height="40"
+                                    Width="600"
+                                    Foreground="Black"
+                                    FontSize="24"
+                                    Margin="0 5"
+                                    SelectedDate="{Binding CurrentClan.Birthday}"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource typesClanovi}}"
+                                  SelectedItem="{Binding CurrentClan.Type}"
+                                  Height="40"
+                                  Width="600"
+                                  Foreground="Black"
+                                  FontSize="24"
+                                  HorizontalContentAlignment="Center"
+                                  VerticalContentAlignment="Center"
+                                  Margin="0 5"/>
+                    </StackPanel>
+                </StackPanel>
+                <Label Content="Obavezna su sva polja sa *"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Bottom"
+                       FontSize="20"
+                       FontWeight="Bold"/>
+            </StackPanel>
+        </ScrollViewer>
+
+        <Button Grid.Row="2"
+                Margin="0 10"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Style="{StaticResource RoundCorner}"
+                Height="50"
+                Width="190"
+                Command="{Binding SaveClanCommand}">
+            <StackPanel Orientation="Vertical">
+                <Label HorizontalAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       FontSize="24"
+                       Content="SAČUVAJ"
+                       FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>
