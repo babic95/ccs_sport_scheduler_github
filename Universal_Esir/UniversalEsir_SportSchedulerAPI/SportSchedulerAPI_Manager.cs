@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using UniversalEsir_Logging;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Obavestenja;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Racun;
+using UniversalEsir_SportSchedulerAPI.RequestModel.Teren;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Uplata;
 using UniversalEsir_SportSchedulerAPI.RequestModel.User;
 using UniversalEsir_SportSchedulerAPI.ResponseModel.Racuni;
+using UniversalEsir_SportSchedulerAPI.ResponseModel.Tereni;
 using UniversalEsir_SportSchedulerAPI.ResponseModel.Uplate;
 using UniversalEsir_SportSchedulerAPI.ResponseModel.User;
 
@@ -303,6 +305,72 @@ namespace UniversalEsir_SportSchedulerAPI
             }
         }
         #endregion Racuni
+
+        #region Tereni
+        public async Task<IEnumerable<TerenResponse>?> GetTerensAsync()
+        {
+            try
+            {
+                var handler = new HttpClientHandler(); handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+                HttpClient client = new HttpClient(handler);
+
+                string requestUrl = $"{_url}/api/Klubs/teren/1";
+
+                var response = await client.GetAsync(requestUrl).ConfigureAwait(false);
+                //var response = client.GetAsync(requestUrl).Result;
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Log.Error($"SportSchedulerAPI_Manager -> GetTerensAsync -> Status je: {(int)response.StatusCode} -> {response.StatusCode.ToString()} ");
+                    return null;
+                }
+
+                try
+                {
+                    // Ovdje obradite uspešan odgovor
+                    var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var terens = JsonConvert.DeserializeObject<IEnumerable<TerenResponse>>(responseData);
+
+                    return terens;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("SportSchedulerAPI_Manager -> GetTerensAsync -> Odgovor nije dobar: ", ex);
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error("SportSchedulerAPI_Manager -> GetTerensAsync -> Greska prilikom GetUsers: ", ex);
+                return null;
+            }
+        }
+        public async Task<bool> PostTerensAsync(TerenRequest terenRequest)
+        {
+            try
+            {
+                var handler = new HttpClientHandler(); handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+                HttpClient client = new HttpClient(handler);
+
+                string requestUrl = $"{_url}/api/Klubs/teren";
+
+                var response = await client.PostAsJsonAsync(requestUrl, terenRequest).ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Log.Error($"SportSchedulerAPI_Manager -> PostTerensAsync -> Status je: {(int)response.StatusCode} -> {response.StatusCode.ToString()} ");
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("SportSchedulerAPI_Manager -> PostTerensAsync -> Greska prilikom PostUser: ", ex);
+                return false;
+            }
+        }
+        #endregion Tereni
 
         #endregion Public methods
 

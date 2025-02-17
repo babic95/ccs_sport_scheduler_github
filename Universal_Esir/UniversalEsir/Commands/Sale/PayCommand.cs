@@ -33,6 +33,8 @@ using System.Windows;
 using System.Windows.Input;
 using DocumentFormat.OpenXml.Bibliography;
 using UniversalEsir.Views.AppMain.AuxiliaryWindows.Sale;
+using UniversalEsir_SportSchedulerAPI.RequestModel.Racun;
+using UniversalEsir_SportSchedulerAPI;
 
 namespace UniversalEsir.Commands.Sale
 {
@@ -95,43 +97,6 @@ namespace UniversalEsir.Commands.Sale
                     return;
                 }
 
-                if (!string.IsNullOrEmpty(paySaleViewModel.BuyerId))
-                {
-                    if(paySaleViewModel.CurrentBuyerIdElement.Id == 10)
-                    {
-                        if(paySaleViewModel.BuyerId.Length != 9)
-                        {
-                            MessageBox.Show("PIB mora da ima 9 cifara!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                    }
-                    else if (paySaleViewModel.CurrentBuyerIdElement.Id == 11)
-                    {
-                        if (paySaleViewModel.BuyerId.Length != 13)
-                        {
-                            MessageBox.Show("JMBG mora da ima 13 cifara!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                    }
-                    else if (paySaleViewModel.CurrentBuyerIdElement.Id == 12)
-                    {
-                        if (paySaleViewModel.BuyerId.Length != 15 ||
-                            !paySaleViewModel.BuyerId.Contains(":"))
-                        {
-                            MessageBox.Show("Morate uneti PIB:JBKJS budžetskog korisnika!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                    }
-                    else if (paySaleViewModel.CurrentBuyerIdElement.Id == 20)
-                    {
-                        if (paySaleViewModel.BuyerId.Length != 9)
-                        {
-                            MessageBox.Show("Broj lične karte mora da ima 9 cifara!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
-                        }
-                    }
-                }
-
                 //if (paySaleViewModel.SaleViewModel.InvoiceType == Enums.InvoiceTypeEnumeration.Avans &&
                 //    paySaleViewModel.Amount < 1m)
                 //{
@@ -147,50 +112,6 @@ namespace UniversalEsir.Commands.Sale
                 //    return;
                 //}
 
-                decimal popust = 0;
-                if (!string.IsNullOrEmpty(paySaleViewModel.Popust))
-                {
-                    try 
-                    {
-                        popust = Convert.ToDecimal(paySaleViewModel.Popust);
-                    }
-                    catch { }
-                }
-
-                if(popust > 0)
-                {
-                    paySaleViewModel.Amount = paySaleViewModel.TotalAmount = paySaleViewModel.TotalAmount * ((100 - popust) / 100);
-                }
-
-                decimal popustFiksan = 0;
-                if (!string.IsNullOrEmpty(paySaleViewModel.PopustFiksan))
-                {
-                    try
-                    {
-                        popustFiksan = Convert.ToDecimal(paySaleViewModel.PopustFiksan);
-                    }
-                    catch { }
-                }
-
-                if (popustFiksan > 0)
-                {
-                    paySaleViewModel.Amount = paySaleViewModel.TotalAmount = paySaleViewModel.TotalAmount - popustFiksan;
-                }
-
-                decimal gotovinaRucno = 0;
-                try
-                {
-                    gotovinaRucno = Convert.ToDecimal(paySaleViewModel.Gotovina);
-
-                    if (gotovinaRucno > 0 &&
-                        gotovinaRucno > paySaleViewModel.TotalAmount)
-                    {
-                        decimal rest = gotovinaRucno - paySaleViewModel.TotalAmount;
-                        MessageBox.Show($"KUSUR JE -> {rest}", "Kusur", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                }
-                catch { }
-
 
                 AddPayment(paySaleViewModel, paymentType);
 
@@ -203,7 +124,7 @@ namespace UniversalEsir.Commands.Sale
                     return;
                 }
 
-                await FinisedSale(paySaleViewModel, popust, popustFiksan);
+                await FinisedSale(paySaleViewModel, 0, 0);
 
                 paySaleViewModel.Window.Close();
             }
@@ -234,47 +155,7 @@ namespace UniversalEsir.Commands.Sale
             {
                 switch (paymentType)
                 {
-                    case "GotovinaRucno":
-                        try
-                        {
-                            decimal gotovinaRucno = Decimal.Round(Convert.ToDecimal(paySaleViewModel.Gotovina), 2);
-
-                            if (gotovinaRucno >= paySaleViewModel.TotalAmount)
-                            {
-
-                                var paymentGotovinaRucno = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Cash);
-                                if (paymentGotovinaRucno != null)
-                                {
-                                    paymentGotovinaRucno.Amount += gotovinaRucno;
-                                }
-                                else
-                                {
-                                    paySaleViewModel.Payment.Add(new Payment()
-                                    {
-                                        Amount = gotovinaRucno,
-                                        PaymentType = PaymentTypeEnumeration.Cash,
-                                    });
-                                }
-                                _payment.Add(new Payment()
-                                {
-                                    Amount = gotovinaRucno,
-                                    PaymentType = PaymentTypeEnumeration.Cash,
-                                });
-                            }
-                            else
-                            {
-                                MessageBox.Show("Gotovina mora biti veća ili jednaka ukupnom iznosu računa!",
-                                    "Greška",
-                                    MessageBoxButton.OK,
-                                    MessageBoxImage.Error);
-                            }
-                        }
-                        catch 
-                        {
-                            MessageBox.Show("PayCommand -> AddPayment -> Gotovina mora biti broj!", "Greška", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
-                        break;
-                    case "Cash":
+                    case "Platio":
                         var paymentCash = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Cash);
                         if (paymentCash != null)
                         {
@@ -294,7 +175,7 @@ namespace UniversalEsir.Commands.Sale
                             PaymentType = PaymentTypeEnumeration.Cash,
                         });
                         break;
-                    case "Card":
+                    case "Crta":
                         var paymentCard = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Card);
                         if (paymentCard != null)
                         {
@@ -1328,6 +1209,18 @@ namespace UniversalEsir.Commands.Sale
 
             int itemInvoiceId = 0;
             List<ItemInvoiceDB> itemsInvoiceDB = new List<ItemInvoiceDB>();
+
+            var placeno = invoiceRequset.Payment.FirstOrDefault(p => p.PaymentType == PaymentTypeEnumeration.Card);
+
+            RacunRequest racunRequest = new RacunRequest()
+            {
+                UserId = paySaleViewModel.CurrentClan.Id,
+                Date = DateTime.Now,
+                TotalAmount = total,
+                Placeno = placeno == null ? 0 : placeno.Amount,
+                Items = new List<ItemRacunRequest>()
+            };
+
             items.ForEach(item =>
             {
                 ItemDB? itemDB = sqliteDbContext.Items.Find(item.Id);
@@ -1344,6 +1237,15 @@ namespace UniversalEsir.Commands.Sale
                         ItemCode = item.Id
                         //Item = itemDB
                     });
+
+                    racunRequest.Items.Add(new ItemRacunRequest()
+                    {
+                        ItemsId = item.Id,
+                        Name = item.Name,
+                        Quantity = item.Quantity,
+                        TotalAmount = item.TotalAmount,
+                        UnitPrice = item.UnitPrice
+                    });
                 }
             });
 
@@ -1358,7 +1260,26 @@ namespace UniversalEsir.Commands.Sale
 
             TakingDownOrder(invoiceDB, paySaleViewModel, paySaleViewModel.SaleViewModel.TableId, itemsInvoice);
 
-            paySaleViewModel.SaleViewModel.LogoutCommand.Execute(true);
+            //dodaj skidanje sa stanja
+
+
+            try
+            {
+                SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+
+                if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
+                {
+                    MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            catch(Exception ex)
+            {
+                Log.Error("PayCommand -> Black -> GREŠKA PRILIKOM slanja racuna na server", ex);
+                MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
+
+            paySaleViewModel.SaleViewModel.Reset();
         }
         private async void Normal(InvoceRequestFileSystemWatcher invoiceRequset,
             PaySaleViewModel paySaleViewModel,

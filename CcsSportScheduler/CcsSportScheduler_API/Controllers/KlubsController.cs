@@ -150,7 +150,7 @@ namespace CcsSportScheduler_API.Controllers
 
         // Get: api/Klubs/Teren/2
         [Route("teren/{idKlub}")]
-        [HttpPost]
+        [HttpGet]
         public async Task<IActionResult> GetTeren(int idKlub)
         {
             var klubDB = await _context.Klubs.FindAsync(idKlub);

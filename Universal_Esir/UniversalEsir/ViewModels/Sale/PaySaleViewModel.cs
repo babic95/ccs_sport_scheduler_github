@@ -20,6 +20,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using UniversalEsir_Logging;
+using UniversalEsir.Models.AppMain.Statistic.Clanovi;
+using UniversalEsir_SportSchedulerAPI;
 
 namespace UniversalEsir.ViewModels.Sale
 {
@@ -61,6 +63,10 @@ namespace UniversalEsir.ViewModels.Sale
         private BuyerIdElement _currentBuyerIdElement;
         private ObservableCollection<Partner> _partners;
         private Partner _currentPartner;
+
+        private ObservableCollection<Clan> _clanovi;
+        private Clan _currentClan;
+
         private ObservableCollection<Driver> _allDrivers;
         private Driver _currentDriver;
 
@@ -128,6 +134,31 @@ namespace UniversalEsir.ViewModels.Sale
                 AllDrivers.Add(new Driver(driver, hasDelevery));
             });
             CurrentDriver = new Driver(); Gotovina = "0";
+
+            Clanovi = new ObservableCollection<Clan>();
+
+            SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+            var clanovi = sportSchedulerAPI_Manager.GetUsersAsync().Result;
+
+            if (clanovi == null)
+            {
+                MessageBox.Show("Greška prilikom učitavanja korisnika!",
+                    "Greška",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+
+                return;
+            }
+
+            if (clanovi.Any())
+            {
+                foreach (var clan in clanovi)
+                {
+                    Clanovi.Add(new Clan(clan));
+                }
+
+                CurrentClan = Clanovi.FirstOrDefault();
+            }
         }
         #endregion Constructors
 
@@ -314,7 +345,7 @@ namespace UniversalEsir.ViewModels.Sale
                 _currentPartner = value;
                 OnPropertyChange(nameof(CurrentPartner));
 
-                if(value != null)
+                if (value != null)
                 {
                     BuyerId = value.Pib;
                     BuyerName = value.Name;
@@ -328,6 +359,24 @@ namespace UniversalEsir.ViewModels.Sale
                         }
                     }
                 }
+            }
+        }
+        public ObservableCollection<Clan> Clanovi
+        {
+            get { return _clanovi; }
+            set
+            {
+                _clanovi = value;
+                OnPropertyChange(nameof(Clanovi));
+            }
+        }
+        public Clan CurrentClan
+        {
+            get { return _currentClan; }
+            set
+            {
+                _currentClan = value;
+                OnPropertyChange(nameof(CurrentClan));
             }
         }
         public ObservableCollection<BuyerIdElement> BuyerIdElements

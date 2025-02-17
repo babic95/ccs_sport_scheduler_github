@@ -43,6 +43,9 @@
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddEditClanWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewUplataWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Driver\AllIsporukeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -71,6 +74,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Otpremnice\ItemInOtpremnicaWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Tereni\AddNewTerenWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Views\AppMain\Statistic\ClanoviView.xaml.cs">
@@ -240,6 +246,9 @@
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddEditClanWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewUplataWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Driver\AllIsporukeWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -268,6 +277,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Otpremnice\ItemInOtpremnicaWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Tereni\AddNewTerenWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\Statistic\ClanoviView.xaml">

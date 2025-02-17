@@ -14,6 +14,8 @@
 
         <Menu Grid.Row="0">
             <MenuItem Header="Dodaj">
+                <MenuItem Header="Dodaj teren"
+                          Command="{Binding AddNewTerenCommand}"/>
                 <MenuItem Header="Dodaj člana"
                           Command="{Binding AddNewClanCommand}"/>
             </MenuItem>

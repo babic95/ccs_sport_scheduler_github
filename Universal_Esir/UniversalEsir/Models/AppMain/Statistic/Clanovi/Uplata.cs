@@ -13,7 +13,6 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
         private string _id;
         private int _userId;
         private decimal _totalAmount;
-        private decimal _razduzeno;
         private DateTime _date;
         private UplataEnumeration _typeUplata;
 
@@ -23,7 +22,6 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             Id = uplata.Id;
             UserId = uplata.UserId;
             TotalAmount = uplata.TotalAmount;
-            Razduzeno = uplata.Razduzeno;
             Date = uplata.Date;
             TypeUplata = (UplataEnumeration)uplata.TypeUplata;
         }
@@ -53,15 +51,6 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             {
                 _totalAmount = value;
                 OnPropertyChange(nameof(TotalAmount));
-            }
-        }
-        public decimal Razduzeno
-        {
-            get { return _razduzeno; }
-            set
-            {
-                _razduzeno = value;
-                OnPropertyChange(nameof(Razduzeno));
             }
         }
         public DateTime Date

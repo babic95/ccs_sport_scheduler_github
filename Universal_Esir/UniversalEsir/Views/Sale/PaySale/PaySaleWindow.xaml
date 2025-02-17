@@ -207,13 +207,13 @@
                                                HorizontalContentAlignment="Right"
                                                VerticalContentAlignment="Center"
                                                Margin="0 0 0 5"/>-->
-                                        <Label Content="Firme partneri:"
+                                        <Label Content="Član:"
                                                FontSize="20"
                                                Height="40"
                                                HorizontalContentAlignment="Right"
                                                VerticalContentAlignment="Center"
                                                Margin="0 0 0 5"/>
-                                        <Label Content="Tip dokumenta kupca:"
+                                        <!--<Label Content="Tip dokumenta kupca:"
                                                FontSize="20"
                                                Height="40"
                                                HorizontalContentAlignment="Right"
@@ -250,7 +250,7 @@
                                                Height="40"
                                                HorizontalContentAlignment="Right"
                                                VerticalContentAlignment="Center"
-                                               Margin="0 0 0 5"/>
+                                               Margin="0 0 0 5"/>-->
                                         <!--<Label Content="Zatvori avans:"
                                                FontSize="20"
                                                Height="40"
@@ -339,8 +339,8 @@
                                                  MinWidth="250"
                                                  Margin="0 0 0 5"
                                                  Text="{Binding Porudzbenica}"/>-->
-                                        <ComboBox ItemsSource="{Binding Partners}"
-                                                  SelectedItem="{Binding CurrentPartner}"
+                                        <ComboBox ItemsSource="{Binding Clanovi}"
+                                                  SelectedItem="{Binding CurrentClan}"
                                                   DisplayMemberPath="Name"
                                                   FontSize="20"
                                                   Height="40"
@@ -348,7 +348,7 @@
                                                   VerticalContentAlignment="Center"
                                                   MinWidth="250"
                                                   Margin="0 0 0 5"/>
-                                        <ComboBox ItemsSource="{Binding BuyerIdElements}"
+                                        <!--<ComboBox ItemsSource="{Binding BuyerIdElements}"
                                                   SelectedItem="{Binding CurrentBuyerIdElement}"
                                                   DisplayMemberPath="Description"
                                                   FontSize="20"
@@ -419,7 +419,7 @@
                                                  VerticalContentAlignment="Center"
                                                  MinWidth="250"
                                                  Margin="0 0 0 5"
-                                                 Text="{Binding PopustFiksan}"/>
+                                                 Text="{Binding PopustFiksan}"/>-->
 
                                         <!--<ToggleButton Width="80"
                                           Height="40"
@@ -814,26 +814,26 @@
                                 </Border>-->
                                 <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Center"
-                                            Margin="0 10">
-                                    <Button Content="Gotovina"
+                                            Margin="0 150">
+                                    <Button Content="Platio"
                                             FontSize="20"
                                             Height="60"
                                             Width="150"
                                             Command="{Binding PayCommand}"
-                                            CommandParameter="Cash"
+                                            CommandParameter="Platio"
                                             Style="{StaticResource RoundCorner}"
                                             Margin="0 0 5 0"
                                             Visibility="{Binding VisibilityBlack}"/>
-                                    <Button Content="Kartica"
+                                    <Button Content="Crta"
                                             FontSize="20"
                                             Height="60"
                                             Width="150"
                                             Command="{Binding PayCommand}"
-                                            CommandParameter="Card"
+                                            CommandParameter="Crta"
                                             Style="{StaticResource RoundCorner}"
-                                            Margin="0 0 5 0"
+                                            Margin="50 0 5 0"
                                             Visibility="{Binding VisibilityBlack}"/>
-                                    <Button Content="Virman"
+                                    <!--<Button Content="Virman"
                                             FontSize="20"
                                             Height="60"
                                             Width="150"
@@ -841,7 +841,7 @@
                                             CommandParameter="WireTransfer"
                                             Style="{StaticResource RoundCorner}"
                                             Margin="0 0 0 0"
-                                            Visibility="{Binding VisibilityBlack}"/>
+                                            Visibility="{Binding VisibilityBlack}"/>-->
                                     <!--<Button Content="Ponuda"
                                             FontSize="20"
                                             Height="60"
@@ -874,7 +874,7 @@
                                             Margin="0 0 0 0"
                                             Visibility="{Binding VisibilityBlack}"/>-->
                                 </StackPanel>
-                                <StackPanel Orientation="Horizontal">
+                                <!--<StackPanel Orientation="Horizontal">
                                     <Label Content="Gotovina:"
                                            FontSize="20"
                                            Height="40"
@@ -965,7 +965,7 @@
                                                     CommandParameter=","/>
 
                                         </StackPanel>
-                                        <!--<StackPanel HorizontalAlignment="Center"
+                                        --><!--<StackPanel HorizontalAlignment="Center"
                 Orientation="Horizontal">
 
         <Button Width="105" 
@@ -979,7 +979,7 @@
                 Command="{Binding ClickOnGotovinaButtonCommand}"
                 CommandParameter="-"/>
 
-    </StackPanel>-->
+    </StackPanel>--><!--
                                         
                                     </StackPanel>
                                     <Button Content="Naplati"
@@ -991,7 +991,7 @@
                                             Style="{StaticResource RoundCorner}"
                                             Margin="0 0 5 0"
                                             Visibility="{Binding VisibilityBlack}"/>
-                                </StackPanel>
+                                </StackPanel>-->
                                 
                             </StackPanel>
                             

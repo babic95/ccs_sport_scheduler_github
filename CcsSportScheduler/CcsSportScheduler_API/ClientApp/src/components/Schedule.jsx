@@ -25,7 +25,8 @@ const CustomBox = styled(Box)({
 
 const Schedule = ({ user }) => {
     const calendarRef = useRef(null);
-    const [terenId, setTerenId] = useState(1);
+    const [terenId, setTerenId] = useState();
+    const [tereni, setTereni] = useState([]);
     const [termini, setTermini] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [showModal, setShowModal] = useState(false);
@@ -72,6 +73,26 @@ const Schedule = ({ user }) => {
             window.removeEventListener('resize', handleWindowResize);
         };
     }, [calendarRef]);
+
+    useEffect(() => {
+        const fetchTereni = async () => {
+            try {
+                const response = await axios.get('/api/Klubs/teren/1');
+
+                console.log(response.data);
+
+                setTereni(response.data);
+
+                if (response.data.length > 0) {
+                    setTerenId(response.data[0].id);  // Postavite prvi element kao inicijalni teren
+                }
+            } catch (error) {
+                console.error('Error fetching tereni:', error);
+            }
+        };
+
+        fetchTereni();
+    }, []);
 
     const fetchTermini = async (startDate, endDate) => {
         try {
@@ -378,8 +399,11 @@ const Schedule = ({ user }) => {
                     label="Izaberi Teren"
                     sx={{ color: '#000000' }}
                 >
-                    <MenuItem value={1}>Teren 1</MenuItem>
-                    <MenuItem value={2}>Teren 2</MenuItem>
+                    {tereni.map((teren) => (
+                        <MenuItem key={teren.id} value={teren.id}>
+                            {teren.name}
+                        </MenuItem>
+                    ))}
                 </Select>
             </FormControl>
 

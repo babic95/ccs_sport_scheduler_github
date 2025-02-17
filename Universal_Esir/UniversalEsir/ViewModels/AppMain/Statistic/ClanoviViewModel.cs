@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversalEsir.Commands.AppMain.Clanovi;
+using UniversalEsir.Commands.AppMain.Tereni;
 using UniversalEsir.Models.AppMain.Statistic.Clanovi;
+using UniversalEsir.Models.AppMain.Statistic.Tereni;
 using UniversalEsir_SportSchedulerAPI;
 
 namespace UniversalEsir.ViewModels.AppMain.Statistic
@@ -24,6 +26,8 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         private ObservableCollection<RacunItem> _racunItems;
 
         private Clan _currentClan;
+        private Teren _currentTeren;
+        private Uplata _currentUplata;
         #endregion Fields
 
         #region Constructors
@@ -65,6 +69,24 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
             {
                 _currentClan = value;
                 OnPropertyChange(nameof(CurrentClan));
+            }
+        }
+        public Teren CurrentTeren
+        {
+            get { return _currentTeren; }
+            set
+            {
+                _currentTeren = value;
+                OnPropertyChange(nameof(CurrentTeren));
+            }
+        }
+        public Uplata CurrentUplata
+        {
+            get { return _currentUplata; }
+            set
+            {
+                _currentUplata = value;
+                OnPropertyChange(nameof(CurrentUplata));
             }
         }
         public ObservableCollection<Clan> Clanovi
@@ -119,6 +141,10 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         public ICommand OpenUserCommand => new OpenUserCommand(this);
         public ICommand AddNewClanCommand => new AddNewClanCommand(this);
         public ICommand SaveClanCommand => new SaveClanCommand(this);
+        public ICommand AddNewTerenCommand => new AddNewTerenCommand(this);
+        public ICommand SaveTerenCommand => new SaveTerenCommand(this);
+        public ICommand AddNewUplataCommand => new AddNewUplataCommand(this);
+        public ICommand SaveUplataCommand => new SaveUplataCommand(this);
         #endregion Commands
 
         #region Public methods
