@@ -89,8 +89,9 @@ const Profile = ({ user }) => {
         try {
             if (selectedFile) {
                 const formData = new FormData();
-                formData.append('file', selectedFile);
-                const uploadResponse = await axios.post(`/api/users/uploadProfileImage/${user.id}`, formData, {
+                formData.append('image', selectedFile);
+                formData.append('userId', user.id);
+                const uploadResponse = await axios.post('/api/users/uploadProfileImage', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

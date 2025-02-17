@@ -220,19 +220,19 @@ namespace CcsSportScheduler_API.Controllers
                 });
             }
         }
-        // POST: api/Users/uploadProfileImage/5
-        [HttpPost("uploadProfileImage/{userId}")]
-        public async Task<IActionResult> UploadProfileImage(int userId, [FromForm] IFormFile file)
+        // POST: api/Users/uploadProfileImage
+        [HttpPost("uploadProfileImage")]
+        public async Task<IActionResult> UploadProfileImage([FromForm] UploadImageRequest request)
         {
             try
             {
-                var user = await _context.Users.FindAsync(userId);
+                var user = await _context.Users.FindAsync(request.UserId);
                 if (user == null)
                 {
                     return NotFound(new { Message = "User not found" });
                 }
 
-                if (file == null || file.Length == 0)
+                if (request.Image == null || request.Image.Length == 0)
                 {
                     return BadRequest(new { Message = "Invalid file" });
                 }
@@ -258,12 +258,12 @@ namespace CcsSportScheduler_API.Controllers
                     await _s3Client.PutBucketAsync(bucketRequest);
                 }
 
-                string key = $"{_imageFolderName}/{user.Username}_{file.FileName}";
+                string key = $"{_imageFolderName}/{user.Username}_{request.Image.FileName}";
                 var objectRequest = new PutObjectRequest()
                 {
                     BucketName = _bucketName,
                     Key = key,
-                    InputStream = file.OpenReadStream(),
+                    InputStream = request.Image.OpenReadStream(),
                     CannedACL = S3CannedACL.PublicRead // Postavljanje javnog pristupa
                 };
                 var response = await _s3Client.PutObjectAsync(objectRequest);
