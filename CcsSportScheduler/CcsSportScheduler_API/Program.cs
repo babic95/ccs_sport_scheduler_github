@@ -46,6 +46,9 @@ builder.Services.AddDbContext<SportSchedulerContext>((DbContextOptionsBuilder op
     .AddJsonFile("appsettings.json")
     .Build();
 
+    Console.WriteLine($"ovo je iz Environment.GetEnvironmentVariable ConnectionStrings={Environment.GetEnvironmentVariable("ConnectionStrings")}");
+    Console.WriteLine($"ovo je iz configuration.GetConnectionString ConnectionStrings={configuration.GetConnectionString("WebApiDatabase")}");
+
     var connectionString = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ConnectionStrings")) ?
     configuration.GetConnectionString("WebApiDatabase") :
     Environment.GetEnvironmentVariable("ConnectionStrings");

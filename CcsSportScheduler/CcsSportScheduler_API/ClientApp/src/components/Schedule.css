@@ -1,6 +1,4 @@
-﻿/* Schedule.css */
-
-.event-fiksni {
+﻿.event-fiksni {
     background-color: gray;
     color: white;
 }
@@ -57,10 +55,7 @@
 
 /* Stil za kalendar */
 .fc {
-    width: 333.33%; /* Povećaj širinu kalendara za 1.42857 da bi se smanjio na 70% */
-    height: 150%;
     margin: 0;
-    transform: scale(0.3); /* Smanji zoom na 70% */
     transform-origin: top left; /* Postavi tačku porekla na gornji levi ugao */
 }
 
@@ -114,14 +109,14 @@
 }
 
 .fc-timegrid-col {
-    width: calc(18.5ch); /* Širina kolone određena sa 22.5 karaktera */
+    width: calc(18.5ch); /* Širina kolone određena sa 18.5 karaktera */
     min-width: calc(18.5ch); /* Minimalna širina kolone */
 }
 
 .zoom-container {
     display: flex;
     justify-content: center; /* Horizontalno centriranje */
-    overflow: auto; /* Omogući pomeranje u oba smera */
+    overflow: hidden; /* Spreči horizontalno pomeranje */
     width: 100vw;
     white-space: nowrap; /* Spreči prelom linije */
 }
@@ -129,10 +124,15 @@
 .zoom-content {
     display: inline-block; /* Omogući horizontalno pomeranje sadržaja */
     width: 100%; /* Širina sadržaja je 100% */
+    transform-origin: top left; /* Postavi tačku porekla na gornji levi ugao */
 }
 
 .centerContainer {
     display: flex;
     justify-content: center; /* Horizontalno centriranje */
     align-items: center; /* Vertikalno centriranje */
+}
+
+.notifications-container {
+    margin-top: 0px; /* Smanji razmak između kalendara i notifikacija */
 }

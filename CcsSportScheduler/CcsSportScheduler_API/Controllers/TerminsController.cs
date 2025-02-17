@@ -80,8 +80,12 @@ namespace CcsSportScheduler_API.Controllers
 
                 if (startDate.HasValue && endDate.HasValue)
                 {
-                    DateTime start = new DateTime(startDate.Value.Year, startDate.Value.Month, startDate.Value.Day, 7, 0, 0);
-                    DateTime end = new DateTime(endDate.Value.Year, endDate.Value.Month, endDate.Value.Day, 22, 0, 0);
+
+                    DateTime start = TimeZoneInfo.ConvertTime(new DateTime(startDate.Value.Year, startDate.Value.Month, startDate.Value.Day, 7, 0, 0),
+                        TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
+
+
+                    DateTime end = start.AddDays(6).AddHours(16);
 
                     // Filtriranje termina u zadanom periodu
                     var termini = _context.Termins.Where(t => t.TerenId == idTeren &&
@@ -91,7 +95,7 @@ namespace CcsSportScheduler_API.Controllers
                     var allTermini = new List<Termin>();
                     for (var date = start; date <= end; date = date.AddHours(1))
                     {
-                        if (date.Hour < 7 || date.Hour >= 23)
+                        if (date.Hour < 7 || date.Hour > 22)
                         {
                             continue; // Preskoči termine van intervala 7-22h
                         }

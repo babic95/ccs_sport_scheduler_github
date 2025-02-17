@@ -46,9 +46,12 @@ const Schedule = ({ user }) => {
     const handleWindowResize = () => {
         if (calendarRef.current && calendarRef.current.el) {
             const calendarEl = calendarRef.current.el;
-            const calendarWidth = calendarEl.scrollWidth || calendarEl.offsetWidth; // Proveri oba svojstva
             const containerWidth = calendarEl.parentNode.offsetWidth;
-            const scale = Math.min(1, containerWidth / calendarWidth);
+
+            // Formula for scaling
+            const desiredWidth = 18.5 * 7; // 18.5ch * 7 days
+            const scale = containerWidth / desiredWidth;
+
             calendarEl.style.transform = `scale(${scale})`;
             calendarEl.style.transformOrigin = '0 0';
         }
@@ -72,8 +75,6 @@ const Schedule = ({ user }) => {
                     endDate: endDate.toISOString()
                 }
             });
-
-            console.log(response.data);
 
             const zakazaniTermini = response.data.map((termin, i) => ({
                 id: termin.id ? termin.id : `slobodan-${cenaTermina.id}-${i}-${new Date(termin.startDateTime).getHours()}`,
@@ -423,7 +424,13 @@ const Schedule = ({ user }) => {
                 </div>
             </div>
 
-            {notifications.length !== 0 ? (<Notifications notifications={notifications} handleNotificationClick={handleNotificationClick} />) : null}
+            {notifications.length !== 0 ? (
+                <Notifications
+                    notifications={notifications}
+                    handleNotificationClick={handleNotificationClick}
+                    style={{ marginTop: '10px' }}
+                />
+            ) : null}
 
             {selectedNotification && (
                 <CustomModal
