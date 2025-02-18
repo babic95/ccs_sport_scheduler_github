@@ -197,8 +197,7 @@
                                         VerticalAlignment="Stretch"
                                         Margin="10">
                                 <StackPanel Orientation="Horizontal"
-                                            HorizontalAlignment="Center"
-                                            Visibility="{Binding VisibilityBlack}">
+                                            HorizontalAlignment="Center">
 
                                     <StackPanel Orientation="Vertical">
                                         <!--<Label Content="Porudzbenica:"
@@ -341,7 +340,7 @@
                                                  Text="{Binding Porudzbenica}"/>-->
                                         <ComboBox ItemsSource="{Binding Clanovi}"
                                                   SelectedItem="{Binding CurrentClan}"
-                                                  DisplayMemberPath="Name"
+                                                  DisplayMemberPath="FullName"
                                                   FontSize="20"
                                                   Height="40"
                                                   HorizontalContentAlignment="Center"
@@ -822,8 +821,7 @@
                                             Command="{Binding PayCommand}"
                                             CommandParameter="Platio"
                                             Style="{StaticResource RoundCorner}"
-                                            Margin="0 0 5 0"
-                                            Visibility="{Binding VisibilityBlack}"/>
+                                            Margin="0 0 5 0"/>
                                     <Button Content="Crta"
                                             FontSize="20"
                                             Height="60"
@@ -831,8 +829,7 @@
                                             Command="{Binding PayCommand}"
                                             CommandParameter="Crta"
                                             Style="{StaticResource RoundCorner}"
-                                            Margin="50 0 5 0"
-                                            Visibility="{Binding VisibilityBlack}"/>
+                                            Margin="50 0 5 0"/>
                                     <!--<Button Content="Virman"
                                             FontSize="20"
                                             Height="60"

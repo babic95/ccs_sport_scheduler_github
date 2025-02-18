@@ -96,12 +96,7 @@ const Schedule = ({ user }) => {
 
     const fetchTermini = async (startDate, endDate) => {
         try {
-            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${user.id}`, {
-                params: {
-                    startDate: startDate.toISOString(),
-                    endDate: endDate.toISOString()
-                }
-            });
+            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${user.id}`);
 
             console.log(response.data);
 

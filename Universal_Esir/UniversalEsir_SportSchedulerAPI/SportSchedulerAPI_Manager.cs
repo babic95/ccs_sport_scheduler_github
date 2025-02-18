@@ -22,7 +22,8 @@ namespace UniversalEsir_SportSchedulerAPI
     {
         #region Fields
 #if DEBUG
-        private string _url = @"https://localhost:44465";
+        private string _url = @"https://tksirmium.com";
+        //private string _url = @"https://localhost:44465";
 #else
         private string _url = @"https://tksirmium.com";
 #endif

@@ -78,60 +78,60 @@ namespace CcsSportScheduler_API.Controllers
                 var cenaTermina = await responseCenaTermina.Content.ReadFromJsonAsync<NaplataTermina>();
 
 
-                if (startDate.HasValue && endDate.HasValue)
+                if (!startDate.HasValue)
                 {
-
-                    DateTime start = TimeZoneInfo.ConvertTime(new DateTime(startDate.Value.Year, startDate.Value.Month, startDate.Value.Day, 7, 0, 0),
+                    startDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow,
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
+                }
+                DateTime start = TimeZoneInfo.ConvertTime(new DateTime(startDate.Value.Year, startDate.Value.Month, startDate.Value.Day, 7, 0, 0),
+                    TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
 
 
-                    DateTime end = start.AddDays(6).AddHours(16);
+                DateTime end = start.AddDays(6).AddHours(16);
 
-                    // Filtriranje termina u zadanom periodu
-                    var termini = _context.Termins.Where(t => t.TerenId == idTeren &&
-                    t.StartDateTime >= start && t.StartDateTime <= end).Include(t => t.User).ToList();
+                // Filtriranje termina u zadanom periodu
+                var termini = _context.Termins.Where(t => t.TerenId == idTeren &&
+                t.StartDateTime >= start && t.StartDateTime <= end).Include(t => t.User).ToList();
 
-                    // Generisanje svih mogućih termina u zadanom periodu
-                    var allTermini = new List<Termin>();
-                    for (var date = start; date <= end; date = date.AddHours(1))
+                // Generisanje svih mogućih termina u zadanom periodu
+                var allTermini = new List<Termin>();
+                for (var date = start; date <= end; date = date.AddHours(1))
+                {
+                    if (date.Hour < 7 || date.Hour > 22)
                     {
-                        if (date.Hour < 7 || date.Hour > 22)
-                        {
-                            continue; // Preskoči termine van intervala 7-22h
-                        }
-
-                        // Proveravamo da li je termin već zakazan
-                        var existingTermin = termini.FirstOrDefault(t => t.StartDateTime == date);
-                        if (existingTermin == null)
-                        {
-                            // Ako termin nije zakazan, dodajemo nezakazani termin sa odgovarajućom cenom
-                            var dayOfWeek = date.DayOfWeek;
-                            var isWeekend = (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday);
-
-                            allTermini.Add(new Termin
-                            {
-                                StartDateTime = date,
-                                EndDateTime = date.AddHours(1),
-                                TerenId = idTeren,
-                                User = null, // Oznaka da je termin nezakazan
-                                Price = cenaTermina == null ? 600 : cenaTermina.Price // Postavljanje cene za nezakazane termine
-                            });
-                        }
-                        else
-                        {
-                            // Ako je termin zakazan, dodajemo ga
-                            allTermini.Add(existingTermin);
-                        }
+                        continue; // Preskoči termine van intervala 7-22h
                     }
 
-                    // Uklonite duplirane termine
-                    termini = allTermini.Distinct().ToList();
+                    // Proveravamo da li je termin već zakazan
+                    var existingTermin = termini.FirstOrDefault(t => t.StartDateTime == date);
+                    if (existingTermin == null)
+                    {
+                        // Ako termin nije zakazan, dodajemo nezakazani termin sa odgovarajućom cenom
+                        var dayOfWeek = date.DayOfWeek;
+                        var isWeekend = (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday);
 
-                    // Sada `termini` sadrži sve termine, zakazane i nezakazane
-
-                    return Ok(termini);
+                        allTermini.Add(new Termin
+                        {
+                            StartDateTime = date,
+                            EndDateTime = date.AddHours(1),
+                            TerenId = idTeren,
+                            User = null, // Oznaka da je termin nezakazan
+                            Price = cenaTermina == null ? 600 : cenaTermina.Price // Postavljanje cene za nezakazane termine
+                        });
+                    }
+                    else
+                    {
+                        // Ako je termin zakazan, dodajemo ga
+                        allTermini.Add(existingTermin);
+                    }
                 }
-                return BadRequest("Nema vremenski interval");
+
+                // Uklonite duplirane termine
+                termini = allTermini.Distinct().ToList();
+
+                // Sada `termini` sadrži sve termine, zakazane i nezakazane
+
+                return Ok(termini);
             }
             catch (Exception ex)
             {

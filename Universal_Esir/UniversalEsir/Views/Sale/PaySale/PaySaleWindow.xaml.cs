@@ -36,10 +36,10 @@ namespace UniversalEsir.Views.Sale.PaySale
         //    Cash.SelectAll();
         //}
 
-        private void BuyerId_GotFocus(object sender, RoutedEventArgs e)
-        {
-            buyerId.SelectAll();
-        }
+        //private void BuyerId_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    buyerId.SelectAll();
+        //}
 
 
         //private void Card_GotFocus(object sender, RoutedEventArgs e)
