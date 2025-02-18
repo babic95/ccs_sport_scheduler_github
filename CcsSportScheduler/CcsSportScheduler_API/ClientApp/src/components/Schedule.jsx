@@ -169,7 +169,9 @@ const Schedule = ({ user }) => {
     };
 
     useEffect(() => {
-        fetchTermini(startOfWeek, endOfWeek);
+        if (terenId !== null) {
+            fetchTermini(startOfWeek, endOfWeek);
+        }
         fetchUnreadNotifications();
         fetchFinancialData();
     }, [terenId]);
