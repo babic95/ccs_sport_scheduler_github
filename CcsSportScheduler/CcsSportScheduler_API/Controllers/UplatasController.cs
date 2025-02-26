@@ -123,6 +123,9 @@ namespace CcsSportScheduler_API.Controllers
                 var racuni = _context.Racuns.Where(r => r.UserId == uplataRequest.UserId &&
                 r.Placeno != r.TotalAmount);
 
+                var zaduzenja = _context.Zaduzenja.Where(z => z.UserId == uplataRequest.UserId &&
+                z.Placeno != z.TotalAmount);
+
                 DateTime odDatuma = TimeZoneInfo.ConvertTime(DateTime.Now,
                     TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
                 DateTime doDatuma = TimeZoneInfo.ConvertTime(DateTime.Now,
@@ -145,9 +148,25 @@ namespace CcsSportScheduler_API.Controllers
                     {
                         odDatuma = minDateRacuni;
                     }
-                    if(maxDateRacuni > doDatuma)
+                    if (maxDateRacuni > doDatuma)
                     {
                         doDatuma = maxDateRacuni;
+                    }
+                }
+
+                if (zaduzenja != null &&
+                    zaduzenja.Any())
+                {
+                    DateTime minDateZaduzenja = await zaduzenja.MinAsync(r => r.Date);
+                    DateTime maxDateZaduzenja = await zaduzenja.MaxAsync(r => r.Date);
+
+                    if (minDateZaduzenja < odDatuma)
+                    {
+                        odDatuma = minDateZaduzenja;
+                    }
+                    if (maxDateZaduzenja > doDatuma)
+                    {
+                        doDatuma = maxDateZaduzenja;
                     }
                 }
 
@@ -204,7 +223,6 @@ namespace CcsSportScheduler_API.Controllers
 
                     if (uplataTotal > 0)
                     {
-
                         if (racuni != null &&
                             racuni.Any())
                         {
@@ -245,6 +263,57 @@ namespace CcsSportScheduler_API.Controllers
                                         }
 
                                         _context.Racuns.Update(r);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    if (uplataTotal > 0)
+                    {
+                        if (zaduzenja != null &&
+                            zaduzenja.Any())
+                        {
+                            var zaduzenjaDate = zaduzenja.Where(z => z.Date.Date == date.Date);
+
+                            if (zaduzenjaDate != null &&
+                                zaduzenjaDate.Any())
+                            {
+                                foreach (var z in zaduzenjaDate.OrderBy(o => o.Date))
+                                {
+                                    if (uplataTotal > 0)
+                                    {
+                                        decimal zaUplatu = z.TotalAmount - z.Placeno;
+
+                                        if (zaUplatu >= uplataTotal)
+                                        {
+                                            z.Placeno += uplataTotal;
+                                            uplata.Razduzeno += uplataTotal;
+
+                                            if (uplata.TypeUplata == (int)UplataEnumeration.Poklon)
+                                            {
+                                                z.Otpis += uplataTotal;
+                                            }
+
+                                            uplataTotal = 0;
+                                        }
+                                        else
+                                        {
+                                            z.Placeno += zaUplatu;
+                                            uplataTotal -= zaUplatu;
+                                            uplata.Razduzeno += zaUplatu;
+
+                                            if (uplata.TypeUplata == (int)UplataEnumeration.Poklon)
+                                            {
+                                                z.Otpis += zaUplatu;
+                                            }
+                                        }
+
+                                        _context.Zaduzenja.Update(z);
                                     }
                                     else
                                     {

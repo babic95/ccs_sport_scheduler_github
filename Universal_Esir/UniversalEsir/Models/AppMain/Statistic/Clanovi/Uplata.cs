@@ -15,6 +15,8 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
         private decimal _totalAmount;
         private DateTime _date;
         private UplataEnumeration _typeUplata;
+        private string _description;
+        private string _totalAmountString;
 
         public Uplata() { }
         public Uplata(UplataResponse uplata)
@@ -24,6 +26,7 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             TotalAmount = uplata.TotalAmount;
             Date = uplata.Date;
             TypeUplata = (UplataEnumeration)uplata.TypeUplata;
+            Description = uplata.Description;
         }
 
         public string Id
@@ -69,6 +72,34 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             {
                 _typeUplata = value;
                 OnPropertyChange(nameof(TypeUplata));
+            }
+        }
+        public string Description
+        {
+            get { return _description; }
+            set
+            {
+                _description = value;
+                OnPropertyChange(nameof(Description));
+            }
+        }
+        public string TotalAmountString
+        {
+            get { return _totalAmountString; }
+            set
+            {
+                if(value.Contains(","))
+                {
+                    value = value.Replace(",", ".");
+                }
+
+                _totalAmountString = value;
+                OnPropertyChange(nameof(TotalAmountString));
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    TotalAmount = Convert.ToDecimal(value);
+                }
             }
         }
     }

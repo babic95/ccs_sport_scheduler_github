@@ -10,7 +10,7 @@ namespace UniversalEsir_Common.Enums
     {
         Other = 0,
         Cash = 1,
-        Card = 2,
+        Crta = 2,
         Check = 3,
         WireTransfer = 4,
         Voucher = 5,

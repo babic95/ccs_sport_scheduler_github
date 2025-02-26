@@ -74,7 +74,7 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
                         case PaymentTypeEnumeration.Cash:
                             Cash = pay.Amount.ToString().Replace(',', '.');
                             break;
-                        case PaymentTypeEnumeration.Card:
+                        case PaymentTypeEnumeration.Crta:
                             Card = pay.Amount.ToString().Replace(',', '.');
                             break;
                         case PaymentTypeEnumeration.WireTransfer:

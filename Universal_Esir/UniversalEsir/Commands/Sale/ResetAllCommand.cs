@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using UniversalEsir.Enums;
 
 namespace UniversalEsir.Commands.Sale
 {
@@ -61,6 +62,11 @@ namespace UniversalEsir.Commands.Sale
                     //}
 
                     _viewModel.Reset();
+
+                    AppStateParameter appStateParameter = new AppStateParameter(AppStateEnumerable.TableOverview,
+                        _viewModel.LoggedCashier,
+                        _viewModel);
+                    _viewModel.UpdateAppViewModelCommand.Execute(appStateParameter);
                 }
                 catch
                 {

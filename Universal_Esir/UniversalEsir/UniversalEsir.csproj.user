@@ -43,6 +43,18 @@
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddEditClanWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewClanarinaWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewOtpisWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewPozajmicaIsplataWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewPozajmicaWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewUplataWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -244,6 +256,18 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddEditClanWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewClanarinaWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewOtpisWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewPozajmicaIsplataWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewPozajmicaWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\Clanovi\AddNewUplataWindow.xaml">

@@ -77,7 +77,7 @@ namespace UniversalEsir.Commands.Login
                 AppStateParameter appStateParameter;
                 if (cashierDB.Type == CashierTypeEnumeration.Worker)
                 {
-                    appStateParameter = new AppStateParameter(AppStateEnumerable.Sale, cashierDB);
+                    appStateParameter = new AppStateParameter(AppStateEnumerable.TableOverview, cashierDB);
                 }
                 else
                 {

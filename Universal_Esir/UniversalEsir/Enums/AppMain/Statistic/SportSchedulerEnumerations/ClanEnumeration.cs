@@ -14,6 +14,9 @@ namespace UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations
         Vanredni = 3,
         Neclanski = 4,
         Klupski = 5,
-        Moderator = 6,
+        Hala = 6,
+        Turnir = 7,
+        Radnik = 8,
+        Moderator = 9,
     }
 }

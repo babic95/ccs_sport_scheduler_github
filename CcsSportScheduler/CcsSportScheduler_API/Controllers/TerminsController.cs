@@ -401,6 +401,7 @@ namespace CcsSportScheduler_API.Controllers
                         StartDateTime = terminRequest.StartDateTime,
                         EndDateTime = terminRequest.EndDateTime == null ? terminRequest.StartDateTime.AddHours(1) : terminRequest.EndDateTime,
                         Price = cenaTermina,
+                        Placeno = terminRequest.Zaduzi == 1 ? 0 : cenaTermina
                     };
 
                     await _context.Termins.AddAsync(terminDB);

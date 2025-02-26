@@ -8,8 +8,7 @@
              xmlns:viewmodels="clr-namespace:UniversalEsir.ViewModels" 
              xmlns:contract5Present="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract,5)"
              d:DataContext="{d:DesignInstance Type=viewmodels:SaleViewModel}"
-             mc:Ignorable="d" 
-             Loaded="UserControl_Loaded">
+             mc:Ignorable="d" >
 
     <UserControl.Resources>
         <converters:DecimalNumberToString x:Key="decimalToString"/>
@@ -24,7 +23,7 @@
 
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="400" MaxWidth ="600"/>
+                <ColumnDefinition MinWidth="350" MaxWidth ="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0"
@@ -56,10 +55,10 @@
                                 BorderThickness="1"
                                 Grid.Column="0">
                             <Grid>
-                                <Label Content="Kasir: "
+                                <Label Content="Član: "
                                        FontSize="14"
                                        HorizontalAlignment="Left"/>
-                                <Label Content="{Binding CashierNema}"
+                                <Label Content="{Binding CurrentClan.Username}"
                                        FontSize="14"
                                        HorizontalAlignment="Right"/>
                             </Grid>
@@ -76,7 +75,7 @@
                     <StackPanel Orientation="Vertical"
                                 Grid.Column="0"
                                 VerticalAlignment="Center">
-                        <Label Content="Šifra: "
+                        <!--<Label Content="Šifra: "
                                FontSize="14"
                                Height="30"
                                HorizontalContentAlignment="Center"
@@ -99,7 +98,7 @@
                                Height="30"
                                HorizontalContentAlignment="Center"
                                VerticalContentAlignment="Center"
-                               Margin="0 0 0 5"/>
+                               Margin="0 0 0 5"/>-->
                         <Label Content="Količina: "
                                FontSize="14"
                                Height="30"
@@ -113,7 +112,7 @@
                     <StackPanel Orientation="Vertical"
                                 Grid.Column="1"
                                 VerticalAlignment="Center">
-                        <TextBox Text="{Binding Sifra, UpdateSourceTrigger=LostFocus}"
+                        <!--<TextBox Text="{Binding Sifra, UpdateSourceTrigger=LostFocus}"
                                  FontSize="14"
                                  Height="30"
                                  x:Name="sifra"
@@ -153,7 +152,7 @@
                                  x:Name="popust"
                                  KeyDown="popust_KeyDown"
                                  HorizontalContentAlignment="Center"
-                                 VerticalContentAlignment="Center"/>
+                                 VerticalContentAlignment="Center"/>-->
                         <TextBox Text="{Binding Quantity}"
                                  FontSize="14"
                                  Height="30"
@@ -161,7 +160,7 @@
                                  x:Name="kolicina"
                                  Tag="Kolicina"
                                  GotFocus="OnTextBoxGotFocus"
-                                 KeyDown="kolicina_KeyDown"
+                                 
                                  HorizontalContentAlignment="Center"
                                  VerticalContentAlignment="Center"/>
                         <!--<TextBox Text="{Binding Barkod, UpdateSourceTrigger=PropertyChanged}"
@@ -177,7 +176,7 @@
                                 Orientation="Horizontal"
                                 HorizontalAlignment="Center">
 
-                        <StackPanel Orientation="Vertical">
+                        <!--<StackPanel Orientation="Vertical">
 
                             <StackPanel HorizontalAlignment="Center"
                                         Orientation="Horizontal">
@@ -253,7 +252,7 @@
                                         CommandParameter=","/>
 
                             </StackPanel>
-                            <!--<StackPanel HorizontalAlignment="Center"
+                            --><!--<StackPanel HorizontalAlignment="Center"
                                         Orientation="Horizontal">
 
                                 <Button Width="105" 
@@ -267,8 +266,8 @@
                                         Command="{Binding ClickOnQuantityButtonCommand}"
                                         CommandParameter="-"/>
 
-                            </StackPanel>-->
-                        </StackPanel>
+                            </StackPanel>--><!--
+                        </StackPanel>-->
 
                     </StackPanel>
                 </Grid>
@@ -277,14 +276,103 @@
                         BorderThickness="1"
                         Background="#EAAC8B">
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
                         <ScrollViewer HorizontalScrollBarVisibility="Disabled"
+              VerticalScrollBarVisibility="Auto"
+              Grid.Row="0">
+                            <Grid Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="60*"/>
+                                    <ColumnDefinition Width="20*"/>
+                                    <ColumnDefinition Width="20*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0"
+                Orientation="Vertical">
+                                    <Label Content="Artikal:"
+               HorizontalAlignment="Left"
+               FontWeight="Bold"
+               FontSize="16"/>
+                                    <ItemsControl ItemsSource="{Binding OldOrders}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Vertical">
+                                                    <Label Content="{Binding Item.Name}"
+                                   HorizontalAlignment="Stretch"
+                                   ToolTip="{Binding Item.Name}"
+                                   HorizontalContentAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   BorderBrush="Black"
+                                   BorderThickness="1"
+                                   FontSize="14"
+                                   Height="30"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                </StackPanel>
+                                <StackPanel Grid.Column="1"
+                Orientation="Vertical">
+                                    <Label Content="Količina:"
+               HorizontalAlignment="Center"
+               FontWeight="Bold"
+               FontSize="16"/>
+
+                                    <ItemsControl ItemsSource="{Binding OldOrders}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Vertical">
+                                                    <Label Content="{Binding Quantity, Converter={StaticResource decimalQuantityToString}}"
+                                   HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Height="30"
+                                   BorderBrush="Black"
+                                   BorderThickness="1"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel Grid.Column="2"
+                Orientation="Vertical">
+                                    <Label Content="Cena:"
+               HorizontalAlignment="Center"
+               FontWeight="Bold"
+               FontSize="16"/>
+
+                                    <ItemsControl ItemsSource="{Binding OldOrders}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Orientation="Vertical">
+                                                    <Label Content="{Binding TotalAmout, Converter={StaticResource decimalToString}}"
+                                   HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Height="30"
+                                   BorderBrush="Black"
+                                   BorderThickness="1"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3"
+                Orientation="Vertical">
+                                </StackPanel>
+                            </Grid>
+                        </ScrollViewer>
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled"
                                       VerticalScrollBarVisibility="Auto"
-                                      Grid.Column="0">
+                                      Grid.Row="1">
                             <Grid Margin="10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="60*"/>
@@ -562,7 +650,7 @@
                                     Command="{Binding RemoveOrderCommand}"
                                     Style="{StaticResource RoundCorner}"/>-->
                         </Grid>
-                        <!--<Button Grid.Column="2"
+                        <Button Grid.Column="2"
                                 Content="Zakači"
                                 FontSize="24"
                                 Command="{Binding HookOrderOnTableCommand}"
@@ -576,7 +664,7 @@
                                 Command="{Binding TableOverviewCommand}"
                                 Style="{StaticResource RoundCorner}"
                                 Margin="5 0 10 0"
-                                Visibility="{Binding TableOverviewVisibility}"/>-->
+                                Visibility="{Binding TableOverviewVisibility}"/>
                         <Button Grid.Column="4"
                                 Content="Naplati"
                                 FontSize="24"

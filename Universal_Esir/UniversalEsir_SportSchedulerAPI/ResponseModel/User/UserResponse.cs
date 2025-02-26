@@ -14,9 +14,10 @@ namespace UniversalEsir_SportSchedulerAPI.ResponseModel.User
         public string Password { get; set; } = null!;
         public string Username { get; set; } = null!;
         public int Type { get; set; }
-        public DateTime Birthday { get; set; }
+        public int Year { get; set; }
+        public int Pol { get; set; }
         public string Contact { get; set; } = null!;
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
         public string Jmbg { get; set; } = null!;
         public int FreeTermin { get; set; }
     }

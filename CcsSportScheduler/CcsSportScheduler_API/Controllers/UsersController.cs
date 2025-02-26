@@ -15,6 +15,7 @@ using CcsSportScheduler_API.Models.Requests.Racun;
 using Amazon.S3.Model;
 using Amazon.S3.Util;
 using Amazon.S3;
+using CcsSportScheduler_API.Models.Response.User;
 
 namespace CcsSportScheduler_API.Controllers
 {
@@ -172,6 +173,8 @@ namespace CcsSportScheduler_API.Controllers
 
                 await _context.Users.AddAsync(userDB);
                 await _context.SaveChangesAsync();
+
+                return Ok(userDB);
             }
             catch (Exception ex)
             {
@@ -183,8 +186,6 @@ namespace CcsSportScheduler_API.Controllers
                     Action = "PostUser"
                 });
             }
-
-            return Ok();
         }
 
         // POST: api/Users/Login
@@ -497,7 +498,7 @@ namespace CcsSportScheduler_API.Controllers
                     financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
                     i.Type == FinancialCardTypeEnumeration.Poklon).Sum(u => u.Razduzenje);
 
-                    financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Racuni ||
+                    financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
                     i.Type == FinancialCardTypeEnumeration.Termini).Sum(t => t.Zaduzenje);
                 }
                 else
@@ -513,8 +514,8 @@ namespace CcsSportScheduler_API.Controllers
                     {
                         items.AddRange(racuni);
 
-                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Racuni).Sum(u => u.Razduzenje);
-                        financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Racuni).Sum(t => t.Zaduzenje);
+                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic).Sum(u => u.Razduzenje);
+                        financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic).Sum(t => t.Zaduzenje);
                     }
                     if (type == 2)
                     {
@@ -632,7 +633,7 @@ namespace CcsSportScheduler_API.Controllers
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
                             Id = r.Id,
-                            Type = FinancialCardTypeEnumeration.Racuni,
+                            Type = FinancialCardTypeEnumeration.Kafic,
                             Date = r.Date,
                             Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,

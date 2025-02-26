@@ -891,8 +891,8 @@ namespace UniversalEsir_Printer.PaperFormat
                     case PaymentTypeEnumeration.Cash:
                         paymentType = "Gotovina";
                         break;
-                    case PaymentTypeEnumeration.Card:
-                        paymentType = "Platna kartica";
+                    case PaymentTypeEnumeration.Crta:
+                        paymentType = "Crta";
                         break;
                     case PaymentTypeEnumeration.Check:
                         paymentType = "Ček";

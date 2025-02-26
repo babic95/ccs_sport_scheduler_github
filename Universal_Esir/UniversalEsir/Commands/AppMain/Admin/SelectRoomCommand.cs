@@ -47,7 +47,7 @@ namespace UniversalEsir.Commands.AppMain.Admin
 
                     if (tableOverviewViewModel.CurrentPartHall != null)
                     {
-                        tableOverviewViewModel.Title = tableOverviewViewModel.CurrentPartHall.Name;
+                        tableOverviewViewModel.SaleViewModel.CurrentPartHall = tableOverviewViewModel.CurrentPartHall;
                     }
                 }
             }

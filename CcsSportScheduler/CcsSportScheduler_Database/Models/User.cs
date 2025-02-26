@@ -14,6 +14,7 @@ namespace CcsSportScheduler_Database.Models
             Ucesnikligas = new HashSet<UcesnikLiga>();
             Ucesnikturnirs = new HashSet<UcesnikTurnir>();
             Uplata = new HashSet<Uplata>();
+            Zaduzenja = new HashSet<Zaduzenje>();
         }
 
         public int Id { get; set; }
@@ -44,5 +45,8 @@ namespace CcsSportScheduler_Database.Models
         public virtual ICollection<UcesnikTurnir> Ucesnikturnirs { get; set; }
         [JsonIgnore]
         public virtual ICollection<Uplata> Uplata { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<Zaduzenje> Zaduzenja { get; set; }
     }
+    
 }

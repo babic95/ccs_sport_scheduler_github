@@ -96,6 +96,7 @@ namespace UniversalEsir.ViewModels.Sale
 #else
             VisibilityBlack = Visibility.Visible;
 #endif
+            CurrentClan = saleViewModel.CurrentClan;
             Window = window;
             SaleViewModel = saleViewModel;
             CashierNema = saleViewModel.CashierNema;
@@ -135,30 +136,6 @@ namespace UniversalEsir.ViewModels.Sale
             });
             CurrentDriver = new Driver(); Gotovina = "0";
 
-            Clanovi = new ObservableCollection<Clan>();
-
-            SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
-            var clanovi = sportSchedulerAPI_Manager.GetUsersAsync().Result;
-
-            if (clanovi == null)
-            {
-                MessageBox.Show("Greška prilikom učitavanja korisnika!",
-                    "Greška",
-                    MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-
-                return;
-            }
-
-            if (clanovi.Any())
-            {
-                foreach (var clan in clanovi)
-                {
-                    Clanovi.Add(new Clan(clan));
-                }
-
-                CurrentClan = Clanovi.FirstOrDefault();
-            }
         }
         #endregion Constructors
 

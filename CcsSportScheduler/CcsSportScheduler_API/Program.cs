@@ -34,20 +34,13 @@ builder.Services.AddCors(options =>
     });
 });
 
-//// Add DbContext
-//var connectionString = builder.Configuration.GetConnectionString("WebApiDatabase");
-//builder.Services.AddDbContext<SportSchedulerContext>(options =>
-//    options.UseMySql(connectionString, ServerVersion.Parse("8.0.26-mysql")));
-
+// Add DbContext
 builder.Services.AddDbContext<SportSchedulerContext>((DbContextOptionsBuilder opt) =>
 {
     IConfigurationRoot configuration = new ConfigurationBuilder()
     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
     .AddJsonFile("appsettings.json")
     .Build();
-
-    Console.WriteLine($"ovo je iz Environment.GetEnvironmentVariable ConnectionStrings={Environment.GetEnvironmentVariable("ConnectionStrings")}");
-    Console.WriteLine($"ovo je iz configuration.GetConnectionString ConnectionStrings={configuration.GetConnectionString("WebApiDatabase")}");
 
     var connectionString = string.IsNullOrEmpty(Environment.GetEnvironmentVariable("ConnectionStrings")) ?
     configuration.GetConnectionString("WebApiDatabase") :
@@ -65,9 +58,8 @@ builder.Services.AddDbContext<SportSchedulerContext>((DbContextOptionsBuilder op
     );
 });
 
-
 builder.Services.AddHostedService<BackgroundRefresh>();
-builder.Services.AddHostedService<AddNewFreeTerminBackground>(); 
+builder.Services.AddHostedService<AddNewFreeTerminBackground>();
 
 var awsOption = builder.Configuration.GetAWSOptions("service2");
 awsOption.Credentials = new BasicAWSCredentials(builder.Configuration["AWS:AccessKey"], builder.Configuration["AWS:SecretKey"]);

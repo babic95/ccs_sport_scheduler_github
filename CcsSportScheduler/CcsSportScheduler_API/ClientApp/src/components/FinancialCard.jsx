@@ -96,6 +96,41 @@ const FinancialCard = ({ user }) => {
         } else if (item.type === 3) {
             setModalContent(
                 <div>
+                    <Typography>Ukupan iznos: {item.totalAmount} RSD</Typography>
+                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
+                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {item.description}</Typography>
+                </div>
+            );
+        } else if (item.type === 4) {
+            setModalContent(
+                <div>
+                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
+                    <Typography>Plaćeno: {item.razduzenje} RSD</Typography>
+                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
+                </div>
+            );
+        } else if (item.type === 3) {
+            setModalContent(
+                <div>
+                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
+                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
+                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {item.description}</Typography>
+                </div>
+            );
+        } else if (item.type === 3) {
+            setModalContent(
+                <div>
+                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
+                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
+                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {item.description}</Typography>
+                </div>
+            );
+        } else if (item.type === 3) {
+            setModalContent(
+                <div>
                     <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
                     <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
                     <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>

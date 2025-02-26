@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using UniversalEsir.ViewModels.AppMain.Statistic;
-using UniversalEsir_SportSchedulerAPI.RequestModel.Teren;
-using UniversalEsir_SportSchedulerAPI;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Uplata;
+using UniversalEsir_SportSchedulerAPI;
 using UniversalEsir_Logging;
+using UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations;
 
-namespace UniversalEsir.Commands.AppMain.Clanovi
+namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
 {
-    public class SaveUplataCommand : ICommand
+    public class SaveOtpisCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
         private ClanoviViewModel _currentViewModel;
 
-        public SaveUplataCommand(ClanoviViewModel currentViewModel)
+        public SaveOtpisCommand(ClanoviViewModel currentViewModel)
         {
             _currentViewModel = currentViewModel;
         }
@@ -33,7 +33,10 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
         {
             try
             {
-                if (_currentViewModel.CurrentClan == null)
+                if (_currentViewModel.CurrentClan == null ||
+                    _currentViewModel.CurrentUplata.Date == null ||
+                    _currentViewModel.CurrentUplata.TotalAmount <= 0 ||
+                    string.IsNullOrEmpty(_currentViewModel.CurrentUplata.Description))
                 {
                     MessageBox.Show("Niste popunili sva polja!",
                         "Greška",
@@ -47,21 +50,22 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
                     UserId = _currentViewModel.CurrentClan.Id,
                     Date = _currentViewModel.CurrentUplata.Date,
                     TotalAmount = _currentViewModel.CurrentUplata.TotalAmount,
-                    TypeUplata = (int)_currentViewModel.CurrentUplata.TypeUplata
+                    TypeUplata = (int)UplataEnumeration.Poklon,
+                    Description = _currentViewModel.CurrentUplata.Description
                 };
 
                 SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
 
                 if (sportSchedulerAPI_Manager.PostUplataAsync(uplataRequest).Result)
                 {
-                    MessageBox.Show("Uspešno ste dodali uplatu!",
+                    MessageBox.Show("Uspešno ste dodali otpis!",
                                                 "Uspeh",
                                                 MessageBoxButton.OK,
                                                 MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBox.Show("Greška prilikom dodavanja uplate!",
+                    MessageBox.Show("Greška prilikom dodavanja otpisa!",
                         "Greška",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
@@ -73,7 +77,7 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
             }
             catch (Exception ex)
             {
-                Log.Error("SaveUplataCommand -> Greska prilikom cuvanja uplate", ex);
+                Log.Error("SaveOtpisCommand -> Greska prilikom cuvanja otpisa", ex);
                 MessageBox.Show("Dogodila se greška!\nObratite se serviseru.",
                     "Greška",
                     MessageBoxButton.OK,

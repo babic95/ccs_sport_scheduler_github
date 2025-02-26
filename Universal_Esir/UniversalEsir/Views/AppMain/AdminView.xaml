@@ -140,7 +140,7 @@
                                                Foreground="White"
                                                HorizontalAlignment="Center"
                                                VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Order.CashierName}"
+                                    <TextBlock Text="{Binding Name}"
                                                FontSize="10"
                                                Foreground="White"
                                                HorizontalAlignment="Center"

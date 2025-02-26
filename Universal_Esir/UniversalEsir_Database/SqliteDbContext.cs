@@ -1065,6 +1065,7 @@ namespace UniversalEsir_Database
                         "'Mrc'   TEXT," +
                         "'KnjizenjePazaraId'   TEXT," +
                         "'Porudzbenica'   TEXT," +
+                        "'IsSend'   INTEGER NOT NULL DEFAULT 0," +
                         "PRIMARY KEY(Id)" +
                         "); ", SQLiteManagerTableNames.Invoice);
                     CreateTable(SQLiteManagerTableNames.Invoice, sql);
@@ -1229,11 +1230,14 @@ namespace UniversalEsir_Database
                     sql = string.Format("CREATE TABLE {0} (" +
                         "'Id'  INTEGER NOT NULL," +
                         "'PartHallId'  INTEGER NOT NULL," +
+                        "'UserId'  INTEGER NOT NULL," +
                         "'LeftCanvas'  NUMERIC," +
                         "'TopCanvas'  NUMERIC," +
                         "'Type'  INTEGER," +
                         "'Width'  NUMERIC," +
                         "'Height'  NUMERIC," +
+                        "'AddPrice'  NUMERIC," +
+                        "'Name'  TEXT," +
                         "PRIMARY KEY(Id AUTOINCREMENT), " +
                         "CONSTRAINT `fk_Table_PartHall1`" +
                         "    FOREIGN KEY(PartHallId)" +

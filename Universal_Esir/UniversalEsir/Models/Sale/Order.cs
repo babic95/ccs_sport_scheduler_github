@@ -12,14 +12,16 @@ namespace UniversalEsir.Models.Sale
     {
         private int _partHall;
         private int _tableId;
+        private string _username;
         private CashierDB _cashier;
         private string _cashierName;
         private ObservableCollection<ItemInvoice> _items;
 
-        public Order(int tableId, int partHall)
+        public Order(int tableId, int partHall, string username)
         {
             TableId = tableId;
             PartHall = partHall;
+            Username = username;
         }
         public Order(CashierDB cashier,
             ObservableCollection<ItemInvoice> items)
@@ -63,6 +65,15 @@ namespace UniversalEsir.Models.Sale
             {
                 _cashierName = value;
                 OnPropertyChange(nameof(CashierName));
+            }
+        }
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                _username = value;
+                OnPropertyChange(nameof(Username));
             }
         }
         public ObservableCollection<ItemInvoice> Items

@@ -140,7 +140,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Knjizenje
                                                         case PaymentTypeEnumeration.Cash:
                                                             zaduzenje.NormalSaleCash += item.TotalAmout.Value;
                                                             break;
-                                                        case PaymentTypeEnumeration.Card:
+                                                        case PaymentTypeEnumeration.Crta:
                                                             zaduzenje.NormalSaleCard += item.TotalAmout.Value;
                                                             break;
                                                         case PaymentTypeEnumeration.WireTransfer:
@@ -157,7 +157,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Knjizenje
                                                         case PaymentTypeEnumeration.Cash:
                                                             zaduzenje.NormalRefundCash -= item.TotalAmout.Value;
                                                             break;
-                                                        case PaymentTypeEnumeration.Card:
+                                                        case PaymentTypeEnumeration.Crta:
                                                             zaduzenje.NormalRefundCard -= item.TotalAmout.Value;
                                                             break;
                                                         case PaymentTypeEnumeration.WireTransfer:

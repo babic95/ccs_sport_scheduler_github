@@ -95,13 +95,13 @@
                                             HorizontalAlignment="Center"
                                             VerticalAlignment="Center">
                                         <TextBlock Text="{Binding Id}"
-                                                   FontSize="18"
+                                                   FontSize="10"
                                                    Foreground="White"
                                                    FontStyle="Italic"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"/>
-                                        <TextBlock Text="{Binding Order.CashierName}"
-                                                   FontSize="10"
+                                        <TextBlock Text="{Binding Name}"
+                                                   FontSize="16"
                                                    Foreground="White"
                                                    FontStyle="Italic"
                                                    HorizontalAlignment="Center"

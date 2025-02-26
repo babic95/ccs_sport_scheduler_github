@@ -793,7 +793,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Calculation
                                     break;
                                 case (int)KepStateEnumeration.Dnevni_Pazar_Prodaja_Kartica:
                                     kp.NormalSaleCard = 0;
-                                    paymentType = PaymentTypeEnumeration.Card;
+                                    paymentType = PaymentTypeEnumeration.Crta;
                                     break;
                                 case (int)KepStateEnumeration.Dnevni_Pazar_Prodaja_Virman:
                                     kp.NormalSaleWireTransfer = 0;
@@ -805,7 +805,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Calculation
                                     break;
                                 case (int)KepStateEnumeration.Dnevni_Pazar_Refundacija_Kartica:
                                     kp.NormalRefundCard = 0;
-                                    paymentType = PaymentTypeEnumeration.Card;
+                                    paymentType = PaymentTypeEnumeration.Crta;
                                     break;
                                 case (int)KepStateEnumeration.Dnevni_Pazar_Refundacija_Virman:
                                     kp.NormalRefundWireTransfer = 0;
@@ -856,7 +856,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Calculation
                                                                     k.Zaduzenje -= item.TotalAmout != null && item.TotalAmout.HasValue ? item.TotalAmout.Value : 0;
                                                                 }
                                                                 break;
-                                                            case PaymentTypeEnumeration.Card:
+                                                            case PaymentTypeEnumeration.Crta:
                                                                 if (invoice.TransactionType == 0)
                                                                 {
                                                                     k.Zaduzenje += item.TotalAmout != null && item.TotalAmout.HasValue ? item.TotalAmout.Value : 0;
@@ -896,7 +896,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Calculation
                                                     k.Razduzenje -= invoice.TotalAmount != null && invoice.TotalAmount.HasValue ? invoice.TotalAmount.Value : 0;
                                                 }
                                                 break;
-                                            case PaymentTypeEnumeration.Card:
+                                            case PaymentTypeEnumeration.Crta:
                                                 if (invoice.TransactionType == 0)
                                                 {
                                                     kp.NormalSaleCard += invoice.TotalAmount != null && invoice.TotalAmount.HasValue ? invoice.TotalAmount.Value : 0;

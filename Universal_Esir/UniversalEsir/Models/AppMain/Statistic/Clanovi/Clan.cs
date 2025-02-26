@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Bibliography;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,10 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
         private string _password;
         private string _username;
         private ClanEnumeration _type;
-        private DateTime _birthday;
+        private int _year;
+        private PolEnumeration _pol;
         private string _contact;
-        private string _email;
+        private string? _email;
         private string _jmbg;
         private int _freeTermin;
 
@@ -32,7 +34,8 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             Password = clan.Password;
             Username = clan.Username;
             Type = (ClanEnumeration)clan.Type;
-            Birthday = clan.Birthday;
+            Year = clan.Year;
+            Pol = (PolEnumeration)clan.Pol;
             Contact = clan.Contact;
             Email = clan.Email;
             Jmbg = clan.Jmbg;
@@ -66,6 +69,15 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 OnPropertyChange(nameof(FullName));
             }
         }
+        public PolEnumeration Pol
+        {
+            get { return _pol; }
+            set
+            {
+                _pol = value;
+                OnPropertyChange(nameof(Pol));
+            }
+        }
         public string Password
         {
             get { return _password; }
@@ -93,13 +105,13 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 OnPropertyChange(nameof(Type));
             }
         }
-        public DateTime Birthday
+        public int Year
         {
-            get { return _birthday; }
+            get { return _year; }
             set
             {
-                _birthday = value;
-                OnPropertyChange(nameof(Birthday));
+                _year = value;
+                OnPropertyChange(nameof(Year));
             }
         }
         public string Contact
@@ -111,7 +123,7 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 OnPropertyChange(nameof(Contact));
             }
         }
-        public string Email
+        public string? Email
         {
             get { return _email; }
             set

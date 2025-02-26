@@ -46,6 +46,7 @@ namespace UniversalEsir_Database.Models
         public string? Address { get; set; }
         public string? District { get; set; }
         public string? Mrc { get; set; }
+        public int IsSend { get; set; }
 
         public virtual KnjizenjePazaraDB? KnjizenjePazara { get; set; }
         public virtual ICollection<ItemInvoiceDB> ItemInvoices { get; set; }

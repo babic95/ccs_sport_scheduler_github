@@ -2,12 +2,14 @@
 {
     public enum FinancialCardTypeEnumeration
     {
-        Racuni = 0,
+        Kafic = 0,
         Termini = 1,
         Uplate = 2,
         Poklon = 3,
         Kotizacije = 4,
         Prodavnica = 5,
-        OtpisPozajmice = 6,
+        Pozajmica = 6,
+        OtpisPozajmice = 7,
+        Clanarina = 8,
     }
 }

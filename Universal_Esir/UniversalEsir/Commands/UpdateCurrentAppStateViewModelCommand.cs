@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace UniversalEsir.Commands
 {
@@ -51,22 +52,41 @@ namespace UniversalEsir.Commands
                         _navigator.CurrentViewModel = new AppMainViewModel(appState.LoggedCashier, _navigator.UpdateCurrentViewModelCommand);
                         break;
                     case AppStateEnumerable.Sale:
-                        if (appState.ViewModel is not null && appState.ViewModel is SaleViewModel)
+                        if (appState.ViewModel is SaleViewModel saleViewModel)
                         {
-                            SaleViewModel saleViewModel = (SaleViewModel)appState.ViewModel;
-                            _navigator.CurrentViewModel = saleViewModel;
+                            if (!(_navigator.CurrentViewModel is SaleViewModel))
+                            {
+                                _navigator.CurrentViewModel = saleViewModel;
+                            }
                         }
                         else
                         {
-                            _navigator.CurrentViewModel = new SaleViewModel(appState.LoggedCashier, 
-                                _navigator.UpdateCurrentViewModelCommand);
+                            if (!(_navigator.CurrentViewModel is SaleViewModel))
+                            {
+                                var newSaleViewModel = (SaleViewModel)appState.ViewModel;
+                                // Set additional properties if needed
+                                _navigator.CurrentViewModel = newSaleViewModel;
+                            }
                         }
                         break;
                     case AppStateEnumerable.TableOverview:
-                        if (appState.ViewModel is not null && appState.ViewModel is SaleViewModel)
+                        if (appState.ViewModel is SaleViewModel sale)
                         {
-                            SaleViewModel saleViewModel = (SaleViewModel)appState.ViewModel;
-                            _navigator.CurrentViewModel = saleViewModel.TableOverviewViewModel;
+                            if (!(_navigator.CurrentViewModel is TableOverviewViewModel))
+                            {
+                                sale.TableOverviewViewModel = new TableOverviewViewModel(sale);
+
+                                _navigator.CurrentViewModel = sale.TableOverviewViewModel;
+                            }
+                        }
+                        else
+                        {
+                            if (!(_navigator.CurrentViewModel is TableOverviewViewModel))
+                            {
+                                var saleVM = new SaleViewModel(appState.LoggedCashier, _navigator.UpdateCurrentViewModelCommand);
+
+                                _navigator.CurrentViewModel = saleVM.TableOverviewViewModel;
+                            }
                         }
                         break;
                     default:

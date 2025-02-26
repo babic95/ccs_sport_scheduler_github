@@ -37,6 +37,7 @@ namespace CcsSportScheduler_Database
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<VestiLiga> Vestiligas { get; set; } = null!;
         public virtual DbSet<VestiTurnir> Vestiturnirs { get; set; } = null!;
+        public virtual DbSet<Zaduzenje> Zaduzenja { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -289,6 +290,48 @@ namespace CcsSportScheduler_Database
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Racuns)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Racun_User1");
+            });
+
+            modelBuilder.Entity<Zaduzenje>(entity =>
+            {
+                entity.ToTable("zaduzenje");
+
+                entity.HasIndex(e => e.UserId, "fk_Zaduzenje_User1_idx");
+
+                entity.Property(e => e.Id)
+                    .HasMaxLength(36)
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Opis)
+                    .HasMaxLength(250)
+                    .HasColumnName("opis");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.Placeno)
+                    .HasPrecision(15, 2)
+                    .HasColumnName("placeno");
+
+                entity.Property(e => e.Otpis)
+                    .HasPrecision(15, 2)
+                    .HasColumnName("otpis");
+
+                entity.Property(e => e.TotalAmount)
+                    .HasPrecision(15, 2)
+                    .HasColumnName("totalAmount");
+
+                entity.Property(e => e.Type)
+                    .HasColumnName("type");
+
+                entity.Property(e => e.UserId).HasColumnName("User_id");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Zaduzenja)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Racun_User1");

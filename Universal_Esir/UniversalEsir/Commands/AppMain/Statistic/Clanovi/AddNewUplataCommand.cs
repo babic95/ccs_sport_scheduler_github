@@ -38,7 +38,7 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
                 _currentViewModel.CurrentUplata = new Uplata()
                 {
                     Date = DateTime.Now,
-                    TotalAmount = 0,
+                    TotalAmountString = "0",
                 };
 
                 _currentViewModel.CurrentWindow = new AddNewUplataWindow(_currentViewModel);

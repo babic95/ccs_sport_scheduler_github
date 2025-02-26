@@ -129,11 +129,11 @@
                              CommandParameter="{x:Static state:StatisticStateEnumerable.ViewNivelacija}"
                              Content="PREGLED NIVELACIJA"/>
 
-                    <RadioButton x:Name="normativ"
+                    <!--<RadioButton x:Name="normativ"
                              IsChecked="{Binding IsCheckedNorm}"
                              Command="{Binding UpdateCurrentStatisticViewModelCommand}"
                              CommandParameter="{x:Static state:StatisticStateEnumerable.Norm}"
-                             Content="SREDI NORMATIVE"/>
+                             Content="SREDI NORMATIVE"/>-->
 
                     <RadioButton x:Name="priceIncrease"
                              IsChecked="{Binding IsCheckedPriceIncrease}"

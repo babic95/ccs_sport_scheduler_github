@@ -577,8 +577,8 @@ namespace UniversalEsir_Common.Models.Invoice.Helpers
                     case Enums.PaymentTypeEnumeration.Cash:
                         paymentType = "Уплаћено - готовина:";
                         break;
-                    case Enums.PaymentTypeEnumeration.Card:
-                        paymentType = "Уплаћено - платна картица:";
+                    case Enums.PaymentTypeEnumeration.Crta:
+                        paymentType = "Уплаћено - црта:";
                         break;
                     case Enums.PaymentTypeEnumeration.Check:
                         paymentType = "Уплаћено - чек:";

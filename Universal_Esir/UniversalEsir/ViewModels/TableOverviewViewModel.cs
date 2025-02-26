@@ -47,6 +47,15 @@ namespace UniversalEsir.ViewModels
             AllRoundPaymentPlaces = new ObservableCollection<PaymentPlace>();
             RoundPaymentPlaces = new ObservableCollection<PaymentPlace>();
             LoadingDB();
+
+            if (SaleViewModel.CurrentPartHall == null)
+            {
+                CurrentPartHall = Rooms.FirstOrDefault();
+            }
+            else
+            {
+                CurrentPartHall = Rooms.FirstOrDefault(r => r.Id == SaleViewModel.CurrentPartHall.Id);
+            }
         }
         #endregion Constructors
 
@@ -169,7 +178,7 @@ namespace UniversalEsir.ViewModels
                 }
                 else
                 {
-                    paymentPlace.Order = new Order(order.TableId, order.PartHall)
+                    paymentPlace.Order = new Order(order.TableId, order.PartHall, order.Username)
                     {
                         Items = new ObservableCollection<ItemInvoice>(order.Items),
                         Cashier = order.Cashier
@@ -210,7 +219,10 @@ namespace UniversalEsir.ViewModels
                     PartHallId = payment.PartHallId,
                     Left = payment.LeftCanvas.Value,
                     Top = payment.TopCanvas.Value,
-                    Type = payment.Type.HasValue ? (PaymentPlaceTypeEnumeration)payment.Type.Value : PaymentPlaceTypeEnumeration.Normal
+                    Type = payment.Type.HasValue ? (PaymentPlaceTypeEnumeration)payment.Type.Value : PaymentPlaceTypeEnumeration.Normal,
+                    Name = payment.Name,
+                    AddPrice = payment.AddPrice,
+                    UserId = payment.UserId,
                 };
 
                 if (paymentPlace.Type == PaymentPlaceTypeEnumeration.Normal)
@@ -255,7 +267,7 @@ namespace UniversalEsir.ViewModels
                 }
                 else
                 {
-                    paymentPlace.Order = new Order(payment.Id, payment.PartHallId);
+                    paymentPlace.Order = new Order(payment.Id, payment.PartHallId, payment.Name);
                     paymentPlace.Background = Brushes.Green;
                     paymentPlace.Total = 0;
                 }

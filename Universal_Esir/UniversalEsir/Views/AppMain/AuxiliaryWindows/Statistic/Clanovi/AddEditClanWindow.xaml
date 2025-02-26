@@ -19,6 +19,12 @@
                 <x:Type TypeName="enums:ClanEnumeration"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="typesPol" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enums:PolEnumeration"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </Window.Resources>
     <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
@@ -36,6 +42,7 @@
                Margin="0 10"/>
 
         <ScrollViewer Grid.Row="1"
+                      VerticalAlignment="Center"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
@@ -76,19 +83,25 @@
                                Margin="0 5"/>
                         <Label Height="40"
                                Foreground="Black"
-                               Content="*E-mail:"
+                               Content="E-mail:"
                                FontSize="24"
                                HorizontalAlignment="Right"
                                Margin="0 5"/>
                         <Label Height="40"
                                Foreground="Black"
-                               Content="*Datum rođenja:"
+                               Content="*Godina rođenja:"
                                FontSize="24"
                                HorizontalAlignment="Right"
                                Margin="0 5"/>
                         <Label Height="40"
                                Foreground="Black"
                                Content="Tip člana:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"/>
+                        <Label Height="40"
+                               Foreground="Black"
+                               Content="Pol:"
                                FontSize="24"
                                HorizontalAlignment="Right"
                                Margin="0 5"/>
@@ -142,14 +155,25 @@
                                  VerticalContentAlignment="Center"
                                  Margin="0 5"
                                  Text="{Binding CurrentClan.Email}"/>
-                        <DatePicker Height="40"
-                                    Width="600"
-                                    Foreground="Black"
-                                    FontSize="24"
-                                    Margin="0 5"
-                                    SelectedDate="{Binding CurrentClan.Birthday}"/>
+                        <TextBox Height="40"
+                                 Width="600"
+                                 Foreground="Black"
+                                 FontSize="24"
+                                 HorizontalContentAlignment="Center"
+                                 VerticalContentAlignment="Center"
+                                 Margin="0 5"
+                                 Text="{Binding CurrentClan.Year}"/>
                         <ComboBox ItemsSource="{Binding Source={StaticResource typesClanovi}}"
                                   SelectedItem="{Binding CurrentClan.Type}"
+                                  Height="40"
+                                  Width="600"
+                                  Foreground="Black"
+                                  FontSize="24"
+                                  HorizontalContentAlignment="Center"
+                                  VerticalContentAlignment="Center"
+                                  Margin="0 5"/>
+                        <ComboBox ItemsSource="{Binding Source={StaticResource typesPol}}"
+                                  SelectedItem="{Binding CurrentClan.Pol}"
                                   Height="40"
                                   Width="600"
                                   Foreground="Black"

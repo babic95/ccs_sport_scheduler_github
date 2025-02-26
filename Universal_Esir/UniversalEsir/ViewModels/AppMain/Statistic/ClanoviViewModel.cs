@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using UniversalEsir.Commands.AppMain.Clanovi;
+using UniversalEsir.Commands.AppMain.Statistic.Clanovi;
 using UniversalEsir.Commands.AppMain.Tereni;
+using UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations;
 using UniversalEsir.Models.AppMain.Statistic.Clanovi;
 using UniversalEsir.Models.AppMain.Statistic.Tereni;
 using UniversalEsir_SportSchedulerAPI;
@@ -24,10 +26,14 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         private Racun _selectedRacun;
 
         private ObservableCollection<RacunItem> _racunItems;
+        private ObservableCollection<SatiTermina> _satiTermina;
+        private SatiTermina _currentSatiTermina;
+        private DanNedeljeEnumeration _currentDan;
 
         private Clan _currentClan;
         private Teren _currentTeren;
         private Uplata _currentUplata;
+        private Zaduzenje _currentZaduzenje;
         #endregion Fields
 
         #region Constructors
@@ -89,6 +95,15 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
                 OnPropertyChange(nameof(CurrentUplata));
             }
         }
+        public Zaduzenje CurrentZaduzenje
+        {
+            get { return _currentZaduzenje; }
+            set
+            {
+                _currentZaduzenje = value;
+                OnPropertyChange(nameof(CurrentZaduzenje));
+            }
+        }
         public ObservableCollection<Clan> Clanovi
         {
             get { return _clanovi; }
@@ -134,6 +149,34 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
                 OnPropertyChange(nameof(RacunItems));
             }
         }
+        public ObservableCollection<SatiTermina> SatiTermina
+        {
+            get { return _satiTermina; }
+            set
+            {
+                _satiTermina = value;
+                OnPropertyChange(nameof(SatiTermina));
+            }
+        }
+        public SatiTermina CurrentSatiTermina
+        {
+            get { return _currentSatiTermina; }
+            set
+            {
+                _currentSatiTermina = value;
+                OnPropertyChange(nameof(CurrentSatiTermina));
+            }
+        }
+        public DanNedeljeEnumeration CurrentDan
+        {
+            get { return _currentDan; }
+            set
+            {
+                _currentDan = value;
+                OnPropertyChange(nameof(CurrentDan));
+            }
+        }
+
         #endregion Properties
 
         #region Commands
@@ -145,6 +188,14 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         public ICommand SaveTerenCommand => new SaveTerenCommand(this);
         public ICommand AddNewUplataCommand => new AddNewUplataCommand(this);
         public ICommand SaveUplataCommand => new SaveUplataCommand(this);
+        public ICommand AddNewOtpisCommand => new AddNewOtpisCommand(this);
+        public ICommand SaveOtpisCommand => new SaveOtpisCommand(this);
+        public ICommand AddNewPozajmicaCommand => new AddNewPozajmicaCommand(this);
+        public ICommand SavePozajmicaCommand => new SavePozajmicaCommand(this);
+        public ICommand AddNewClanarinaCommand => new AddNewClanarinaCommand(this);
+        public ICommand SaveClanarinaCommand => new SaveClanarinaCommand(this);
+        public ICommand AddNewPozajmicaIsplataCommand => new AddNewPozajmicaIsplataCommand(this);
+        public ICommand SavePozajmicaIsplataCommand => new SavePozajmicaIsplataCommand(this);
         #endregion Commands
 
         #region Public methods

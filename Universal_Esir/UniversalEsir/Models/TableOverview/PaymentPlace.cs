@@ -14,6 +14,7 @@ namespace UniversalEsir.Models.TableOverview
     {
         private int _id;
         private int _partHallId;
+        private int _userId;
         private Order _order;
         private decimal _left;
         private decimal _top;
@@ -21,6 +22,8 @@ namespace UniversalEsir.Models.TableOverview
         private decimal _height;
         private decimal _diameter;
         private decimal _total;
+        private decimal _addPrice;
+        private string _name;
         private Brush _background;
         private PaymentPlaceTypeEnumeration _type;
 
@@ -41,6 +44,15 @@ namespace UniversalEsir.Models.TableOverview
             {
                 _partHallId = value;
                 OnPropertyChange(nameof(PartHallId));
+            }
+        }
+        public int UserId
+        {
+            get { return _userId; }
+            set
+            {
+                _userId = value;
+                OnPropertyChange(nameof(UserId));
             }
         }
         public Order Order
@@ -104,6 +116,24 @@ namespace UniversalEsir.Models.TableOverview
             {
                 _total = value;
                 OnPropertyChange(nameof(Total));
+            }
+        }
+        public decimal AddPrice
+        {
+            get { return _addPrice; }
+            set
+            {
+                _addPrice = value;
+                OnPropertyChange(nameof(AddPrice));
+            }
+        }
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                _name = value;
+                OnPropertyChange(nameof(Name));
             }
         }
         public Brush Background

@@ -10,5 +10,6 @@ namespace UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations
     {
         Standard = 0,
         Poklon = 1,
+        Pozajmica = 2,
     }
 }

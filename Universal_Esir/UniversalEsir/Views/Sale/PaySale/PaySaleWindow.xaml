@@ -206,12 +206,12 @@
                                                HorizontalContentAlignment="Right"
                                                VerticalContentAlignment="Center"
                                                Margin="0 0 0 5"/>-->
-                                        <Label Content="Član:"
+                                        <!--<Label Content="Član:"
                                                FontSize="20"
                                                Height="40"
                                                HorizontalContentAlignment="Right"
                                                VerticalContentAlignment="Center"
-                                               Margin="0 0 0 5"/>
+                                               Margin="0 0 0 5"/>-->
                                         <!--<Label Content="Tip dokumenta kupca:"
                                                FontSize="20"
                                                Height="40"
@@ -338,7 +338,7 @@
                                                  MinWidth="250"
                                                  Margin="0 0 0 5"
                                                  Text="{Binding Porudzbenica}"/>-->
-                                        <ComboBox ItemsSource="{Binding Clanovi}"
+                                        <!--<ComboBox ItemsSource="{Binding Clanovi}"
                                                   SelectedItem="{Binding CurrentClan}"
                                                   DisplayMemberPath="FullName"
                                                   FontSize="20"
@@ -346,7 +346,7 @@
                                                   HorizontalContentAlignment="Center"
                                                   VerticalContentAlignment="Center"
                                                   MinWidth="250"
-                                                  Margin="0 0 0 5"/>
+                                                  Margin="0 0 0 5"/>-->
                                         <!--<ComboBox ItemsSource="{Binding BuyerIdElements}"
                                                   SelectedItem="{Binding CurrentBuyerIdElement}"
                                                   DisplayMemberPath="Description"

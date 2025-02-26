@@ -131,6 +131,8 @@ namespace CcsSportScheduler_API.Controllers
                     Racunitems = new List<RacunItem>(),
                     TotalAmount = racunRequest.TotalAmount,
                     UserId = userDB.Id,
+                    Placeno = racunRequest.Placeno,
+                    Otpis = 0
                 };
 
                 foreach (var item in racunRequest.Items)

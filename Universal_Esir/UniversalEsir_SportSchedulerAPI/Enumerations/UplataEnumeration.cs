@@ -4,5 +4,6 @@
     {
         Standard = 0,
         Poklon = 1,
+        Pozajmica = 2,
     }
 }

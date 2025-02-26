@@ -254,7 +254,10 @@ namespace UniversalEsir.ViewModels.AppMain
                     PartHallId = payment.PartHallId,
                     Left = payment.LeftCanvas.Value,
                     Top = payment.TopCanvas.Value,
-                    Type = payment.Type.HasValue ? (PaymentPlaceTypeEnumeration)payment.Type.Value : PaymentPlaceTypeEnumeration.Normal
+                    Type = payment.Type.HasValue ? (PaymentPlaceTypeEnumeration)payment.Type.Value : PaymentPlaceTypeEnumeration.Normal,
+                    Name = payment.Name,
+                    AddPrice = payment.AddPrice,
+                    UserId = payment.UserId
                 };
 
                 if(paymentPlace.Type == PaymentPlaceTypeEnumeration.Normal)
@@ -297,7 +300,7 @@ namespace UniversalEsir.ViewModels.AppMain
                 }
                 else
                 {
-                    paymentPlace.Order = new Order(payment.Id, payment.PartHallId);
+                    paymentPlace.Order = new Order(payment.Id, payment.PartHallId, payment.Name);
                     paymentPlace.Background = Brushes.Green;
                     paymentPlace.Total = 0;
                 }

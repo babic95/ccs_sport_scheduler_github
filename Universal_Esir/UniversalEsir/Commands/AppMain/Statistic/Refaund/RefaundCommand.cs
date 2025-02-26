@@ -305,7 +305,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Refaund
                 payRefaundViewModel.Payment.Add(new Payment()
                 {
                     Amount = Card,
-                    PaymentType = PaymentTypeEnumeration.Card,
+                    PaymentType = PaymentTypeEnumeration.Crta,
                 });
             }
             if (WireTransfer > 0)

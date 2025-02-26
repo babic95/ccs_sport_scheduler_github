@@ -28,47 +28,47 @@ namespace UniversalEsir.Views.Sale
             InitializeComponent();
         }
 
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            sifra.Focus();
-            sifra.SelectAll();
-            _viewModel = DataContext as SaleViewModel;
-        }
+        //private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    sifra.Focus();
+        //    sifra.SelectAll();
+        //    _viewModel = DataContext as SaleViewModel;
+        //}
 
-        private void sifra_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                name.Focus();
-            }
-        }
-        private void name_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                popust.Focus();
-                popust.SelectAll();
-            }
-        }
+        //private void sifra_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        name.Focus();
+        //    }
+        //}
+        //private void name_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        popust.Focus();
+        //        popust.SelectAll();
+        //    }
+        //}
 
-        private void popust_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                kolicina.Focus();
-                kolicina.SelectAll();
-            }
-        }
+        //private void popust_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        kolicina.Focus();
+        //        kolicina.SelectAll();
+        //    }
+        //}
 
-        private void kolicina_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                sifra.Focus();
-                SaleViewModel saleViewModel = (SaleViewModel)DataContext;
-                saleViewModel.FindItemInDB();
-            }
-        }
+        //private void kolicina_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //    {
+        //        sifra.Focus();
+        //        SaleViewModel saleViewModel = (SaleViewModel)DataContext;
+        //        saleViewModel.FindItemInDB();
+        //    }
+        //}
         private void OnTextBoxGotFocus(object sender, RoutedEventArgs e)
         { 
             if(sender is TextBox textBox1)

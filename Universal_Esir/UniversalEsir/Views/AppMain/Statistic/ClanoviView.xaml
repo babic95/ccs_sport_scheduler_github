@@ -19,6 +19,20 @@
                 <MenuItem Header="Dodaj člana"
                           Command="{Binding AddNewClanCommand}"/>
             </MenuItem>
+            <MenuItem Header="Zaduzenja">
+                <MenuItem Header="Članarina"
+                          Command="{Binding AddNewClanarinaCommand}"/>
+                <MenuItem Header="Povrat pozajmice"
+                          Command="{Binding PovratPozajmiceCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Uplate">
+                <MenuItem Header="Uplata"
+                          Command="{Binding AddNewUplataCommand}"/>
+                <MenuItem Header="Otpis"
+                          Command="{Binding AddNewOtpisCommand}"/>
+                <MenuItem Header="Pozajmica"
+                          Command="{Binding AddNewPozajmicaCommand}"/>
+            </MenuItem>
 
         </Menu>
         <Grid Grid.Row="1">

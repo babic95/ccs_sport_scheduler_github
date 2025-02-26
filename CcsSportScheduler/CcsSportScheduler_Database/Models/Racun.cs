@@ -13,6 +13,7 @@ namespace CcsSportScheduler_Database.Models
 
         public string Id { get; set; } = null!;
         public int UserId { get; set; }
+        public int Type { get; set; }
         public string InvoiceNumber { get; set; } = null!;
         public DateTime Date { get; set; }
         public decimal TotalAmount { get; set; }

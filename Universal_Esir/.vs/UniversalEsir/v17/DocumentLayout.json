@@ -3,20 +3,60 @@
   "WorkspaceRootPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\sale\\paycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\sale\\paycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\viewmodels\\saleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\viewmodels\\saleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F396F8CB-2D18-485B-8BAD-803D67D9B250}|UniversalEsir_SportSchedulerAPI\\UniversalEsir_SportSchedulerAPI.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir_sportschedulerapi\\requestmodel\\racun\\racunrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F396F8CB-2D18-485B-8BAD-803D67D9B250}|UniversalEsir_SportSchedulerAPI\\UniversalEsir_SportSchedulerAPI.csproj|solutionrelative:universalesir_sportschedulerapi\\requestmodel\\racun\\racunrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\viewmodels\\sale\\paysaleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\viewmodels\\sale\\paysaleviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\sale\\paysale\\paysalewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\sale\\paysale\\paysalewindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\sale\\paysale\\paysalewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\sale\\paysale\\paysalewindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\tableoverview\\clickonpaymentplacecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\tableoverview\\clickonpaymentplacecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2D293963-7D20-404E-9275-139F5A194C5A}|UniversalEsir_Settings\\UniversalEsir_Settings.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir_settings\\settingsmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2D293963-7D20-404E-9275-139F5A194C5A}|UniversalEsir_Settings\\UniversalEsir_Settings.csproj|solutionrelative:universalesir_settings\\settingsmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\sale\\resetallcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\sale\\resetallcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\updatecurrentappstateviewmodelcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\updatecurrentappstateviewmodelcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\sale\\hookorderontablecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\sale\\hookorderontablecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\sale\\saleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\sale\\saleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\viewmodels\\appmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\viewmodels\\appmainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F396F8CB-2D18-485B-8BAD-803D67D9B250}|UniversalEsir_SportSchedulerAPI\\UniversalEsir_SportSchedulerAPI.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir_sportschedulerapi\\sportschedulerapi_manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F396F8CB-2D18-485B-8BAD-803D67D9B250}|UniversalEsir_SportSchedulerAPI\\UniversalEsir_SportSchedulerAPI.csproj|solutionrelative:universalesir_sportschedulerapi\\sportschedulerapi_manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\statistic\\clanovi\\saveclancommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\appmain\\statistic\\clanovi\\saveclancommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C1AC5DFF-D464-4E6F-9C0B-4D25291CDAA8}|UniversalEsir_Database\\UniversalEsir_Database.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir_database\\sqlitedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C1AC5DFF-D464-4E6F-9C0B-4D25291CDAA8}|UniversalEsir_Database\\UniversalEsir_Database.csproj|solutionrelative:universalesir_database\\sqlitedbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +66,207 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SettingsManager.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\SettingsManager.cs",
-              "RelativeDocumentMoniker": "UniversalEsir_Settings\\SettingsManager.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Settings\\SettingsManager.cs",
-              "RelativeToolTip": "UniversalEsir_Settings\\SettingsManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABLAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "ClickOnPaymentPlaceCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "ViewState": "AgIAAGYAAAAAAAAAAAAIwH0AAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T15:21:51.708Z",
-              "IsPinned": true,
+              "WhenOpened": "2025-02-26T15:22:34.987Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SaleViewModel.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\SaleViewModel.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\ViewModels\\SaleViewModel.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\SaleViewModel.cs",
+              "RelativeToolTip": "UniversalEsir\\ViewModels\\SaleViewModel.cs",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAgwIMAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:47:10.076Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "SaveClanCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "ViewState": "AgIAAEcAAAAAAAAAAAAcwFoAAABGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:56:35.91Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "PayCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\PayCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\PayCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
+              "ViewState": "AgIAAGICAAAAAAAAAAAMwDcDAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:26:05.259Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PaySaleViewModel.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\Sale\\PaySaleViewModel.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\ViewModels\\Sale\\PaySaleViewModel.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\Sale\\PaySaleViewModel.cs",
+              "RelativeToolTip": "UniversalEsir\\ViewModels\\Sale\\PaySaleViewModel.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAgwHYAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:25:48.735Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RacunRequest.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\RequestModel\\Racun\\RacunRequest.cs",
+              "RelativeDocumentMoniker": "UniversalEsir_SportSchedulerAPI\\RequestModel\\Racun\\RacunRequest.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\RequestModel\\Racun\\RacunRequest.cs",
+              "RelativeToolTip": "UniversalEsir_SportSchedulerAPI\\RequestModel\\Racun\\RacunRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAQAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T14:48:43.775Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "PaySaleWindow.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml",
               "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml",
               "RelativeToolTip": "UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-02-17T15:26:45.432Z",
+              "WhenOpened": "2025-02-26T17:35:35.812Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 9,
+              "Title": "SaleView.xaml",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "RelativeDocumentMoniker": "UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "RelativeToolTip": "UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-02-26T15:24:15.927Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ResetAllCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\ResetAllCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\ResetAllCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\ResetAllCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\Sale\\ResetAllCommand.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAwwD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T17:27:02.612Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "UpdateCurrentAppStateViewModelCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\UpdateCurrentAppStateViewModelCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\UpdateCurrentAppStateViewModelCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\UpdateCurrentAppStateViewModelCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\UpdateCurrentAppStateViewModelCommand.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAnwEgAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T17:11:35.047Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "HookOrderOnTableCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\HookOrderOnTableCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\HookOrderOnTableCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\HookOrderOnTableCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\Sale\\HookOrderOnTableCommand.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAgwCkAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T17:10:28.886Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AppMainViewModel.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\AppMainViewModel.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\ViewModels\\AppMainViewModel.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\AppMainViewModel.cs",
+              "RelativeToolTip": "UniversalEsir\\ViewModels\\AppMainViewModel.cs",
+              "ViewState": "AgIAAIIAAAAAAAAAAAAnwJQAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-02-26T17:11:53.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "SportSchedulerAPI_Manager.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
               "RelativeDocumentMoniker": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
               "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
               "RelativeToolTip": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAANwAAAAAAAAAAAAIwOQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T15:20:08.754Z",
+              "WhenOpened": "2025-02-26T15:27:17.498Z",
               "EditorCaption": ""
-            },
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "8aea6a4e-b8f3-48d5-a4bd-e926db382a14",
+        "Display": 1,
+        "X": 219,
+        "Y": -49,
+        "Width": 1389,
+        "Height": 732,
+        "WindowState": 2
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PaySaleWindow.xaml.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml.cs",
-              "RelativeDocumentMoniker": "UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml.cs",
-              "RelativeToolTip": "UniversalEsir\\Views\\Sale\\PaySale\\PaySaleWindow.xaml.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAawC4AAAAfAAAAAAAAAA==",
+              "DocumentIndex": 13,
+              "Title": "SqliteDbContext.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\SqliteDbContext.cs",
+              "RelativeDocumentMoniker": "UniversalEsir_Database\\SqliteDbContext.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Database\\SqliteDbContext.cs",
+              "RelativeToolTip": "UniversalEsir_Database\\SqliteDbContext.cs",
+              "ViewState": "AgIAAL8EAAAAAAAAAAAAANMEAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-02-17T15:17:14.604Z",
+              "WhenOpened": "2025-02-26T11:02:56.417Z",
               "EditorCaption": ""
             }
           ]

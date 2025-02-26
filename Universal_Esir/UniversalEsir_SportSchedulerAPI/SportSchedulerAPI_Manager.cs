@@ -11,6 +11,7 @@ using UniversalEsir_SportSchedulerAPI.RequestModel.Racun;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Teren;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Uplata;
 using UniversalEsir_SportSchedulerAPI.RequestModel.User;
+using UniversalEsir_SportSchedulerAPI.RequestModel.Zaduzenje;
 using UniversalEsir_SportSchedulerAPI.ResponseModel.Racuni;
 using UniversalEsir_SportSchedulerAPI.ResponseModel.Tereni;
 using UniversalEsir_SportSchedulerAPI.ResponseModel.Uplate;
@@ -22,8 +23,8 @@ namespace UniversalEsir_SportSchedulerAPI
     {
         #region Fields
 #if DEBUG
-        private string _url = @"https://tksirmium.com";
-        //private string _url = @"https://localhost:44465";
+        //private string _url = @"https://tksirmium.com";
+        private string _url = @"https://localhost:44465";
 #else
         private string _url = @"https://tksirmium.com";
 #endif
@@ -85,7 +86,7 @@ namespace UniversalEsir_SportSchedulerAPI
                 return null;
             }
         }
-        public async Task<bool> PostUsersAsync(UserRequest userRequest)
+        public async Task<UserResponse?> PostUsersAsync(UserRequest userRequest)
         {
             try
             {
@@ -99,15 +100,27 @@ namespace UniversalEsir_SportSchedulerAPI
                 if (!response.IsSuccessStatusCode)
                 {
                     Log.Error($"SportSchedulerAPI_Manager -> PostUsersAsync -> Status je: {(int)response.StatusCode} -> {response.StatusCode.ToString()} ");
-                    return false;
+                    return null;
                 }
 
-                return true;
+                try
+                {
+                    // Ovdje obradite uspešan odgovor
+                    var responseData = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var user = JsonConvert.DeserializeObject<UserResponse>(responseData);
+
+                    return user;
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("SportSchedulerAPI_Manager -> PostUsersAsync -> Odgovor nije dobar: ", ex);
+                    return null;
+                }
             }
             catch (Exception ex)
             {
                 Log.Error("SportSchedulerAPI_Manager -> PostUsersAsync -> Greska prilikom PostUser: ", ex);
-                return false;
+                return null;
             }
         }
         public async Task<bool> PutUsersAsync(UserRequest userRequest)
@@ -213,6 +226,36 @@ namespace UniversalEsir_SportSchedulerAPI
             }
         }
         #endregion Uplate
+
+        #region Zaduzenje
+        
+        public async Task<bool> PostZaduzenjeAsync(ZaduzenjeRequest zaduzenjeRequest)
+        {
+            try
+            {
+                var handler = new HttpClientHandler(); handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true;
+                HttpClient client = new HttpClient(handler);
+                client.Timeout = Timeout.InfiniteTimeSpan;
+
+                string requestUrl = $"{_url}/api/Zaduzenjes";
+
+                var response = await client.PostAsJsonAsync(requestUrl, zaduzenjeRequest).ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    Log.Error($"SportSchedulerAPI_Manager -> PostZaduzenjeAsync -> Status je: {(int)response.StatusCode} -> {response.StatusCode.ToString()} ");
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("SportSchedulerAPI_Manager -> PostZaduzenjeAsync -> Greska prilikom PostZaduzenjeAsync: ", ex);
+                return false;
+            }
+        }
+        #endregion Zaduzenje
 
         #region Obavestenja
         public async Task<bool> PostObavestenjeAsync(ObavestenjeRequest obavestenjeRequest)

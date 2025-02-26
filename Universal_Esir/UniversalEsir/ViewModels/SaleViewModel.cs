@@ -20,6 +20,8 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.ComponentModel;
 using UniversalEsir.Commands.Sale.Pay;
+using UniversalEsir.Models.TableOverview;
+using UniversalEsir.Models.AppMain.Statistic.Clanovi;
 
 namespace UniversalEsir.ViewModels
 {
@@ -28,6 +30,7 @@ namespace UniversalEsir.ViewModels
         #region Fields
         private AppMainViewModel _mainViewModel;
         private string _cashierNema;
+        private Clan _currentClan;
 
         private Visibility _tableOverviewVisibility;
         private bool _hookOrderEnable;
@@ -41,6 +44,7 @@ namespace UniversalEsir.ViewModels
         private ObservableCollection<Item> _items;
 
         private ObservableCollection<ItemInvoice> _itemsInvoice;
+        private ObservableCollection<ItemInvoice> _oldOrders;
 
         private decimal _totalAmount;
         private int _tableId;
@@ -125,6 +129,7 @@ namespace UniversalEsir.ViewModels
             }
 
             ItemsInvoice = new ObservableCollection<ItemInvoice>();
+            OldOrders = new ObservableCollection<ItemInvoice>();
             TotalAmount = 0;
 
             RunTimer();
@@ -165,6 +170,7 @@ namespace UniversalEsir.ViewModels
         #endregion Internal Properties
 
         #region Properties
+        public PartHall? CurrentPartHall { get; set; }
         public string FocusedTextBox
         {
             get { return _focusedTextBox; }
@@ -265,6 +271,15 @@ namespace UniversalEsir.ViewModels
                 OnPropertyChange(nameof(CashierNema));
             }
         }
+        public Clan CurrentClan
+        {
+            get { return _currentClan; }
+            set
+            {
+                _currentClan = value;
+                OnPropertyChange(nameof(CurrentClan));
+            }
+        }
         public bool IsEnabledRemoveOrder
         {
             get { return _isEnabledRemoveOrder; }
@@ -348,6 +363,16 @@ namespace UniversalEsir.ViewModels
                 OnPropertyChange(nameof(Items));
             }
         }
+        
+        public ObservableCollection<ItemInvoice> OldOrders
+        {
+            get { return _oldOrders; }
+            set
+            {
+                _oldOrders = value;
+                OnPropertyChange(nameof(OldOrders));
+            }
+        }
         public ObservableCollection<ItemInvoice> ItemsInvoice
         {
             get { return _itemsInvoice; }
@@ -356,7 +381,7 @@ namespace UniversalEsir.ViewModels
                 _itemsInvoice = value;
                 OnPropertyChange(nameof(ItemsInvoice));
 
-                if(value != null && value.Any())
+                if (value != null && value.Any())
                 {
                     HookOrderEnable = true;
                 }
@@ -701,11 +726,15 @@ namespace UniversalEsir.ViewModels
         }
         internal void Reset()
         {
+            CurrentOrder = null;
             CashierNema = LoggedCashier.Name;
             TableId = 0;
             TotalAmount = 0;
             ItemsInvoice = new ObservableCollection<ItemInvoice>();
+            OldOrders = new ObservableCollection<ItemInvoice>();
             HookOrderEnable = false;
+
+            TableOverviewViewModel = new TableOverviewViewModel(this);
         }
 
         internal void SendToDisplay(string nameItem, string? priceItem = null)

@@ -35,6 +35,7 @@
                Margin="0 10"/>
 
         <ScrollViewer Grid.Row="1"
+                      VerticalAlignment="Center"
                       HorizontalScrollBarVisibility="Auto"
                       VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical">
@@ -51,19 +52,13 @@
                                Margin="0 5"/>
                         <Label Height="40"
                                Foreground="Black"
-                               Content="*Tip uplate:"
+                               Content="*Datum uplate:"
                                FontSize="24"
                                HorizontalAlignment="Right"
                                Margin="0 5"/>
                         <Label Height="40"
                                Foreground="Black"
-                               Content="*JMBG:"
-                               FontSize="24"
-                               HorizontalAlignment="Right"
-                               Margin="0 5"/>
-                        <Label Height="40"
-                               Foreground="Black"
-                               Content="*Username:"
+                               Content="*Iznos:"
                                FontSize="24"
                                HorizontalAlignment="Right"
                                Margin="0 5"/>
@@ -71,6 +66,7 @@
                     <StackPanel Orientation="Vertical">
                         <ComboBox ItemsSource="{Binding Clanovi}"
                                   SelectedItem="{Binding CurrentClan}"
+                                  DisplayMemberPath="FullName"
                                   Height="40"
                                   Width="600"
                                   Foreground="Black"
@@ -78,21 +74,13 @@
                                   HorizontalContentAlignment="Center"
                                   VerticalContentAlignment="Center"
                                   Margin="0 5"/>
-                        <ComboBox ItemsSource="{Binding Source={StaticResource typesUplata}}"
-                                  SelectedItem="{Binding CurrentClan.Type}"
-                                  Height="40"
-                                  Width="600"
-                                  Foreground="Black"
-                                  FontSize="24"
-                                  HorizontalContentAlignment="Center"
-                                  VerticalContentAlignment="Center"
-                                  Margin="0 5"/>
+                       
                         <DatePicker Height="40"
                                     Width="600"
                                     Foreground="Black"
                                     FontSize="24"
                                     Margin="0 5"
-                                    SelectedDate="{Binding CurrentClan.Birthday}"/>
+                                    SelectedDate="{Binding CurrentUplata.Date}"/>
                         <TextBox Height="40"
                                  Width="600"
                                  Foreground="Black"
@@ -100,7 +88,7 @@
                                  HorizontalContentAlignment="Center"
                                  VerticalContentAlignment="Center"
                                  Margin="0 5"
-                                 Text="{Binding CurrentClan.FullName}"/>
+                                 Text="{Binding CurrentUplata.TotalAmountString}"/>
                     </StackPanel>
                 </StackPanel>
                 <Label Content="Obavezna su sva polja sa *"
@@ -118,7 +106,7 @@
                 Style="{StaticResource RoundCorner}"
                 Height="50"
                 Width="190"
-                Command="{Binding SaveClanCommand}">
+                Command="{Binding SaveUplataCommand}">
             <StackPanel Orientation="Vertical">
                 <Label HorizontalAlignment="Center"
                        HorizontalContentAlignment="Center"

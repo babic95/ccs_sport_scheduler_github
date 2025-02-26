@@ -276,7 +276,8 @@ const Schedule = ({ user }) => {
                     TerenId: terenId,
                     UserId: selectedUser,
                     StartDateTime: selectedEvent.start.toISOString(),
-                    EndDateTime: selectedEvent.end.toISOString()
+                    EndDateTime: selectedEvent.end.toISOString(),
+                    Zaduzi: 1,
                 };
 
                 await axios.post(`/api/termins/zakazi`, reservationData);

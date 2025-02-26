@@ -35,6 +35,8 @@ using DocumentFormat.OpenXml.Bibliography;
 using UniversalEsir.Views.AppMain.AuxiliaryWindows.Sale;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Racun;
 using UniversalEsir_SportSchedulerAPI;
+using UniversalEsir_SportSchedulerAPI.RequestModel.Zaduzenje;
+using UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations;
 
 namespace UniversalEsir.Commands.Sale
 {
@@ -64,17 +66,29 @@ namespace UniversalEsir.Commands.Sale
             if(_viewModel is SaleViewModel)
             {
                 SaleViewModel saleViewModel = (SaleViewModel)_viewModel;
-                if (!saleViewModel.ItemsInvoice.Any())
+                if (saleViewModel.ItemsInvoice.Any() ||
+                    saleViewModel.OldOrders.Any())
                 {
-                    MessageBox.Show("Niste uneli ni jedan artikal.",
-                        "Greška",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-                    return;
-                }
 
-                PaySaleWindow paySaleWindow = new PaySaleWindow(saleViewModel);
-                paySaleWindow.ShowDialog();
+                    foreach (var item in saleViewModel.OldOrders)
+                    {
+                        var itemInvoice = saleViewModel.ItemsInvoice.FirstOrDefault(itemInvoice => itemInvoice.Item.Id == item.Item.Id);
+
+                        if (itemInvoice != null)
+                        {
+                            itemInvoice.Quantity += item.Quantity;
+                            itemInvoice.TotalAmout += item.TotalAmout;
+                        }
+                        else
+                        {
+                            saleViewModel.ItemsInvoice.Add(item);
+                        }
+                    }
+
+
+                    PaySaleWindow paySaleWindow = new PaySaleWindow(saleViewModel);
+                    paySaleWindow.ShowDialog();
+                }
             }
             else if(_viewModel is PaySaleViewModel)
             {
@@ -86,6 +100,15 @@ namespace UniversalEsir.Commands.Sale
                 string paymentType = parameter as string;
 
                 PaySaleViewModel paySaleViewModel = (PaySaleViewModel)_viewModel;
+
+                if(paySaleViewModel.SaleViewModel.CurrentClan == null)
+                {
+                    MessageBox.Show("Niste izabrali člana!",
+                        "Greška",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    return;
+                }
 
                 paySaleViewModel.ChangeFocusCommand.Execute("Pay");
 
@@ -124,7 +147,15 @@ namespace UniversalEsir.Commands.Sale
                     return;
                 }
 
-                await FinisedSale(paySaleViewModel, 0, 0);
+                decimal povecajCenu = 0;
+
+                if (paySaleViewModel.SaleViewModel.CurrentClan.FullName.ToLower().Contains("turnir") ||
+                    paySaleViewModel.SaleViewModel.CurrentClan.FullName.ToLower().Contains("kup"))
+                {
+                    povecajCenu = 30;
+                }
+
+                await FinisedSale(paySaleViewModel, povecajCenu);
 
                 paySaleViewModel.Window.Close();
             }
@@ -176,7 +207,7 @@ namespace UniversalEsir.Commands.Sale
                         });
                         break;
                     case "Crta":
-                        var paymentCard = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Card);
+                        var paymentCard = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Crta);
                         if (paymentCard != null)
                         {
                             paymentCard.Amount += paySaleViewModel.TotalAmount;
@@ -186,13 +217,13 @@ namespace UniversalEsir.Commands.Sale
                             paySaleViewModel.Payment.Add(new Payment()
                             {
                                 Amount = paySaleViewModel.TotalAmount,
-                                PaymentType = PaymentTypeEnumeration.Card,
+                                PaymentType = PaymentTypeEnumeration.Crta,
                             });
                         }
                         _payment.Add(new Payment()
                         {
                             Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.Card,
+                            PaymentType = PaymentTypeEnumeration.Crta,
                         });
                         break;
                     case "WireTransfer":
@@ -313,7 +344,7 @@ namespace UniversalEsir.Commands.Sale
                     _payment.Add(new Payment()
                     {
                         Amount = Card,
-                        PaymentType = PaymentTypeEnumeration.Card,
+                        PaymentType = PaymentTypeEnumeration.Crta,
                     });
                 }
                 if (Check > 0)
@@ -355,7 +386,7 @@ namespace UniversalEsir.Commands.Sale
                 }
             }
         }
-        private async Task FinisedSale(PaySaleViewModel paySaleViewModel, decimal popust, decimal fiksanPopust)
+        private async Task FinisedSale(PaySaleViewModel paySaleViewModel, decimal vecaCena)
         {
             InvoceRequestFileSystemWatcher invoiceRequset = new InvoceRequestFileSystemWatcher()
             {
@@ -376,45 +407,12 @@ namespace UniversalEsir.Commands.Sale
 
             decimal total = 0;
 
-            decimal fiksanPopustPoArtiklu = 0;
-
-            if(fiksanPopust > 0)
-            {
-                fiksanPopustPoArtiklu = Decimal.Round(fiksanPopust / paySaleViewModel.ItemsInvoice.Count, 2);
-
-                decimal fiksanPopustPoArtikluStaro = 0;
-                while (true)
-                {
-                    var manjiPopust = paySaleViewModel.ItemsInvoice.Where(item => item.TotalAmout <= fiksanPopustPoArtiklu);
-
-                    if (manjiPopust != null &&
-                        manjiPopust.Any())
-                    {
-                        fiksanPopustPoArtiklu = Decimal.Round(fiksanPopust / (paySaleViewModel.ItemsInvoice.Count - manjiPopust.Count()), 2);
-                    }
-
-                    if(fiksanPopustPoArtikluStaro == fiksanPopustPoArtiklu)
-                    {
-                        break;
-                    }
-
-                    fiksanPopustPoArtikluStaro = fiksanPopustPoArtiklu;
-                }
-            }
-
             paySaleViewModel.ItemsInvoice.ToList().ForEach(item =>
             {
-                if(popust > 0)
+                if(vecaCena > 0 &&
+                !item.Item.Name.ToLower().Contains("kotizacija"))
                 {
-                    item.Item.SellingUnitPrice = Decimal.Round(item.Item.SellingUnitPrice * ((100 - popust) / 100), 2);
-                }
-                else if(fiksanPopustPoArtiklu > 0)
-                {
-                    if (item.TotalAmout > fiksanPopustPoArtiklu)
-                    {
-                        item.TotalAmout = Decimal.Round(item.TotalAmout - fiksanPopustPoArtiklu, 2);
-                        item.Item.SellingUnitPrice = Decimal.Round(item.TotalAmout / item.Quantity, 2);
-                    }
+                    item.Item.SellingUnitPrice = Decimal.Round(item.Item.SellingUnitPrice + vecaCena, 2);
                 }
 
                 ItemFileSystemWatcher itemFileSystemWatcher = new ItemFileSystemWatcher()
@@ -818,96 +816,98 @@ namespace UniversalEsir.Commands.Sale
         }
         private async Task TakingDownNorm(InvoiceDB invoice)
         {
-            SqliteDbContext sqliteDbContext = new SqliteDbContext();
-            List<ItemDB> itemsForCondition = new List<ItemDB>();
-
-            var itemsInInvoice = invoice.ItemInvoices.Where(item => item.IsSirovina == 0);
-
-            if (itemsInInvoice != null &&
-                itemsInInvoice.Any())
+            try
             {
-                itemsInInvoice.ToList().ForEach(item =>
+                List<ItemDB> itemsForCondition = new List<ItemDB>();
+                using (var dbContext =  new SqliteDbContext())
                 {
-                    var it = sqliteDbContext.Items.Find(item.ItemCode);
-                    if (it != null && item.Quantity.HasValue)
+                    var itemsInInvoice = dbContext.ItemInvoices.Where(item => item.InvoiceId == invoice.Id &&
+                    (item.IsSirovina == 0 || item.IsSirovina == null));
+
+                    if (itemsInInvoice != null && itemsInInvoice.Any())
                     {
-                        var itemInNorm = sqliteDbContext.ItemsInNorm.Where(norm => it.IdNorm == norm.IdNorm);
-
-                        if (itemInNorm.Any())
+                        foreach (var item in itemsInInvoice.ToList())
                         {
-                            itemInNorm.ToList().ForEach(norm =>
+                            var it = dbContext.Items.FirstOrDefault(i => i.Id == item.ItemCode);
+                            if (it != null && item.Quantity.HasValue)
                             {
-                                var itm = sqliteDbContext.Items.Find(norm.IdItem);
+                                var itemInNorm = dbContext.ItemsInNorm.Where(norm => it.IdNorm == norm.IdNorm);
 
-                                if (itm != null)
+                                if (itemInNorm != null && itemInNorm.Any())
                                 {
-                                    if (itm.IdNorm == null)
+                                    foreach (var norm in itemInNorm)
                                     {
-                                        itm.TotalQuantity -= item.Quantity.Value * norm.Quantity;
-                                        sqliteDbContext.Items.Update(itm);
-                                    }
-                                    else
-                                    {
-                                        var itemInNorm2 = sqliteDbContext.ItemsInNorm.Where(norm => itm.IdNorm == norm.IdNorm);
-                                        if (itemInNorm2.Any())
+                                        var itm = dbContext.Items.FirstOrDefault(i => i.Id == norm.IdItem);
+
+                                        if (itm != null)
                                         {
-                                            itemInNorm2.ToList().ForEach(norm2 =>
+                                            if (itm.IdNorm == null)
                                             {
-                                                var itm2 = sqliteDbContext.Items.Find(norm2.IdItem);
-
-                                                if (itm2 != null)
+                                                itm.TotalQuantity -= item.Quantity.Value * norm.Quantity;
+                                            }
+                                            else
+                                            {
+                                                var itemInNorm2 = dbContext.ItemsInNorm.Where(norm => itm.IdNorm == norm.IdNorm);
+                                                if (itemInNorm2.Any())
                                                 {
-                                                    if (itm2.IdNorm == null)
+                                                    foreach (var norm2 in itemInNorm2.ToList())
                                                     {
-                                                        itm2.TotalQuantity -= item.Quantity.Value * norm.Quantity * norm2.Quantity;
-                                                        sqliteDbContext.Items.Update(itm2);
-                                                    }
-                                                    else
-                                                    {
-                                                        var itemInNorm3 = sqliteDbContext.ItemsInNorm.Where(norm => itm2.IdNorm == norm2.IdNorm);
-                                                        if (itemInNorm3.Any())
-                                                        {
-                                                            itemInNorm3.ToList().ForEach(norm3 =>
-                                                            {
-                                                                var itm3 = sqliteDbContext.Items.Find(norm3.IdItem);
+                                                        var itm2 = dbContext.Items.FirstOrDefault(i => i.Id == norm2.IdItem);
 
-                                                                if (itm3 != null)
+                                                        if (itm2 != null)
+                                                        {
+                                                            if (itm2.IdNorm == null)
+                                                            {
+                                                                itm2.TotalQuantity -= item.Quantity.Value * norm.Quantity * norm2.Quantity;
+                                                            }
+                                                            else
+                                                            {
+                                                                var itemInNorm3 = dbContext.ItemsInNorm.Where(norm => itm2.IdNorm == norm2.IdNorm);
+                                                                if (itemInNorm3.Any())
                                                                 {
-                                                                    if (itm3.IdNorm == null)
+                                                                    foreach (var norm3 in itemInNorm3)
                                                                     {
-                                                                        itm3.TotalQuantity -= item.Quantity.Value * norm.Quantity * norm2.Quantity * norm3.Quantity;
-                                                                        sqliteDbContext.Items.Update(itm3);
+                                                                        var itm3 = dbContext.Items.FirstOrDefault(i => i.Id == norm3.IdItem);
+
+                                                                        if (itm3 != null)
+                                                                        {
+                                                                            if (itm3.IdNorm == null)
+                                                                            {
+                                                                                itm3.TotalQuantity -= item.Quantity.Value * norm.Quantity * norm2.Quantity * norm3.Quantity;
+                                                                            }
+                                                                        }
                                                                     }
                                                                 }
-                                                            });
-                                                        }
-                                                        else
-                                                        {
-                                                            itm2.TotalQuantity -= item.Quantity.Value * norm.Quantity * norm2.Quantity;
-                                                            sqliteDbContext.Items.Update(itm2);
+                                                                else
+                                                                {
+                                                                    itm2.TotalQuantity -= item.Quantity.Value * norm.Quantity * norm2.Quantity;
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
-                                            });
-                                        }
-                                        else
-                                        {
-                                            itm.TotalQuantity -= item.Quantity.Value * norm.Quantity;
-                                            sqliteDbContext.Items.Update(itm);
+                                                else
+                                                {
+                                                    itm.TotalQuantity -= item.Quantity.Value * norm.Quantity;
+                                                }
+                                            }
                                         }
                                     }
                                 }
-                            });
+                                else
+                                {
+                                    it.TotalQuantity -= item.Quantity.Value;
+                                }
+                                dbContext.Items.Update(it);
+                            }
                         }
-                        else
-                        {
-                            it.TotalQuantity -= item.Quantity.Value;
-                            sqliteDbContext.Items.Update(it);
-                        }
+                        await dbContext.SaveChangesAsync();
                     }
-                });
-
-                await sqliteDbContext.SaveChangesAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error($"PayCommand -> TakingDownNorm -> Greska prilikom skidanja normativa za racun {invoice.Id} - {invoice.InvoiceNumberResult}: ", ex);
             }
         }
         private async void SaveToDB(InvoceRequestFileSystemWatcher invoiceRequset,
@@ -1193,6 +1193,12 @@ namespace UniversalEsir.Commands.Sale
 
             ObservableCollection<ItemInvoice> itemsInvoice = new ObservableCollection<ItemInvoice>(paySaleViewModel.SaleViewModel.ItemsInvoice);
 
+            SqliteDbContext sqliteDbContext = new SqliteDbContext();
+
+            SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+
+            var neposlatiRacuni = sqliteDbContext.Invoices.Include(i => i.ItemInvoices).Include(i => i.PaymentInvoices).Where(i => i.IsSend == 0);
+
             InvoiceDB invoiceDB = new InvoiceDB()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -1201,83 +1207,325 @@ namespace UniversalEsir.Commands.Sale
                 TransactionType = 0,
                 SdcDateTime = DateTime.Now,
                 TotalAmount = total,
+                IsSend = 0
             };
-            SqliteDbContext sqliteDbContext = new SqliteDbContext();
             sqliteDbContext.Add(invoiceDB);
 
             sqliteDbContext.SaveChanges();
 
+
+            if(neposlatiRacuni != null &&
+                neposlatiRacuni.Any())
+            {
+                try
+                {
+                    foreach (var racun in neposlatiRacuni)
+                    {
+                        var placenoStaro = racun.PaymentInvoices.FirstOrDefault(p => p.PaymentType == PaymentTypeEnumeration.Crta);
+
+                        var kotizacijaStaro = racun.ItemInvoices.FirstOrDefault(i => i.Name.ToLower().Contains("kotizacija"));
+
+                        if (kotizacijaStaro != null)
+                        {
+                            ZaduzenjeRequest zaduzenjeRequestStaro = new ZaduzenjeRequest()
+                            {
+                                Date = DateTime.Now,
+                                TotalAmount = racun.TotalAmount.Value,
+                                Placeno = placenoStaro == null ? 0 : placenoStaro.Amout.Value,
+                                Type = (int)ZaduzenjeEnumeration.Kotizacije,
+                                UserId = paySaleViewModel.SaleViewModel.CurrentClan.Id,
+                                Opis = kotizacijaStaro != null ? kotizacijaStaro.Name : null,
+                                Otpis = 0
+                            };
+
+                            if (!sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequestStaro).Result)
+                            {
+                                MessageBox.Show("GREŠKA PRILIKOM slanja zaduzenja za kotizaciju na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                            else
+                            {
+                                racun.IsSend = 1;
+                                sqliteDbContext.Invoices.Update(racun);
+                                sqliteDbContext.SaveChanges();
+                            }
+                        }
+                        else
+                        {
+                            var prodavnicaStaro = sqliteDbContext.Items.Join(sqliteDbContext.ItemGroups,
+                                item => item.IdItemGroup,
+                                group => group.Id,
+                                (item, group) => new { Item = item, Group = group }).
+                                Where(i => i.Group.Name.ToLower().Contains("prodavnica"));
+
+                            RacunRequest racunRequestStaro = new RacunRequest()
+                            {
+                                UserId = paySaleViewModel.CurrentClan.Id,
+                                Date = DateTime.Now,
+                                TotalAmount = racun.TotalAmount.Value,
+                                Placeno = placenoStaro == null ? 0 : placenoStaro.Amout.Value,
+                                Items = new List<ItemRacunRequest>(),
+                                Type = (int)RacunEnumeration.Kafic
+                            };
+
+                            RacunRequest prodavnicaRequestStaro = new RacunRequest()
+                            {
+                                UserId = paySaleViewModel.CurrentClan.Id,
+                                Date = DateTime.Now,
+                                TotalAmount = racun.TotalAmount.Value,
+                                Placeno = placenoStaro == null ? 0 : placenoStaro.Amout.Value,
+                                Items = new List<ItemRacunRequest>(),
+                                Type = (int)RacunEnumeration.Prodavnica
+                            };
+
+                            foreach (var item in racun.ItemInvoices)
+                            {
+                                if (prodavnicaStaro.FirstOrDefault(i => i.Item.Id == item.ItemCode) != null)
+                                {
+                                    racunRequestStaro.Items.Add(new ItemRacunRequest()
+                                    {
+                                        ItemsId = item.ItemCode,
+                                        Name = item.Name,
+                                        Quantity = item.Quantity.Value,
+                                        TotalAmount = item.TotalAmout.Value,
+                                        UnitPrice = item.UnitPrice.Value
+                                    });
+                                }
+                                else
+                                {
+                                    prodavnicaRequestStaro.Items.Add(new ItemRacunRequest()
+                                    {
+                                        ItemsId = item.ItemCode,
+                                        Name = item.Name,
+                                        Quantity = item.Quantity.Value,
+                                        TotalAmount = item.TotalAmout.Value,
+                                        UnitPrice = item.UnitPrice.Value
+                                    });
+                                }
+                            }
+                            try
+                            {
+                                if (racunRequestStaro.Items.Any())
+                                {
+                                    if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequestStaro).Result)
+                                    {
+                                        MessageBox.Show("GREŠKA PRILIKOM slanja racuna za kafic na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                    else
+                                    {
+                                        racun.IsSend = 1;
+                                        sqliteDbContext.Invoices.Update(racun);
+                                        sqliteDbContext.SaveChanges();
+                                    }
+                                }
+                                if (prodavnicaRequestStaro.Items.Any())
+                                {
+                                    racun.IsSend = 0;
+                                    if (!sportSchedulerAPI_Manager.PostRacunAsync(prodavnicaRequestStaro).Result)
+                                    {
+                                        MessageBox.Show("GREŠKA PRILIKOM slanja racuna za prodavnicu na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+                                    else
+                                    {
+                                        racun.IsSend = 1;
+                                    }
+
+                                    sqliteDbContext.Invoices.Update(racun);
+                                    sqliteDbContext.SaveChanges();
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Error("PayCommand -> Black -> GREŠKA PRILIKOM slanja STAROG racuna na server", ex);
+                                MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("PayCommand -> Black -> Desila se greska: ", ex);
+                }
+            }
+
             int itemInvoiceId = 0;
             List<ItemInvoiceDB> itemsInvoiceDB = new List<ItemInvoiceDB>();
 
-            var placeno = invoiceRequset.Payment.FirstOrDefault(p => p.PaymentType == PaymentTypeEnumeration.Card);
+            var placeno = invoiceRequset.Payment.FirstOrDefault(p => p.PaymentType == PaymentTypeEnumeration.Crta);
 
-            RacunRequest racunRequest = new RacunRequest()
-            {
-                UserId = paySaleViewModel.CurrentClan.Id,
-                Date = DateTime.Now,
-                TotalAmount = total,
-                Placeno = placeno == null ? 0 : placeno.Amount,
-                Items = new List<ItemRacunRequest>()
-            };
+            var kotizacija = items.FirstOrDefault(i => i.Name.ToLower().Contains("kotizacija"));
 
-            items.ForEach(item =>
+            if (kotizacija != null)
             {
-                ItemDB? itemDB = sqliteDbContext.Items.Find(item.Id);
-                if (itemDB != null)
+                ZaduzenjeRequest zaduzenjeRequest = new ZaduzenjeRequest()
                 {
-                    itemsInvoiceDB.Add(new ItemInvoiceDB()
-                    {
-                        Id = itemInvoiceId++,
-                        Quantity = item.Quantity,
-                        TotalAmout = item.TotalAmount,
-                        Label = item.Label,
-                        Name = item.Name,
-                        UnitPrice = item.UnitPrice,
-                        ItemCode = item.Id
-                        //Item = itemDB
-                    });
+                    Date = DateTime.Now,
+                    TotalAmount = total,
+                    Placeno = placeno == null ? 0 : placeno.Amount,
+                    Type = (int)ZaduzenjeEnumeration.Kotizacije,
+                    UserId = paySaleViewModel.SaleViewModel.CurrentClan.Id,
+                    Opis = kotizacija != null ? kotizacija.Name : null,
+                    Otpis = 0
+                };
 
-                    racunRequest.Items.Add(new ItemRacunRequest()
+                foreach (var item in items)
+                {
+                    ItemDB? itemDB = sqliteDbContext.Items.Find(item.Id);
+                    if (itemDB != null)
                     {
-                        ItemsId = item.Id,
-                        Name = item.Name,
-                        Quantity = item.Quantity,
-                        TotalAmount = item.TotalAmount,
-                        UnitPrice = item.UnitPrice
-                    });
+                        itemsInvoiceDB.Add(new ItemInvoiceDB()
+                        {
+                            Id = itemInvoiceId++,
+                            Quantity = item.Quantity,
+                            TotalAmout = item.TotalAmount,
+                            Label = item.Label,
+                            Name = item.Name,
+                            UnitPrice = item.UnitPrice,
+                            ItemCode = item.Id
+                            //Item = itemDB
+                        });
+
+                        itemsInvoiceDB.ForEach(itemInvoice =>
+                        {
+                            itemInvoice.InvoiceId = invoiceDB.Id;
+                            //itemInvoice.Invoice = invoice;
+
+                            sqliteDbContext.Add(itemInvoice);
+                        });
+                        sqliteDbContext.SaveChanges();
+                    }
                 }
-            });
 
-            itemsInvoiceDB.ForEach(itemInvoice =>
+                if (!sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
+                {
+                    MessageBox.Show("GREŠKA PRILIKOM slanja zaduzenja za kotizaciju na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    invoiceDB.IsSend = 1;
+                    sqliteDbContext.Invoices.Update(invoiceDB);
+                    sqliteDbContext.SaveChanges();
+                }
+            }
+            else
             {
-                itemInvoice.InvoiceId = invoiceDB.Id;
-                //itemInvoice.Invoice = invoice;
+                var prodavnica = sqliteDbContext.Items.Join(sqliteDbContext.ItemGroups,
+                    item => item.IdItemGroup,
+                    group => group.Id,
+                    (item, group) => new { Item = item, Group = group }).
+                    Where(i => i.Group.Name.ToLower().Contains("prodavnica"));
 
-                sqliteDbContext.Add(itemInvoice);
-            });
-            sqliteDbContext.SaveChanges(); 
+                RacunRequest racunRequest = new RacunRequest()
+                {
+                    UserId = paySaleViewModel.CurrentClan.Id,
+                    Date = DateTime.Now,
+                    TotalAmount = total,
+                    Placeno = placeno == null ? 0 : placeno.Amount,
+                    Items = new List<ItemRacunRequest>(),
+                    Type = (int)RacunEnumeration.Kafic
+                };
+
+                RacunRequest prodavnicaRequest = new RacunRequest()
+                {
+                    UserId = paySaleViewModel.CurrentClan.Id,
+                    Date = DateTime.Now,
+                    TotalAmount = total,
+                    Placeno = placeno == null ? 0 : placeno.Amount,
+                    Items = new List<ItemRacunRequest>(),
+                    Type = (int)RacunEnumeration.Prodavnica
+                };
+
+                foreach (var item in items)
+                {
+                    ItemDB? itemDB = sqliteDbContext.Items.Find(item.Id);
+                    if (itemDB != null)
+                    {
+                        itemsInvoiceDB.Add(new ItemInvoiceDB()
+                        {
+                            Id = itemInvoiceId++,
+                            Quantity = item.Quantity,
+                            TotalAmout = item.TotalAmount,
+                            Label = item.Label,
+                            Name = item.Name,
+                            UnitPrice = item.UnitPrice,
+                            ItemCode = item.Id
+                            //Item = itemDB
+                        });
+
+                        if (prodavnica.FirstOrDefault(i => i.Item.Id == item.Id) != null)
+                        {
+                            prodavnicaRequest.Items.Add(new ItemRacunRequest()
+                            {
+                                ItemsId = item.Id,
+                                Name = item.Name,
+                                Quantity = item.Quantity,
+                                TotalAmount = item.TotalAmount,
+                                UnitPrice = item.UnitPrice
+                            });
+                        }
+                        else
+                        {
+                            racunRequest.Items.Add(new ItemRacunRequest()
+                            {
+                                ItemsId = item.Id,
+                                Name = item.Name,
+                                Quantity = item.Quantity,
+                                TotalAmount = item.TotalAmount,
+                                UnitPrice = item.UnitPrice
+                            });
+                        }
+                    }
+                }
+
+                itemsInvoiceDB.ForEach(itemInvoice =>
+                {
+                    itemInvoice.InvoiceId = invoiceDB.Id;
+                    //itemInvoice.Invoice = invoice;
+
+                    sqliteDbContext.Add(itemInvoice);
+                });
+                sqliteDbContext.SaveChanges();
+
+                TakingDownNorm(invoiceDB);
+
+                try
+                {
+                    if (racunRequest.Items.Any())
+                    {
+                        if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
+                        {
+                            MessageBox.Show("GREŠKA PRILIKOM slanja racuna za kafic na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            invoiceDB.IsSend = 1;
+                            sqliteDbContext.Invoices.Update(invoiceDB);
+                            sqliteDbContext.SaveChanges();
+                        }
+                    }
+                    if (prodavnicaRequest.Items.Any())
+                    {
+                        invoiceDB.IsSend = 0;
+                        if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
+                        {
+                            MessageBox.Show("GREŠKA PRILIKOM slanja racuna za prodavnicu na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                        else
+                        {
+                            invoiceDB.IsSend = 1;
+                        }
+
+                        sqliteDbContext.Invoices.Update(invoiceDB);
+                        sqliteDbContext.SaveChanges();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error("PayCommand -> Black -> GREŠKA PRILIKOM slanja racuna na server", ex);
+                    MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    }
+            }
 
             TakingDownOrder(invoiceDB, paySaleViewModel, paySaleViewModel.SaleViewModel.TableId, itemsInvoice);
-
-            //dodaj skidanje sa stanja
-
-
-            try
-            {
-                SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
-
-                if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
-                {
-                    MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            catch(Exception ex)
-            {
-                Log.Error("PayCommand -> Black -> GREŠKA PRILIKOM slanja racuna na server", ex);
-                MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-
 
             paySaleViewModel.SaleViewModel.Reset();
         }

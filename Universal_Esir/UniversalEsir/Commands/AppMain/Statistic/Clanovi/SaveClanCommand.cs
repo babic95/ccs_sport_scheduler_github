@@ -10,6 +10,7 @@ using UniversalEsir.Models.AppMain.Statistic.Clanovi;
 using UniversalEsir.ViewModels.AppMain.Statistic;
 using UniversalEsir.Views.AppMain.AuxiliaryWindows.Statistic.Clanovi;
 using UniversalEsir_Database;
+using UniversalEsir_Database.Models;
 using UniversalEsir_Logging;
 using UniversalEsir_SportSchedulerAPI;
 using UniversalEsir_SportSchedulerAPI.RequestModel.User;
@@ -39,9 +40,9 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
             {
                 if(string.IsNullOrEmpty(_currentViewModel.CurrentClan.FullName) ||
                     string.IsNullOrEmpty(_currentViewModel.CurrentClan.Contact) ||
-                    _currentViewModel.CurrentClan.Birthday == null ||
+                    _currentViewModel.CurrentClan.Year == null ||
                     _currentViewModel.CurrentClan.Type == null ||
-                    string.IsNullOrEmpty(_currentViewModel.CurrentClan.Email) ||
+                    _currentViewModel.CurrentClan.Pol == null ||
                     string.IsNullOrEmpty(_currentViewModel.CurrentClan.Jmbg) ||
                     string.IsNullOrEmpty(_currentViewModel.CurrentClan.Password) ||
                     string.IsNullOrEmpty(_currentViewModel.CurrentClan.Username))
@@ -58,7 +59,8 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
                     KlubId = 1,
                     FullName = _currentViewModel.CurrentClan.FullName,
                     Contact = _currentViewModel.CurrentClan.Contact,
-                    Birthday = _currentViewModel.CurrentClan.Birthday,
+                    Year = _currentViewModel.CurrentClan.Year,
+                    Pol = (int)_currentViewModel.CurrentClan.Pol,
                     Email = _currentViewModel.CurrentClan.Email,
                     Jmbg = _currentViewModel.CurrentClan.Jmbg,
                     Password = _currentViewModel.CurrentClan.Password,
@@ -70,8 +72,39 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
 
                 if (_currentViewModel.CurrentClan.Id == -1)
                 {
-                    if (sportSchedulerAPI_Manager.PostUsersAsync(userRequest).Result)
+                    var newUser = sportSchedulerAPI_Manager.PostUsersAsync(userRequest).Result;
+                    if (newUser != null)
                     {
+                        try
+                        {
+                            SqliteDbContext sqliteDbContext = new SqliteDbContext();
+                            PaymentPlaceDB paymentPlaceDB = new PaymentPlaceDB()
+                            {
+                                UserId = newUser.Id,
+                                Name = newUser.Username,
+                                Height = 20,
+                                Width = 20,
+                                LeftCanvas = 0,
+                                TopCanvas = 0,
+                                PartHallId = 1,
+                                Type = 0,
+                                AddPrice = newUser.FullName.ToLower().Contains("turnir") ||
+                                newUser.FullName.ToLower().Contains("kup") ? 30 : 0,
+                            };
+
+                            sqliteDbContext.PaymentPlaces.Add(paymentPlaceDB);
+                            sqliteDbContext.SaveChanges();
+                        }
+                        catch (Exception ex) 
+                        {
+                            Log.Error("SaveClanCommand -> Desila se greska prilikom kreiranja platnog mesta za novog clana: ", ex);
+                            MessageBox.Show("Desila se greška prilikom kreiranja platnog mesta za novog korisnika!",
+                            "Greška",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+                            return;
+                        }
+
                         MessageBox.Show("Uspešno ste dodali novog clana!",
                                                     "Uspeh",
                                                     MessageBoxButton.OK,

@@ -15,6 +15,7 @@ namespace UniversalEsir_SportSchedulerAPI.ResponseModel.Uplate
         public decimal Razduzeno { get; set; }
         public DateTime Date { get; set; }
         public int TypeUplata { get; set; }
+        public string Description { get; set; }
         public UserResponse User { get; set; } = null!;
     }
 }
