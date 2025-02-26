@@ -99,6 +99,7 @@ const FinancialCard = ({ user }) => {
                     <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
                     <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
                     <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {item.description}</Typography>
                 </div>
             );
         }
@@ -135,6 +136,10 @@ const FinancialCard = ({ user }) => {
                 return 'Kotizacije';
             case 5:
                 return 'Prodavnica';
+            case 6:
+                return 'Otpis pozajmice';
+            case 7:
+                return 'Članarina';
             default:
                 return 'Nepoznato';
         }
@@ -173,6 +178,8 @@ const FinancialCard = ({ user }) => {
                         <MenuItem value="3">Poklon</MenuItem>
                         <MenuItem value="4">Kotizacije</MenuItem>
                         <MenuItem value="5">Prodavnica</MenuItem>
+                        <MenuItem value="6">Otpis pozajmice</MenuItem>
+                        <MenuItem value="7">Članarina</MenuItem>
                     </Select>
                 </FormControl>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>

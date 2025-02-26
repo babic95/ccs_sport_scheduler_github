@@ -294,7 +294,17 @@ namespace CcsSportScheduler_API.Controllers
                 });
             }
 
-            var cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == userDB.Type);
+            NaplataTermina? cenaTermina = null; 
+
+            if(userDB.Type == (int)UserEnumeration.Plivajuci &&
+                userDB.FreeTermin > 0)
+            {
+                cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == (int)TerminEnumeration.Free);
+            }
+            else
+            {
+                cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == userDB.Type);
+            }
 
             if (cenaTermina == null)
             {

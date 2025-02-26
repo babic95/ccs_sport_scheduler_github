@@ -10,5 +10,8 @@
         Klupski = 5,
         Hala = 6,
         Turnir = 7,
+        Radnik = 8,
+        Moderator = 9,
+        Free = 10,
     }
 }

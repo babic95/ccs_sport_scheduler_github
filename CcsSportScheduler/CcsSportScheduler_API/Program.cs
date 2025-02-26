@@ -67,6 +67,7 @@ builder.Services.AddDbContext<SportSchedulerContext>((DbContextOptionsBuilder op
 
 
 builder.Services.AddHostedService<BackgroundRefresh>();
+builder.Services.AddHostedService<AddNewFreeTerminBackground>(); 
 
 var awsOption = builder.Configuration.GetAWSOptions("service2");
 awsOption.Credentials = new BasicAWSCredentials(builder.Configuration["AWS:AccessKey"], builder.Configuration["AWS:SecretKey"]);

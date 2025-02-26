@@ -158,7 +158,7 @@ namespace CcsSportScheduler_API.Controllers
             {
                 userDB = new User()
                 {
-                    Birthday = user.Birthday,
+                    Year = user.Year,
                     Contact = user.Contact,
                     Email = user.Email,
                     FullName = user.FullName,
@@ -166,7 +166,8 @@ namespace CcsSportScheduler_API.Controllers
                     KlubId = user.KlubId.Value,
                     Password = user.Password,
                     Username = user.Username,
-                    Type = user.Type.Value
+                    Type = user.Type.Value,
+                    Pol = user.Pol,
                 };
 
                 await _context.Users.AddAsync(userDB);
@@ -317,7 +318,7 @@ namespace CcsSportScheduler_API.Controllers
                 userDB.Email = user.Email;
                 //userDB.Password = user.Password;
                 //userDB.Username = user.Username;
-                userDB.Birthday = user.Birthday;
+                userDB.Year = user.Year;
                 userDB.FullName = user.FullName;
                 userDB.Jmbg = user.Jmbg;
                 //userDB.Type = user.Type;

@@ -195,7 +195,8 @@ namespace CcsSportScheduler_API.Controllers
         [HttpPost]
         public async Task<IActionResult> SendAllUser(ObavestenjeRequest obavestenjeRequest)
         {
-            foreach (var userDB in _context.Users.ToList())
+            foreach (var userDB in _context.Users.Where(u => u.Type != (int)UserEnumeration.Moderator && 
+            u.Type != (int)UserEnumeration.Radnik).ToList())
             {
                 try
                 {

@@ -3,7 +3,7 @@ import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import axios from 'axios';
-import { Modal, Button, Typography, Box, Container, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Modal, Button, Typography, Box, Container, FormControl, InputLabel, Select, MenuItem, CircularProgress } from '@mui/material';
 import { styled } from '@mui/system';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Schedule.css'; // Uverite se da je CSS datoteka pravilno importovana
@@ -25,7 +25,7 @@ const CustomBox = styled(Box)({
 
 const Schedule = ({ user }) => {
     const calendarRef = useRef(null);
-    const [terenId, setTerenId] = useState();
+    const [terenId, setTerenId] = useState('');
     const [tereni, setTereni] = useState([]);
     const [termini, setTermini] = useState([]);
     const [selectedEvent, setSelectedEvent] = useState(null);
@@ -35,6 +35,9 @@ const Schedule = ({ user }) => {
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [selectedNotification, setSelectedNotification] = useState(null);
+    const [users, setUsers] = useState([]);
+    const [selectedUser, setSelectedUser] = useState(user.id);
+    const [loading, setLoading] = useState(true);
     const { startOfWeek, endOfWeek } = getWeekRange();
 
     const [financialData, setFinancialData] = useState({
@@ -78,11 +81,8 @@ const Schedule = ({ user }) => {
         const fetchTereni = async () => {
             try {
                 const response = await axios.get('/api/Klubs/teren/1');
-
                 console.log(response.data);
-
                 setTereni(response.data);
-
                 if (response.data.length > 0) {
                     setTerenId(response.data[0].id);  // Postavite prvi element kao inicijalni teren
                 }
@@ -91,13 +91,31 @@ const Schedule = ({ user }) => {
             }
         };
 
-        fetchTereni();
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get('/api/users/getAllUsersFromKlub/1');
+                console.log(response.data);
+                setUsers(response.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        const fetchData = async () => {
+            setLoading(true);
+            await fetchTereni();
+            await fetchUsers();
+        };
+
+        fetchData();
+
+
     }, []);
 
     const fetchTermini = async (startDate, endDate) => {
         try {
-            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${user.id}`);
-
+            setLoading(true);
+            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${selectedUser}`);
             console.log(response.data);
 
             const zakazaniTermini = response.data.map((termin, i) => ({
@@ -111,19 +129,19 @@ const Schedule = ({ user }) => {
                     type: termin.user ? termin.user.type : null
                 },
                 className: termin.user ? eventClassNames({ event: { extendedProps: { type: termin.user.type } } }) : '',
-                backgroundColor: termin.user ? eventBackgoundCollor({ event: { extendedProps: { type: termin.user.type } } }) : 'white', // Postavljanje bele boje za slobodne termine
+                backgroundColor: termin.type ? eventBackgoundCollor({ event: { extendedProps: { type: termin.type } } }) : 'white', // Postavljanje bele boje za slobodne termine
                 textColor: 'black',
                 borderColor: 'black',
             }));
 
             setTermini([]);
-
             console.log(zakazaniTermini);
-
             setTermini(zakazaniTermini);
+
         } catch (error) {
             console.error('Error fetching termini:', error);
         }
+        setLoading(false);
     };
 
     const generateSlobodniTermini = (startDate, endDate, cenaTermina) => {
@@ -161,7 +179,7 @@ const Schedule = ({ user }) => {
 
     const fetchFinancialData = async () => {
         try {
-            const response = await axios.get(`/api/users/financialCard/${user.id}`);
+            const response = await axios.get(`/api/users/financialCard/${selectedUser}`);
             setFinancialData(response.data);
         } catch (error) {
             console.error('Error fetching financial data:', error);
@@ -169,12 +187,12 @@ const Schedule = ({ user }) => {
     };
 
     useEffect(() => {
-        if (terenId !== null) {
+        if (terenId !== '') {
             fetchTermini(startOfWeek, endOfWeek);
         }
         fetchUnreadNotifications();
         fetchFinancialData();
-    }, [terenId]);
+    }, [terenId, selectedUser]);
 
     const fetchUnreadNotifications = async () => {
         try {
@@ -211,6 +229,7 @@ const Schedule = ({ user }) => {
         }
 
         setSelectedEvent({
+            id: null,
             start: startTime,
             end: endTime,
             price: price,
@@ -223,6 +242,7 @@ const Schedule = ({ user }) => {
     const handleEventClick = (clickInfo) => {
         console.log(clickInfo.event.extendedProps);
         setSelectedEvent({
+            id: clickInfo.event.id,
             start: new Date(clickInfo.event.startStr),
             end: new Date(clickInfo.event.endStr),
             user: clickInfo.event.extendedProps.user,
@@ -230,13 +250,31 @@ const Schedule = ({ user }) => {
         });
         setShowModal(true);
     };
+    
+    const handleOtkazi = async () => {
+        if (selectedEvent) {
+            try {
+                
+                await axios.delete(`/api/termins/${user.id}/${selectedEvent.id}`);
+                alert('Termin uspešno otkazan!');
 
+                setTermini([]);
+                fetchTermini(startOfWeek, endOfWeek);
+
+                setSelectedEvent(null);
+                setShowModal(false);
+            } catch (error) {
+                console.error('Error making otkazivanje:', error);
+                alert('Greška prilikom otkazivanja: ' + (error.response?.data?.message || error.message));
+            }
+        }
+    };
     const handleReservation = async () => {
         if (selectedEvent) {
             try {
                 const reservationData = {
                     TerenId: terenId,
-                    UserId: user.id,
+                    UserId: selectedUser,
                     StartDateTime: selectedEvent.start.toISOString(),
                     EndDateTime: selectedEvent.end.toISOString()
                 };
@@ -315,8 +353,6 @@ const Schedule = ({ user }) => {
                 return 'event-neclanski'; // Neclanski
             case 5:
                 return 'event-klupski'; // Klupski
-            case 6:
-                return 'event-moderator'; // Moderator
             default:
                 return '';
         }
@@ -336,8 +372,6 @@ const Schedule = ({ user }) => {
                 return 'blue'; // Neclanski
             case 5:
                 return 'brown'; // Klupski
-            case 6:
-                return 'purple'; // Moderator
             default:
                 return '';
         }
@@ -363,155 +397,189 @@ const Schedule = ({ user }) => {
             <div className="legend-item">
                 <div className="legend-color event-klupski"></div> Klupski
             </div>
-            <div className="legend-item">
-                <div className="legend-color event-moderator"></div> Moderator
-            </div>
         </Box>
     );
 
-    const saldo = financialData.totalRazduzenje - financialData.totalZaduzenje;
+    const saldo = financialData.totalRazduzenje - financialData.totalRazduzenje;
 
     return (
         <Container component="main" maxWidth="lg" sx={{ mt: 8, mb: 4 }}>
-            <Typography variant="h6" align="center" gutterBottom>
-                Ukupno zaduženje: {financialData.totalZaduzenje} RSD
-            </Typography>
-            <Typography variant="h6" align="center" gutterBottom>
-                Ukupno razduženje: {financialData.totalRazduzenje} RSD
-            </Typography>
-            <Typography variant="h6" align="center" gutterBottom sx={{ color: saldo < 0 ? 'red' : saldo > 0 ? 'green' : 'inherit' }}>
-                SALDO: {saldo} RSD
-            </Typography>
+            {loading ? (
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                    <CircularProgress />
+                </Box>
+            ) : (
+                <>
+                    <Typography variant="h6" align="center" gutterBottom>
+                        Ukupno zaduženje: {financialData.totalZaduzenje} RSD
+                    </Typography>
+                    <Typography variant="h6" align="center" gutterBottom>
+                        Ukupno razduženje: {financialData.totalRazduzenje} RSD
+                    </Typography>
+                    <Typography variant="h6" align="center" gutterBottom sx={{ color: saldo < 0 ? 'red' : saldo > 0 ? 'green' : 'inherit' }}>
+                        SALDO: {saldo} RSD
+                    </Typography>
 
-            <Typography component="h1" variant="h4" color="primary" align="center" gutterBottom>
-                Rezervacija Termina
-            </Typography>
+                    <Typography component="h1" variant="h4" color="primary" align="center" gutterBottom>
+                        Rezervacija Termina
+                    </Typography>
 
-            <FormControl fullWidth variant="outlined" sx={{ mb: 3 }}>
-                <InputLabel id="teren-label" sx={{ color: '#000000' }}>Izaberi Teren</InputLabel>
-                <Select
-                    labelId="teren-label"
-                    value={terenId}
-                    onChange={(e) => setTerenId(e.target.value)}
-                    label="Izaberi Teren"
-                    sx={{ color: '#000000' }}
-                >
-                    {tereni.map((teren) => (
-                        <MenuItem key={teren.id} value={teren.id}>
-                            {teren.name}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                    <FormControl fullWidth variant="outlined" sx={{ mb: 3 }}>
+                        <InputLabel id="teren-label" sx={{ color: '#000000' }}>Izaberi Teren</InputLabel>
+                        <Select
+                            labelId="teren-label"
+                            value={terenId}
+                            onChange={(e) => setTerenId(e.target.value)}
+                            label="Izaberi Teren"
+                            sx={{ color: '#000000' }}
+                        >
+                            {tereni.map((teren) => (
+                                <MenuItem key={teren.id} value={teren.id}>
+                                    {teren.name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
 
-            <div className="centerContainer">
-                <Legend />
-            </div>
+                    {(user.type === 9 || user.type === 8) && (
+                        <FormControl fullWidth variant="outlined" sx={{ mb: 3 }}>
+                            <InputLabel id="user-label" sx={{ color: '#000000' }}>Izaberi Korisnika</InputLabel>
+                            <Select
+                                labelId="user-label"
+                                value={selectedUser}
+                                onChange={(e) => setSelectedUser(e.target.value)}
+                                label="Izaberi Korisnika"
+                                sx={{ color: '#000000' }}
+                            >
+                                {users.map((user) => (
+                                    <MenuItem key={user.id} value={user.id}>
+                                        {user.username}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    )}
 
-            <div className="zoom-container">
-                <div className="zoom-content" ref={calendarRef}>
-                    <FullCalendar
-                        plugins={[timeGridPlugin, interactionPlugin]}
-                        initialView="timeGridWeek"
-                        headerToolbar={{
-                            left: '',
-                            center: 'title',
-                            right: ''
-                        }}
-                        locale='sr' // Serbian locale
-                        allDaySlot={false}
-                        slotMinTime="07:00:00"
-                        slotMaxTime="23:00:00"
-                        slotDuration="01:00:00" // Interval je sada sat vremena
-                        events={termini}
-                        dateClick={handleDateClick}
-                        eventClick={handleEventClick}
-                        eventClassNames={eventClassNames} // Dodato za prilagođene klase
-                        initialDate={selectedDate} // Postavljanje početnog datuma na današnji dan
-                        validRange={{ start: startOfWeek, end: endOfWeek }}
-                        views={{
-                            timeGridWeek: {
-                                type: 'timeGridWeek',
-                                duration: { weeks: 1 },
-                                buttonText: 'Nedelja'
-                            },
-                            timeGridDay: {
-                                type: 'timeGridDay',
-                                duration: { days: 1 },
-                                buttonText: 'Dan'
-                            }
-                        }}
-                        firstDay={selectedDate.getDay()} // Postavljanje prvog dana na trenutni dan
-                        handleWindowResize={true}
-                        windowResizeDelay={100}
-                        longPressDelay={0}
-                        selectLongPressDelay={0}
-                        eventLongPressDelay={0}
-                        timeZone='local' // Postavljanje vremenske zone na lokalnu
-                        eventContent={renderEventContent} // Koristi prilagođeni sadržaj događaja
-                    />
-                </div>
-            </div>
+                    <div className="centerContainer">
+                        <Legend />
+                    </div>
+                    <div className="zoom-container">
+                        <div className="zoom-content" ref={calendarRef}>
+                            <FullCalendar
+                                plugins={[timeGridPlugin, interactionPlugin]}
+                                initialView="timeGridWeek"
+                                headerToolbar={{
+                                    left: '',
+                                    center: 'title',
+                                    right: ''
+                                }}
+                                locale='sr' // Serbian locale
+                                allDaySlot={false}
+                                slotMinTime="07:00:00"
+                                slotMaxTime="23:00:00"
+                                slotDuration="01:00:00" // Interval je sada sat vremena
+                                events={termini}
+                                dateClick={handleDateClick}
+                                eventClick={handleEventClick}
+                                eventClassNames={eventClassNames} // Dodato za prilagođene klase
+                                initialDate={selectedDate} // Postavljanje početnog datuma na današnji dan
+                                validRange={{ start: startOfWeek, end: endOfWeek }}
+                                views={{
+                                    timeGridWeek: {
+                                        type: 'timeGridWeek',
+                                        duration: { weeks: 1 },
+                                        buttonText: 'Nedelja'
+                                    },
+                                    timeGridDay: {
+                                        type: 'timeGridDay',
+                                        duration: { days: 1 },
+                                        buttonText: 'Dan'
+                                    }
+                                }}
+                                firstDay={selectedDate.getDay()} // Postavljanje prvog dana na trenutni dan
+                                handleWindowResize={true}
+                                windowResizeDelay={100}
+                                longPressDelay={0}
+                                selectLongPressDelay={0}
+                                eventLongPressDelay={0}
+                                timeZone='local' // Postavljanje vremenske zone na lokalnu
+                                eventContent={renderEventContent} // Koristi prilagođeni sadržaj događaja
+                            />
+                        </div>
+                    </div>
 
-            {notifications.length !== 0 ? (
-                <Notifications
-                    notifications={notifications}
-                    handleNotificationClick={handleNotificationClick}
-                    style={{ marginTop: '10px' }}
-                />
-            ) : null}
+                    {notifications.length !== 0 ? (
+                        <Notifications
+                            notifications={notifications}
+                            handleNotificationClick={handleNotificationClick}
+                            style={{ marginTop: '10px' }}
+                        />
+                    ) : null}
 
-            {selectedNotification && (
-                <CustomModal
-                    open={Boolean(selectedNotification)}
-                    onClose={handleModalClose}
-                    aria-labelledby="notification-modal-title"
-                    aria-describedby="notification-modal-description"
-                >
-                    <CustomBox>
-                        <Typography variant="h6" id="notification-modal-title">Obaveštenje</Typography>
-                        <Typography id="notification-modal-description">{selectedNotification.description}</Typography>
-                        <Button variant="contained" color="primary" onClick={handleModalClose} sx={{ display: 'block', margin: '20px auto' }}>Zatvori</Button>
-                    </CustomBox>
-                </CustomModal>
-            )}
+                    {selectedNotification && (
+                        <CustomModal
+                            open={Boolean(selectedNotification)}
+                            onClose={handleModalClose}
+                            aria-labelledby="notification-modal-title"
+                            aria-describedby="notification-modal-description"
+                        >
+                            <CustomBox>
+                                <Typography variant="h6" id="notification-modal-title">Obaveštenje</Typography>
+                                <Typography id="notification-modal-description">{selectedNotification.description}</Typography>
+                                <Button variant="contained" color="primary" onClick={handleModalClose} sx={{ display: 'block', margin: '20px auto' }}>Zatvori</Button>
+                            </CustomBox>
+                        </CustomModal>
+                    )}
 
-            {showModal && (
-                <CustomModal
-                    open={showModal}
-                    onClose={() => setShowModal(false)}
-                    aria-labelledby="reservation-modal-title"
-                    aria-describedby="reservation-modal-description"
-                >
-                    <CustomBox>
-                        {selectedEvent && selectedEvent.user ? (
-                            <>
-                                <Typography variant="h6" id="reservation-modal-title">Pregled Termina</Typography>
-                                <Typography variant="body1">Rezervisano od: {selectedEvent.user.username}</Typography>
-                                <Typography variant="body1">Početak: {formatDateTime(selectedEvent.start)}</Typography>
-                                <Typography variant="body1">Kraj: {formatDateTime(selectedEvent.end)}</Typography>
-                                <Button variant="contained" color="primary" onClick={() => setShowModal(false)} sx={{ display: 'block', margin: '20px auto' }}>
-                                    Zatvori
-                                </Button>
-                            </>
-                        ) : (
-                            <>
-                                <Typography variant="h6" id="reservation-modal-title">Zakazivanje Termina</Typography>
-                                <Typography variant="body1">Početak: {formatDateTime(selectedEvent.start)}</Typography>
-                                <Typography variant="body1">Kraj: {formatDateTime(selectedEvent.end)}</Typography>
-                                <Typography variant="body1">Cena: {selectedEvent.price} RSD</Typography>
-                                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
-                                    <Button variant="contained" color="secondary" onClick={() => setShowModal(false)}>
-                                        Zatvori
-                                    </Button>
-                                    <Button variant="contained" color="primary" onClick={handleReservation}>
-                                        Rezerviši
-                                    </Button>
-                                </Box>
-                            </>
-                        )}
-                    </CustomBox>
-                </CustomModal>
+                    {showModal && (
+                        <CustomModal
+                            open={showModal}
+                            onClose={() => setShowModal(false)}
+                            aria-labelledby="reservation-modal-title"
+                            aria-describedby="reservation-modal-description"
+                        >
+                            <CustomBox>
+                                {selectedEvent && selectedEvent.user ? (
+                                    <>
+                                        <Typography variant="h6" id="reservation-modal-title">Pregled Termina</Typography>
+                                        <Typography variant="body1">Rezervisano od: {selectedEvent.user.username}</Typography>
+                                        <Typography variant="body1">Početak: {formatDateTime(selectedEvent.start)}</Typography>
+                                            <Typography variant="body1">Kraj: {formatDateTime(selectedEvent.end)}</Typography>
+                                            {user.id === selectedEvent.user.id || user.type === 9 || user.type === 8 ?
+                                                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+                                                    <Button variant="contained" color="secondary" onClick={() => setShowModal(false)}>
+                                                        Zatvori
+                                                    </Button>
+                                                    <Button variant="contained" color="primary" onClick={handleOtkazi}>
+                                                        Otkaži
+                                                    </Button>
+                                                </Box> : 
+                                                <Button variant="contained" color="primary" onClick={() => setShowModal(false)} sx={{ display: 'block', margin: '20px auto' }}>
+                                                    Zatvori
+                                                </Button>
+                                            }
+                                        
+                                    </>
+                                ) : (
+                                    <>
+                                        <Typography variant="h6" id="reservation-modal-title">Zakazivanje Termina</Typography>
+                                        <Typography variant="body1">Početak: {formatDateTime(selectedEvent.start)}</Typography>
+                                        <Typography variant="body1">Kraj: {formatDateTime(selectedEvent.end)}</Typography>
+                                        <Typography variant="body1">Cena: {selectedEvent.price} RSD</Typography>
+                                        <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between' }}>
+                                            <Button variant="contained" color="secondary" onClick={() => setShowModal(false)}>
+                                                Zatvori
+                                            </Button>
+                                            <Button variant="contained" color="primary" onClick={handleReservation}>
+                                                Rezerviši
+                                            </Button>
+                                        </Box>
+                                    </>
+                                )}
+                            </CustomBox>
+                        </CustomModal>
+                    )}
+                </>
             )}
         </Container>
     );
