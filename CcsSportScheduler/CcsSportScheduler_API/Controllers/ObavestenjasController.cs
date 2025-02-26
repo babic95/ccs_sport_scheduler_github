@@ -190,6 +190,42 @@ namespace CcsSportScheduler_API.Controllers
 
             return Ok();
         }
+        // POST: api/Obavestenjas/sendAllUser
+        [Route("sendAllUser")]
+        [HttpPost]
+        public async Task<IActionResult> SendAllUser(ObavestenjeRequest obavestenjeRequest)
+        {
+            foreach (var userDB in _context.Users.ToList())
+            {
+                try
+                {
+                    Obavestenja obavestenja = new Obavestenja()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        Date = TimeZoneInfo.ConvertTime(DateTime.Now,
+                        TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")),
+                        PrvoSlanje = (int)ObavestenjaEnumeration.Ostalo,
+                        UserId = userDB.Id,
+                        Description = Encoding.UTF8.GetBytes(obavestenjeRequest.Description),
+                    };
+
+                    await _context.Obavestenjas.AddAsync(obavestenja);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception ex)
+                {
+                    return Conflict(new ErrorResponse
+                    {
+                        Controller = "ObavestenjasController",
+                        Message = $"{ex.Message}",
+                        Code = ErrorEnumeration.Exception,
+                        Action = "Post"
+                    });
+                }
+            }
+
+            return Ok();
+        }
 
         // POST: api/Obavestenjas/Seen/id
         [Route("seen/{id}")]
