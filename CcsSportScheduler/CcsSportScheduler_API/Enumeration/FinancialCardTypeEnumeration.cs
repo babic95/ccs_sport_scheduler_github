@@ -7,6 +7,7 @@
         Uplate = 2,
         Poklon = 3,
         Kotizacije = 4,
-        Prodavnica = 5
+        Prodavnica = 5,
+        OtpisPozajmice = 6,
     }
 }

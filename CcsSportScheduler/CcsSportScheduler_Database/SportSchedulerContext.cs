@@ -404,6 +404,8 @@ namespace CcsSportScheduler_Database
 
                 entity.Property(e => e.TerenId).HasColumnName("Teren_id");
 
+                entity.Property(e => e.Type).HasColumnName("type");
+
                 entity.Property(e => e.TerminLigaId)
                     .HasMaxLength(36)
                     .HasColumnName("TerminLiga_id");
@@ -622,10 +624,6 @@ namespace CcsSportScheduler_Database
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.Birthday)
-                    .HasColumnType("datetime")
-                    .HasColumnName("birthday");
-
                 entity.Property(e => e.Contact)
                     .HasMaxLength(45)
                     .HasColumnName("contact");
@@ -639,6 +637,10 @@ namespace CcsSportScheduler_Database
                     .HasColumnName("email");
 
                 entity.Property(e => e.FreeTermin).HasColumnName("freeTermin");
+
+                entity.Property(e => e.Pol).HasColumnName("pol");
+
+                entity.Property(e => e.Year).HasColumnName("year");
 
                 entity.Property(e => e.FullName)
                     .HasMaxLength(100)

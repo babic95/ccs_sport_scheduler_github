@@ -349,7 +349,15 @@ namespace CcsSportScheduler_API.Controllers
                 {
                     var startTermin = new TimeOnly(terminRequest.StartDateTime.Hour, terminRequest.StartDateTime.Minute);
 
-                    var naplataTermina = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id == userDB.Type);
+                    int terminType = (int)UserEnumeration.Vanredni;
+
+                    if (userDB.Type == (int)UserEnumeration.Moderator ||
+                        userDB.Type == (int)UserEnumeration.Radnik)
+                    {
+                        terminType = (int)UserEnumeration.Neclanski;
+                    }
+
+                    var naplataTermina = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id == terminType);
 
                     if (naplataTermina == null)
                     {
@@ -364,6 +372,17 @@ namespace CcsSportScheduler_API.Controllers
 
                     decimal cenaTermina = naplataTermina.Price;
 
+                    if (userDB.Type == (int)UserEnumeration.Plivajuci &&
+                        userDB.FreeTermin > 0)
+                    {
+                        cenaTermina = 0;
+                        userDB.FreeTermin--;
+
+                        _context.Users.Update(userDB);
+
+                        terminType = (int)UserEnumeration.Plivajuci;
+                    }
+
                     var popustTermina = await _context.Popustiterminas.FirstOrDefaultAsync(p => p.TypeUser == userDB.Type);
 
                     if (popustTermina != null)
@@ -376,6 +395,7 @@ namespace CcsSportScheduler_API.Controllers
                         Id = Guid.NewGuid().ToString(),
                         TerenId = terminRequest.TerenId,
                         UserId = terminRequest.UserId,
+                        Type = terminType,
                         DateRezervacije = TimeZoneInfo.ConvertTime(DateTime.Now,
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")),
                         StartDateTime = terminRequest.StartDateTime,
@@ -441,7 +461,8 @@ namespace CcsSportScheduler_API.Controllers
             }
 
             if (terminDB.UserId != idUser &&
-                userDB.Type != (int)UserEnumeration.Moderator)
+                userDB.Type != (int)UserEnumeration.Moderator &&
+                userDB.Type != (int)UserEnumeration.Radnik)
             {
                 return NotFound(new ErrorResponse
                 {
@@ -455,8 +476,9 @@ namespace CcsSportScheduler_API.Controllers
             var vremeDoTermina = terminDB.StartDateTime.Subtract(TimeZoneInfo.ConvertTime(DateTime.Now,
                     TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")));
 
-            if (vremeDoTermina.Ticks < new TimeSpan(8, 0, 0).Ticks &&
-                userDB.Type != (int)UserEnumeration.Moderator)
+            if (vremeDoTermina.Ticks < new TimeSpan(5, 30, 0).Ticks &&
+                userDB.Type != (int)UserEnumeration.Moderator &&
+                userDB.Type != (int)UserEnumeration.Radnik)
             {
                 return NotFound(new ErrorResponse
                 {

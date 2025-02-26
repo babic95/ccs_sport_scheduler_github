@@ -1,6 +1,6 @@
 ﻿namespace CcsSportScheduler_API.Enumeration
 {
-    public enum UserEnumeration
+    public enum TerminEnumeration
     {
         Fiksni = 0,
         Plivajuci = 1,
@@ -10,7 +10,5 @@
         Klupski = 5,
         Hala = 6,
         Turnir = 7,
-        Radnik = 8,
-        Moderator = 9,
     }
 }

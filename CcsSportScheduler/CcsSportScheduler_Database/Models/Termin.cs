@@ -13,6 +13,7 @@ namespace CcsSportScheduler_Database.Models
         public string Id { get; set; } = null!;
         public int TerenId { get; set; }
         public int? UserId { get; set; }
+        public int Type { get; set; }
         public string? TerminLigaId { get; set; }
         public string? TerminTurnirId { get; set; }
         public DateTime StartDateTime { get; set; }

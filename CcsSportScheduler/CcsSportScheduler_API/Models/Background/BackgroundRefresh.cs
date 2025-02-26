@@ -13,7 +13,7 @@ namespace CcsSportScheduler_API.Models.Background
         private Timer? _timerDan;
         private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<BackgroundRefresh> _logger;
-        private readonly int satiObavestenja = 3;
+        private readonly int satiObavestenja = 6;
 
         public BackgroundRefresh(IServiceProvider serviceProvider, ILogger<BackgroundRefresh> logger)
         {
@@ -122,8 +122,8 @@ namespace CcsSportScheduler_API.Models.Background
 
                         if (obavestenjeDB == null)
                         {
-                            string obavestenjeText = $"Poštovani korisniče, danas imate termin u {t.StartDateTime.Hour}:{t.StartDateTime.Minute}. " +
-                                $"Ukoliko želite da otkažete termin bez naknade molimo Vas da to učinite najkasnije do {t.StartDateTime.Hour - satiObavestenja}:{t.StartDateTime.Minute - 30}.";
+                            string obavestenjeText = $"Poštovani korisniče, danas imate termin u {t.StartDateTime.Hour}:00. " +
+                                $"Ukoliko želite da otkažete termin bez naknade molimo Vas da to učinite najkasnije do {t.StartDateTime.Hour - satiObavestenja}:30.";
 
                             obavestenjeDB = new Obavestenja()
                             {
