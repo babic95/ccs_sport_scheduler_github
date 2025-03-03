@@ -356,6 +356,10 @@ namespace CcsSportScheduler_API.Controllers
                     {
                         terminType = (int)UserEnumeration.Neclanski;
                     }
+                    else if(terminRequest.Zaduzi == 0)
+                    {
+                        terminType = userDB.Type;
+                    }
 
                     var naplataTermina = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id == terminType);
 
@@ -400,8 +404,8 @@ namespace CcsSportScheduler_API.Controllers
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")),
                         StartDateTime = terminRequest.StartDateTime,
                         EndDateTime = terminRequest.EndDateTime == null ? terminRequest.StartDateTime.AddHours(1) : terminRequest.EndDateTime,
-                        Price = cenaTermina,
-                        Placeno = terminRequest.Zaduzi == 1 ? 0 : cenaTermina
+                        Price = terminRequest.Zaduzi == 1 ? cenaTermina : 0,
+                        Placeno = 0
                     };
 
                     await _context.Termins.AddAsync(terminDB);
