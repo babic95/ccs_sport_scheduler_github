@@ -114,7 +114,7 @@ namespace CcsSportScheduler_API.Controllers
                     TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")),
                     TotalAmount = uplataRequest.TotalAmount,
                     TypeUplata = uplataRequest.TypeUplata,
-                    Razduzeno = 0
+                    Razduzeno = 0,
                 };
 
                 var termini = _context.Termins.Where(t => t.UserId == uplataRequest.UserId &&
@@ -172,7 +172,7 @@ namespace CcsSportScheduler_API.Controllers
 
                 decimal uplataTotal = uplataRequest.TotalAmount;
 
-                for (var date = odDatuma; date <= doDatuma; date = date.AddDays(1)) 
+                for (var date = odDatuma.Date; date <= doDatuma; date = date.AddDays(1)) 
                 {
                     if (termini != null &&
                         termini.Any())

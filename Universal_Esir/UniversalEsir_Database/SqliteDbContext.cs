@@ -7,6 +7,7 @@ using UniversalEsir_Logging;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using System.Security.Claims;
 
 namespace UniversalEsir_Database
 {
@@ -1034,6 +1035,7 @@ namespace UniversalEsir_Database
                 {
                     sql = string.Format("CREATE TABLE {0} (" +
                         "'Id' TEXT NOT NULL," +
+                        "'ClanId' INTEGER NOT NULL," + 
                         "'DateAndTimeOfIssue'   TEXT," +
                         "'Cashier'   TEXT," +
                         "'BuyerId'   TEXT," +
@@ -1070,11 +1072,15 @@ namespace UniversalEsir_Database
                         "); ", SQLiteManagerTableNames.Invoice);
                     CreateTable(SQLiteManagerTableNames.Invoice, sql);
                 }
-                
                 else
                 {
                     try
                     {
+                        sql = string.Format("ALTER TABLE {0}  " +
+                           "ADD COLUMN 'ClanId'    INTEGER NOT NULL " +
+                           "; ", SQLiteManagerTableNames.Invoice);
+                        CreateTable(SQLiteManagerTableNames.Invoice, sql);
+
                         sql = string.Format("ALTER TABLE {0}  " +
                            "ADD COLUMN 'KnjizenjePazaraId'    TEXT " +
                            "; ", SQLiteManagerTableNames.Invoice);

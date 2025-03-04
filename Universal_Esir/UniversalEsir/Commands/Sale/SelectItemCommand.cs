@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using UniversalEsir.ViewModels.Sale;
 
 namespace UniversalEsir.Commands.Sale
 {
@@ -51,22 +52,35 @@ namespace UniversalEsir.Commands.Sale
 
             ItemInvoice? itemInvoice = _viewModel.ItemsInvoice.Where(item => item.Item.Id == itemDB.Id).FirstOrDefault();
 
+            decimal povecajCenu = 0;
+            if (_viewModel.CurrentClan.FullName.ToLower().Contains("turnir") ||
+                    _viewModel.CurrentClan.FullName.ToLower().Contains("kup"))
+            {
+                povecajCenu = 30;
+            }
+
             if (itemInvoice is not null)
             {
                 itemInvoice.Quantity += quantity;
 
-                itemInvoice.TotalAmout += itemDB.SellingUnitPrice * quantity;
+                itemInvoice.TotalAmout += (itemDB.SellingUnitPrice + povecajCenu) * quantity;
 
-                _viewModel.TotalAmount += itemDB.SellingUnitPrice * quantity;
+                _viewModel.TotalAmount += (itemDB.SellingUnitPrice + povecajCenu) * quantity;
             }
             else
             {
-                _viewModel.ItemsInvoice.Add(new ItemInvoice(new Item(itemDB), quantity));
+                var item = new Item(itemDB)
+                {
+                    SellingUnitPrice = itemDB.SellingUnitPrice + povecajCenu
+                };
+                itemInvoice = new ItemInvoice(item, quantity);
 
-                _viewModel.TotalAmount += itemDB.SellingUnitPrice * quantity;
+                _viewModel.ItemsInvoice.Add(itemInvoice);
+
+                _viewModel.TotalAmount += (itemDB.SellingUnitPrice + povecajCenu) * quantity;
             }
 
-            _viewModel.SendToDisplay(itemDB.Name, string.Format("{0:#,##0.00}", itemDB.SellingUnitPrice).Replace(',', '#').Replace('.', ',').Replace('#', '.'));
+            _viewModel.SendToDisplay(itemDB.Name, string.Format("{0:#,##0.00}", (itemDB.SellingUnitPrice + povecajCenu)).Replace(',', '#').Replace('.', ',').Replace('#', '.'));
 
             if (_viewModel.ItemsInvoice.Any())
             {

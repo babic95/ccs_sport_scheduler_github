@@ -44,36 +44,43 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
                         MessageBoxImage.Error);
                     return;
                 }
+                var result = MessageBox.Show("Da li ste sigurni da želite da sačuvate pozajmicu?",
+                    "Upozorenje",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
-                UplataRequest uplataRequest = new UplataRequest()
+                if (result == MessageBoxResult.Yes)
                 {
-                    UserId = _currentViewModel.CurrentClan.Id,
-                    Date = _currentViewModel.CurrentUplata.Date,
-                    TotalAmount = _currentViewModel.CurrentUplata.TotalAmount,
-                    TypeUplata = (int)UplataEnumeration.Pozajmica,
-                    Description = _currentViewModel.CurrentUplata.Description
-                };
+                    UplataRequest uplataRequest = new UplataRequest()
+                    {
+                        UserId = _currentViewModel.CurrentClan.Id,
+                        Date = _currentViewModel.CurrentUplata.Date,
+                        TotalAmount = _currentViewModel.CurrentUplata.TotalAmount,
+                        TypeUplata = (int)UplataEnumeration.Pozajmica,
+                        Description = _currentViewModel.CurrentUplata.Description
+                    };
 
-                SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+                    SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
 
-                if (sportSchedulerAPI_Manager.PostUplataAsync(uplataRequest).Result)
-                {
-                    MessageBox.Show("Uspešno ste dodali pozajmicu!",
-                                                "Uspeh",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Information);
+                    if (sportSchedulerAPI_Manager.PostUplataAsync(uplataRequest).Result)
+                    {
+                        MessageBox.Show("Uspešno ste dodali pozajmicu!",
+                                                    "Uspeh",
+                                                    MessageBoxButton.OK,
+                                                    MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom dodavanja pozajmice!",
+                            "Greška",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+
+                        return;
+                    }
+
+                    _currentViewModel.CurrentWindow.Close();
                 }
-                else
-                {
-                    MessageBox.Show("Greška prilikom dodavanja pozajmice!",
-                        "Greška",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-
-                    return;
-                }
-
-                _currentViewModel.CurrentWindow.Close();
             }
             catch (Exception ex)
             {

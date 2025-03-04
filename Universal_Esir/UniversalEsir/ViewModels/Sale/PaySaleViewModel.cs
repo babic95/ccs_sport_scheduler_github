@@ -103,7 +103,7 @@ namespace UniversalEsir.ViewModels.Sale
             BuyerVisibility = Visibility.Hidden;
             SplitOrder = false;
 
-            Payment = new List<Payment>();
+            //Payment = new List<Payment>();
 
             ItemsInvoice = SaleViewModel.ItemsInvoice;
             TotalAmount = SaleViewModel.TotalAmount;
@@ -827,7 +827,7 @@ namespace UniversalEsir.ViewModels.Sale
         #endregion Properties
 
         #region Internal Properties
-        internal List<Payment> Payment { get; set; }
+        internal Payment Payment { get; set; }
         internal SaleViewModel SaleViewModel { get; set; }
         internal Window Window { get; set; }
         #endregion Internal Properties

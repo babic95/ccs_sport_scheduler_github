@@ -253,6 +253,14 @@ namespace UniversalEsir.ViewModels
 
                         itemsInUnprocessedOrder.ToList().ForEach(item =>
                         {
+                            //if (paymentPlace.Name.ToLower().Contains("turnir") ||
+                            //paymentPlace.Name.ToLower().Contains("kup"))
+                            //{
+                            //    povecajCenu = 30;
+                            //}
+
+                            item.Item.SellingUnitPrice += paymentPlace.AddPrice;
+
                             ItemInvoice itemInvoice = new ItemInvoice(new Item(item.Item), item.ItemInUnprocessedOrder.Quantity);
                             items.Add(itemInvoice);
                             total += itemInvoice.TotalAmout;

@@ -44,7 +44,7 @@ namespace UniversalEsir_Common.Models.Invoice.FileSystemWatcher
         /// List of Payments for the invoice, where each Payment defines it's method and amount
         /// </summary>
         [JsonProperty("payment")]
-        public IEnumerable<Payment> Payment { get; set; }
+        public Payment Payment { get; set; }
         /// <summary>
         /// Mandatory only in case Invoice Type is Refund, Copy or Normal Sale connected to an Advance Sale. 
         /// In all cases, this field must contain Invoice Number of previously issued invoice. 

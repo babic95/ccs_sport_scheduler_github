@@ -943,17 +943,15 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
                 }
             });
 
-            invoiceRequset.Payment.ToList().ForEach(payment =>
+            
+            PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
             {
-                PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
-                {
-                    InvoiceId = invoiceDB.Id,
-                    Amout = payment.Amount,
-                    PaymentType = payment.PaymentType
-                };
+                InvoiceId = invoiceDB.Id,
+                Amout = invoiceRequset.Payment.Amount,
+                PaymentType = invoiceRequset.Payment.PaymentType
+            };
 
-                sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
-            });
+            sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
             sqliteDbContext.SaveChanges();
 
             if(responseJson.TaxItems != null &&

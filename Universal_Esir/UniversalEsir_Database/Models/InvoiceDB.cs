@@ -15,6 +15,7 @@ namespace UniversalEsir_Database.Models
         }
 
         public string Id { get; set; } = null!;
+        public int ClanId { get; set; }
         public string? Porudzbenica { get; set; }
         public string? KnjizenjePazaraId { get; set; }
         public DateTime? DateAndTimeOfIssue { get; set; }

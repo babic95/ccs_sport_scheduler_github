@@ -37,6 +37,7 @@ using UniversalEsir_SportSchedulerAPI.RequestModel.Racun;
 using UniversalEsir_SportSchedulerAPI;
 using UniversalEsir_SportSchedulerAPI.RequestModel.Zaduzenje;
 using UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations;
+using UniversalEsir.Enums;
 
 namespace UniversalEsir.Commands.Sale
 {
@@ -50,7 +51,6 @@ namespace UniversalEsir.Commands.Sale
         private const int ERROR_LOCK_VIOLATION = 33;
 
         private DateTime _timer;
-        private List<Payment> _payment;
 
         public PayCommand(ViewModelBase viewModel)
         {
@@ -136,23 +136,17 @@ namespace UniversalEsir.Commands.Sale
                 //}
 
 
+                decimal povecajCenu = 0;
+
                 AddPayment(paySaleViewModel, paymentType);
 
-                if (!paySaleViewModel.Payment.Any())
+                if (paySaleViewModel.Payment == null)
                 {
                     MessageBox.Show("Niste uneli način plaćanja",
                         "Greška",
                         MessageBoxButton.OK,
                         MessageBoxImage.Error);
                     return;
-                }
-
-                decimal povecajCenu = 0;
-
-                if (paySaleViewModel.SaleViewModel.CurrentClan.FullName.ToLower().Contains("turnir") ||
-                    paySaleViewModel.SaleViewModel.CurrentClan.FullName.ToLower().Contains("kup"))
-                {
-                    povecajCenu = 30;
                 }
 
                 await FinisedSale(paySaleViewModel, povecajCenu);
@@ -180,209 +174,25 @@ namespace UniversalEsir.Commands.Sale
         }
         private void AddPayment(PaySaleViewModel paySaleViewModel, string paymentType)
         {
-            _payment = new List<Payment>();
-
+            paySaleViewModel.Payment = null;
             if (!string.IsNullOrEmpty(paymentType))
             {
                 switch (paymentType)
                 {
                     case "Platio":
-                        var paymentCash = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Cash);
-                        if (paymentCash != null)
+                        paySaleViewModel.Payment = new Payment()
                         {
-                            paymentCash.Amount += paySaleViewModel.TotalAmount;
-                        }
-                        else
-                        {
-                            paySaleViewModel.Payment.Add(new Payment()
-                            {
-                                Amount = paySaleViewModel.TotalAmount,
-                                PaymentType = PaymentTypeEnumeration.Cash,
-                            });
-                        }
-                        _payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
+                            Amount = 0,
                             PaymentType = PaymentTypeEnumeration.Cash,
-                        });
+                        };
                         break;
                     case "Crta":
-                        var paymentCard = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Crta);
-                        if (paymentCard != null)
+                        paySaleViewModel.Payment = new Payment()
                         {
-                            paymentCard.Amount += paySaleViewModel.TotalAmount;
-                        }
-                        else
-                        {
-                            paySaleViewModel.Payment.Add(new Payment()
-                            {
-                                Amount = paySaleViewModel.TotalAmount,
-                                PaymentType = PaymentTypeEnumeration.Crta,
-                            });
-                        }
-                        _payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
+                            Amount = 0,
                             PaymentType = PaymentTypeEnumeration.Crta,
-                        });
+                        };
                         break;
-                    case "WireTransfer":
-                        paySaleViewModel.Payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.WireTransfer,
-                        });
-                        _payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.WireTransfer,
-                        });
-                        break;
-                    case "Otpremnica":
-                        paySaleViewModel.Payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.Otpremnica,
-                        });
-                        _payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.Otpremnica,
-                        });
-                        break;
-                    case "Ponuda":
-                        paySaleViewModel.Payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.Ponuda,
-                        });
-                        _payment.Add(new Payment()
-                        {
-                            Amount = paySaleViewModel.TotalAmount,
-                            PaymentType = PaymentTypeEnumeration.Ponuda,
-                        });
-                        break;
-                    case "Avans":
-                        LastAdvanceInvoiceWindow lastAdvanceInvoiceWindow = new LastAdvanceInvoiceWindow(paySaleViewModel);
-                        lastAdvanceInvoiceWindow.ShowDialog();
-
-                        if (string.IsNullOrEmpty(paySaleViewModel.LastAdvanceInvoice))
-                        {
-                            MessageBox.Show("Niste uneli poslednji broj Avansa",
-                                "Greška",
-                                MessageBoxButton.OK,
-                                MessageBoxImage.Error);
-                            return;
-                        }
-
-                        paySaleViewModel.Payment.Add(new Payment()
-                        {
-                            Amount = 0,
-                            PaymentType = PaymentTypeEnumeration.WireTransfer,
-                        });
-                        _payment.Add(new Payment()
-                        {
-                            Amount = 0,
-                            PaymentType = PaymentTypeEnumeration.WireTransfer,
-                        });
-                        break;
-                }
-            }
-            else
-            {
-                decimal Other = Convert.ToDecimal(paySaleViewModel.Other);
-                decimal Cash = Convert.ToDecimal(paySaleViewModel.Cash);
-                decimal Card = Convert.ToDecimal(paySaleViewModel.Card);
-                decimal Check = Convert.ToDecimal(paySaleViewModel.Check);
-                decimal WireTransfer = Convert.ToDecimal(paySaleViewModel.WireTransfer);
-                decimal Voucher = Convert.ToDecimal(paySaleViewModel.Voucher);
-                decimal MobileMoney = Convert.ToDecimal(paySaleViewModel.MobileMoney);
-                if (Other > 0)
-                {
-                    paySaleViewModel.Payment.Add(new Payment()
-                    {
-                        Amount = Other,
-                        PaymentType = PaymentTypeEnumeration.Other,
-                    });
-                }
-                if (Cash > 0)
-                {
-                    var payment = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Cash);
-                    if (payment != null)
-                    {
-                        payment.Amount += Cash;
-                    }
-                    else
-                    {
-                        paySaleViewModel.Payment.Add(new Payment()
-                        {
-                            Amount = Cash,
-                            PaymentType = PaymentTypeEnumeration.Cash,
-                        });
-                    }
-                    _payment.Add(new Payment()
-                    {
-                        Amount = Cash,
-                        PaymentType = PaymentTypeEnumeration.Cash,
-                    });
-                }
-                if (Card > 0)
-                {
-                    var payment = paySaleViewModel.Payment.FirstOrDefault(pay => pay.PaymentType == PaymentTypeEnumeration.Cash);
-                    if (payment != null)
-                    {
-                        payment.Amount += Card;
-                    }
-                    else
-                    {
-                        paySaleViewModel.Payment.Add(new Payment()
-                        {
-                            Amount = Card,
-                            PaymentType = PaymentTypeEnumeration.Cash,
-                        });
-                    }
-                    _payment.Add(new Payment()
-                    {
-                        Amount = Card,
-                        PaymentType = PaymentTypeEnumeration.Crta,
-                    });
-                }
-                if (Check > 0)
-                {
-                    paySaleViewModel.Payment.Add(new Payment()
-                    {
-                        Amount = Check,
-                        PaymentType = PaymentTypeEnumeration.Cash,
-                    });
-                }
-                if (WireTransfer > 0)
-                {
-                    paySaleViewModel.Payment.Add(new Payment()
-                    {
-                        Amount = WireTransfer,
-                        PaymentType = PaymentTypeEnumeration.WireTransfer,
-                    });
-                    _payment.Add(new Payment()
-                    {
-                        Amount = WireTransfer,
-                        PaymentType = PaymentTypeEnumeration.WireTransfer,
-                    });
-                }
-                if (Voucher > 0)
-                {
-                    paySaleViewModel.Payment.Add(new Payment()
-                    {
-                        Amount = Voucher,
-                        PaymentType = PaymentTypeEnumeration.Voucher,
-                    });
-                }
-                if (MobileMoney > 0)
-                {
-                    paySaleViewModel.Payment.Add(new Payment()
-                    {
-                        Amount = MobileMoney,
-                        PaymentType = PaymentTypeEnumeration.MobileMoney,
-                    });
                 }
             }
         }
@@ -430,6 +240,8 @@ namespace UniversalEsir.Commands.Sale
                 total += itemFileSystemWatcher.TotalAmount;
             });
             invoiceRequset.Items = items;
+
+            invoiceRequset.Payment.Amount = total;
 #if CRNO
             Black(invoiceRequset, paySaleViewModel, total, items);
 #else
@@ -647,11 +459,11 @@ namespace UniversalEsir.Commands.Sale
                 ItemDB? itemDB = sqliteDbContext.Items.Find(item.Item.Id);
                 if (itemDB != null)
                 {
-                    if(itemDB.IdNorm != null)
+                    if (itemDB.IdNorm != null)
                     {
                         var norms = sqliteDbContext.ItemsInNorm.Where(norm => norm.IdNorm == itemDB.IdNorm);
 
-                        if(norms != null &&
+                        if (norms != null &&
                             norms.Any())
                         {
                             norms.ForEachAsync(norm =>
@@ -669,7 +481,7 @@ namespace UniversalEsir.Commands.Sale
                                             norms2.ForEachAsync(norm2 =>
                                             {
                                                 var normItem2 = sqliteDbContext.Items.Find(norm2.IdItem);
-                                                if(normItem2 != null)
+                                                if (normItem2 != null)
                                                 {
                                                     if (normItem2.IdNorm != null)
                                                     {
@@ -682,7 +494,7 @@ namespace UniversalEsir.Commands.Sale
                                                                 var normItem3 = sqliteDbContext.Items.Find(norm3.IdItem);
                                                                 if (normItem3 != null)
                                                                 {
-                                                                    decimal unitPrice = normItem3.InputUnitPrice != null && normItem3.InputUnitPrice.HasValue ? 
+                                                                    decimal unitPrice = normItem3.InputUnitPrice != null && normItem3.InputUnitPrice.HasValue ?
                                                                     normItem3.InputUnitPrice.Value : 0;
 
                                                                     var itemInvoice = new ItemInvoiceDB()
@@ -738,7 +550,7 @@ namespace UniversalEsir.Commands.Sale
                                             var itemInvoice = new ItemInvoiceDB()
                                             {
                                                 Id = itemInvoiceId++,
-                                                Quantity = Decimal.Round(item.Quantity  * norm.Quantity, 3),
+                                                Quantity = Decimal.Round(item.Quantity * norm.Quantity, 3),
                                                 TotalAmout = Decimal.Round(Decimal.Round(item.Quantity * norm.Quantity, 3) * unitPrice, 2),
                                                 Label = normItem.Label,
                                                 Name = normItem.Name,
@@ -799,18 +611,18 @@ namespace UniversalEsir.Commands.Sale
                 }
             });
 
-            _payment.ForEach(payment =>
+            if (invoiceRequset.Payment != null)
             {
                 PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
                 {
                     InvoiceId = invoiceDB.Id,
-                    Amout = payment.Amount,
-                    PaymentType = payment.PaymentType
+                    Amout = invoiceRequset.Payment.Amount,
+                    PaymentType = invoiceRequset.Payment.PaymentType
                 };
 
                 sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
-            });
-            await sqliteDbContext.SaveChangesAsync();
+            }
+            sqliteDbContext.SaveChanges();
 
             return invoiceDB;
         }
@@ -1003,17 +815,14 @@ namespace UniversalEsir.Commands.Sale
                 });
                 sqliteDbContext.SaveChanges();
 
-                _payment.ForEach(payment =>
+                PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
                 {
-                    PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
-                    {
-                        InvoiceId = invoiceDB.Id,
-                        Amout = payment.Amount,
-                        PaymentType = payment.PaymentType
-                    };
+                    InvoiceId = invoiceDB.Id,
+                    Amout = paySaleViewModel.Payment.Amount,
+                    PaymentType = paySaleViewModel.Payment.PaymentType
+                };
 
-                    sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
-                });
+                sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
 
                 sqliteDbContext.SaveChanges();
 
@@ -1128,17 +937,15 @@ namespace UniversalEsir.Commands.Sale
                 });
                 sqliteDbContext.SaveChanges();
 
-                _payment.ForEach(payment =>
+                
+                PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
                 {
-                    PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
-                    {
-                        InvoiceId = invoiceDB.Id,
-                        Amout = payment.Amount,
-                        PaymentType = payment.PaymentType
-                    };
+                    InvoiceId = invoiceDB.Id,
+                    Amout = paySaleViewModel.Payment.Amount,
+                    PaymentType = paySaleViewModel.Payment.PaymentType
+                };
 
-                    sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
-                });
+                sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
 
                 sqliteDbContext.SaveChanges();
 
@@ -1197,8 +1004,6 @@ namespace UniversalEsir.Commands.Sale
 
             SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
 
-            var neposlatiRacuni = sqliteDbContext.Invoices.Include(i => i.ItemInvoices).Include(i => i.PaymentInvoices).Where(i => i.IsSend == 0);
-
             InvoiceDB invoiceDB = new InvoiceDB()
             {
                 Id = Guid.NewGuid().ToString(),
@@ -1207,14 +1012,29 @@ namespace UniversalEsir.Commands.Sale
                 TransactionType = 0,
                 SdcDateTime = DateTime.Now,
                 TotalAmount = total,
-                IsSend = 0
+                IsSend = 0,
+                ClanId = paySaleViewModel.SaleViewModel.CurrentClan.Id,
             };
             sqliteDbContext.Add(invoiceDB);
 
             sqliteDbContext.SaveChanges();
 
+            if (invoiceRequset.Payment != null)
+            {
+                PaymentInvoiceDB paymentInvoice = new PaymentInvoiceDB()
+                {
+                    InvoiceId = invoiceDB.Id,
+                    Amout = invoiceRequset.Payment.Amount,
+                    PaymentType = invoiceRequset.Payment.PaymentType
+                };
 
-            if(neposlatiRacuni != null &&
+                sqliteDbContext.PaymentInvoices.Add(paymentInvoice);
+            }
+            sqliteDbContext.SaveChanges();
+
+            var neposlatiRacuni = sqliteDbContext.Invoices.Include(i => i.PaymentInvoices).Include(i => i.ItemInvoices).Where(i => i.IsSend == 0 &&
+            i.Id != invoiceDB.Id);
+            if (neposlatiRacuni != null &&
                 neposlatiRacuni.Any())
             {
                 try
@@ -1233,7 +1053,7 @@ namespace UniversalEsir.Commands.Sale
                                 TotalAmount = racun.TotalAmount.Value,
                                 Placeno = placenoStaro == null ? 0 : placenoStaro.Amout.Value,
                                 Type = (int)ZaduzenjeEnumeration.Kotizacije,
-                                UserId = paySaleViewModel.SaleViewModel.CurrentClan.Id,
+                                UserId = racun.ClanId,
                                 Opis = kotizacijaStaro != null ? kotizacijaStaro.Name : null,
                                 Otpis = 0
                             };
@@ -1259,7 +1079,7 @@ namespace UniversalEsir.Commands.Sale
 
                             RacunRequest racunRequestStaro = new RacunRequest()
                             {
-                                UserId = paySaleViewModel.CurrentClan.Id,
+                                UserId = racun.ClanId,
                                 Date = DateTime.Now,
                                 TotalAmount = racun.TotalAmount.Value,
                                 Placeno = placenoStaro == null ? 0 : placenoStaro.Amout.Value,
@@ -1269,7 +1089,7 @@ namespace UniversalEsir.Commands.Sale
 
                             RacunRequest prodavnicaRequestStaro = new RacunRequest()
                             {
-                                UserId = paySaleViewModel.CurrentClan.Id,
+                                UserId = racun.ClanId,
                                 Date = DateTime.Now,
                                 TotalAmount = racun.TotalAmount.Value,
                                 Placeno = placenoStaro == null ? 0 : placenoStaro.Amout.Value,
@@ -1350,7 +1170,13 @@ namespace UniversalEsir.Commands.Sale
             int itemInvoiceId = 0;
             List<ItemInvoiceDB> itemsInvoiceDB = new List<ItemInvoiceDB>();
 
-            var placeno = invoiceRequset.Payment.FirstOrDefault(p => p.PaymentType == PaymentTypeEnumeration.Crta);
+            Payment? placeno = null;
+
+            if (invoiceRequset.Payment != null &&
+                invoiceRequset.Payment.PaymentType == PaymentTypeEnumeration.Cash)
+            {
+                placeno = invoiceRequset.Payment;
+            }
 
             var kotizacija = items.FirstOrDefault(i => i.Name.ToLower().Contains("kotizacija"));
 
@@ -1398,6 +1224,7 @@ namespace UniversalEsir.Commands.Sale
                 if (!sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
                 {
                     MessageBox.Show("GREŠKA PRILIKOM slanja zaduzenja za kotizaciju na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
                 }
                 else
                 {
@@ -1486,7 +1313,7 @@ namespace UniversalEsir.Commands.Sale
                 sqliteDbContext.SaveChanges();
 
                 TakingDownNorm(invoiceDB);
-
+                TakingDownOrder(invoiceDB, paySaleViewModel, paySaleViewModel.SaleViewModel.TableId, itemsInvoice);
                 try
                 {
                     if (racunRequest.Items.Any())
@@ -1494,6 +1321,7 @@ namespace UniversalEsir.Commands.Sale
                         if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
                         {
                             MessageBox.Show("GREŠKA PRILIKOM slanja racuna za kafic na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
                         }
                         else
                         {
@@ -1502,12 +1330,14 @@ namespace UniversalEsir.Commands.Sale
                             sqliteDbContext.SaveChanges();
                         }
                     }
+
                     if (prodavnicaRequest.Items.Any())
                     {
                         invoiceDB.IsSend = 0;
-                        if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
+                        if (!sportSchedulerAPI_Manager.PostRacunAsync(prodavnicaRequest).Result)
                         {
                             MessageBox.Show("GREŠKA PRILIKOM slanja racuna za prodavnicu na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
                         }
                         else
                         {
@@ -1517,17 +1347,21 @@ namespace UniversalEsir.Commands.Sale
                         sqliteDbContext.Invoices.Update(invoiceDB);
                         sqliteDbContext.SaveChanges();
                     }
+
                 }
                 catch (Exception ex)
                 {
                     Log.Error("PayCommand -> Black -> GREŠKA PRILIKOM slanja racuna na server", ex);
                     MessageBox.Show("GREŠKA PRILIKOM slanja racuna na server!", "", MessageBoxButton.OK, MessageBoxImage.Error);
-                                    }
+                }
             }
 
-            TakingDownOrder(invoiceDB, paySaleViewModel, paySaleViewModel.SaleViewModel.TableId, itemsInvoice);
-
             paySaleViewModel.SaleViewModel.Reset();
+
+            AppStateParameter appStateParameter = new AppStateParameter(AppStateEnumerable.TableOverview,
+                paySaleViewModel.SaleViewModel.LoggedCashier,
+                paySaleViewModel.SaleViewModel);
+            paySaleViewModel.SaleViewModel.UpdateAppViewModelCommand.Execute(appStateParameter);
         }
         private async void Normal(InvoceRequestFileSystemWatcher invoiceRequset,
             PaySaleViewModel paySaleViewModel,

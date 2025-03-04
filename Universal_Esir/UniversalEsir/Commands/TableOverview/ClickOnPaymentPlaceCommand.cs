@@ -129,8 +129,8 @@ namespace UniversalEsir.Commands.TableOverview
                         paymentPlace.Order.Items.Any())
                     {
                         _viewModel.SaleViewModel.OldOrders = new ObservableCollection<ItemInvoice>(paymentPlace.Order.Items);
-
                         _viewModel.SaleViewModel.TotalAmount = paymentPlace.Total;
+                        
                         _viewModel.SaleViewModel.CurrentOrder = new Order(paymentPlace.Id, paymentPlace.PartHallId, paymentPlace.Name)
                         {
                             Items = new ObservableCollection<ItemInvoice>(paymentPlace.Order.Items),

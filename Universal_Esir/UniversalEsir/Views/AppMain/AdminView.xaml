@@ -42,8 +42,8 @@
                 <MenuItem Header="Dodaj">
                     <MenuItem Header="Dodaj prostoriju"
                           Command="{Binding OpenWindowAddNewRoomCommand}"/>
-                    <MenuItem Header="Dodaj platno mesto"
-                          Command="{Binding OpenWindowAddNewPaymentPlaceCommand}"/>
+                    <!--<MenuItem Header="Dodaj platno mesto"
+                          Command="{Binding OpenWindowAddNewPaymentPlaceCommand}"/>-->
                 </MenuItem>
                 <MenuItem Header="Postavke">
                     <MenuItem Header="Izmeni trenutnu prostoriju"

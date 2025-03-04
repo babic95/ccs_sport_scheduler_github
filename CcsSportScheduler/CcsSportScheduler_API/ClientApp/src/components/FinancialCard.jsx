@@ -54,6 +54,7 @@ const FinancialCard = ({ user }) => {
                 <div>
                     <Typography>Broj računa: {racun.invoiceNumber}</Typography>
                     <Typography>Datum: {new Date(racun.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Tip: Kafić"</Typography>
                     <Typography>Ukupan iznos: {racun.totalAmount} RSD</Typography>
                     <Typography>Plaćeno: {racun.placeno} RSD</Typography>
                     <Typography>Otpisano: {racun.otpis} RSD</Typography>
@@ -94,47 +95,82 @@ const FinancialCard = ({ user }) => {
                 </div>
             );
         } else if (item.type === 3) {
+            const response = await axios.get(`/api/uplatas/${item.id}`);
+            const poklon = response.data;
             setModalContent(
                 <div>
-                    <Typography>Ukupan iznos: {item.totalAmount} RSD</Typography>
-                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
-                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
-                    <Typography>Opis: {item.description}</Typography>
+                    <Typography>Ukupan iznos: {poklon.totalAmount} RSD</Typography>
+                    <Typography>Otpisano: {poklon.razduzeno} RSD</Typography>
+                    <Typography>Datum: {new Date(poklon.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {poklon.description}</Typography>
                 </div>
             );
         } else if (item.type === 4) {
+            const response = await axios.get(`/api/zaduzenjes/${item.id}`);
+            const kotizacija = response.data;
             setModalContent(
                 <div>
-                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
-                    <Typography>Plaćeno: {item.razduzenje} RSD</Typography>
-                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Datum: {new Date(kotizacija.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {kotizacija.opis}</Typography>
+                    <Typography>Ukupan iznos: {kotizacija.totalAmount} RSD</Typography>
+                    <Typography>Plaćeno: {kotizacija.placeno} RSD</Typography>
+                    <Typography>Otpisano: {kotizacija.otpis} RSD</Typography>
                 </div>
             );
-        } else if (item.type === 3) {
+        } else if (item.type === 5) {
+            const response = await axios.get(`/api/racuns/${item.id}`);
+            const racun = response.data;
             setModalContent(
                 <div>
-                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
-                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
-                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
-                    <Typography>Opis: {item.description}</Typography>
+                    <Typography>Broj računa: {racun.invoiceNumber}</Typography>
+                    <Typography>Datum: {new Date(racun.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Tip: Prodavnica</Typography>
+                    <Typography>Ukupan iznos: {racun.totalAmount} RSD</Typography>
+                    <Typography>Plaćeno: {racun.placeno} RSD</Typography>
+                    <Typography>Otpisano: {racun.otpis} RSD</Typography>
+                    <Typography>Stavke:</Typography>
+                    <ul>
+                        {racun.racunitems.map((item, index) => (
+                            <li key={index}>
+                                Naziv: {item.name}<br />
+                                Količina: {item.quantity}<br />
+                                Jedinična cena: {item.unitPrice} RSD<br />
+                                Ukupno: {item.totalAmount} RSD
+                            </li>
+                        ))}
+                    </ul>
                 </div>
             );
-        } else if (item.type === 3) {
+        } else if (item.type === 6) {
+            const response = await axios.get(`/api/uplatas/${item.id}`);
+            const pozajmica = response.data;
             setModalContent(
                 <div>
-                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
-                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
-                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
-                    <Typography>Opis: {item.description}</Typography>
+                    <Typography>Ukupan iznos: {pozajmica.totalAmount} RSD</Typography>
+                    <Typography>Pozajmica: {pozajmica.razduzeno} RSD</Typography>
+                    <Typography>Datum: {new Date(pozajmica.date).toLocaleDateString('sr-RS')}</Typography>
+                    {/*<Typography>Opis: {pozajmica.description}</Typography>*/}
                 </div>
             );
-        } else if (item.type === 3) {
+        } else if (item.type === 7) {
+            const response = await axios.get(`/api/zaduzenjes/${item.id}`);
+            const otpisPozajmice = response.data;
             setModalContent(
                 <div>
-                    <Typography>Ukupan iznos: {item.razduzenje} RSD</Typography>
-                    <Typography>Poklonjeno: {item.razduzenje} RSD</Typography>
-                    <Typography>Datum: {new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
-                    <Typography>Opis: {item.description}</Typography>
+                    <Typography>Razduženo pozajmice: {otpisPozajmice.totalAmount} RSD</Typography>
+                    <Typography>Datum: {new Date(otpisPozajmice.date).toLocaleDateString('sr-RS')}</Typography>
+                    <Typography>Opis: {otpisPozajmice.opis}</Typography>
+                </div>
+            );
+        } else if (item.type === 8) {
+            const response = await axios.get(`/api/zaduzenjes/${item.id}`);
+            const clanarina = response.data;
+            setModalContent(
+                <div>
+                    <Typography>Ukupan iznos: {clanarina.totalAmount} RSD</Typography>
+                    <Typography>Plaćeno: {clanarina.placeno} RSD</Typography>
+                    <Typography>Otpisano: {clanarina.otpis} RSD</Typography>
+                    <Typography>Datum: {new Date(clanarina.date).toLocaleDateString('sr-RS')}</Typography>
                 </div>
             );
         }
@@ -142,7 +178,9 @@ const FinancialCard = ({ user }) => {
     };
 
     const getColor = (item) => {
-        if (item.type === 2 || item.type === 3) {
+        if (item.type === 2 ||
+            item.type === 3 ||
+            item.type === 6) {
             return 'green';
         }
 
@@ -166,14 +204,16 @@ const FinancialCard = ({ user }) => {
             case 2:
                 return 'Uplata';
             case 3:
-                return 'Poklon';
+                return 'Otpis';
             case 4:
                 return 'Kotizacije';
             case 5:
                 return 'Prodavnica';
             case 6:
-                return 'Otpis pozajmice';
+                return 'Pozajmica';
             case 7:
+                return 'Otpis pozajmice';
+            case 8:
                 return 'Članarina';
             default:
                 return 'Nepoznato';
@@ -210,11 +250,12 @@ const FinancialCard = ({ user }) => {
                         <MenuItem value="0">Kafić</MenuItem>
                         <MenuItem value="1">Termin</MenuItem>
                         <MenuItem value="2">Uplata</MenuItem>
-                        <MenuItem value="3">Poklon</MenuItem>
+                        <MenuItem value="3">Otpis</MenuItem>
                         <MenuItem value="4">Kotizacije</MenuItem>
                         <MenuItem value="5">Prodavnica</MenuItem>
-                        <MenuItem value="6">Otpis pozajmice</MenuItem>
-                        <MenuItem value="7">Članarina</MenuItem>
+                        <MenuItem value="6">Pozajmica</MenuItem>
+                        <MenuItem value="7">Otpis pozajmice</MenuItem>
+                        <MenuItem value="8">Članarina</MenuItem>
                     </Select>
                 </FormControl>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>

@@ -135,18 +135,18 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Refaund
                     });
                     invoiceRequest.Items = items;
 
-                    List<Payment> payments = new List<Payment>();
+                    Payment payments = new Payment();
 
                     var paymentsIvoice = await sqliteDbContext.GetAllPaymentFromInvoice(invoiceDB.Id);
                     paymentsIvoice.ForEach(payment =>
                     {
                         if (payment.Amout.HasValue)
                         {
-                            payments.Add(new Payment()
+                            payments = new Payment()
                             {
                                 Amount = payment.Amout.Value,
                                 PaymentType = payment.PaymentType
-                            });
+                            };
                         }
                     });
                     invoiceRequest.Payment = payments;
@@ -237,7 +237,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Refaund
         {
             PayRefaundViewModel payRefaundViewModel = (PayRefaundViewModel)_currentViewModel;
 
-            AddPayment(payRefaundViewModel);
+            //AddPayment(payRefaundViewModel);
 
             //payRefaundViewModel.RefaundViewModel.CurrentInvoiceRequest.InvoiceNumber = SettingsManager.Instance.GetPosNumber();
             payRefaundViewModel.RefaundViewModel.CurrentInvoiceRequest.TransactionType = UniversalEsir_Common.Enums.TransactionTypeEnumeration.Refund;
@@ -259,63 +259,63 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Refaund
             payRefaundViewModel.Window.Close();
             //payRefaundViewModel.RefaundViewModel.SearchRefaundInvoiceCommand.Execute(null);
         }
-        private void AddPayment(PayRefaundViewModel payRefaundViewModel)
-        {
-            if (payRefaundViewModel.RefaundViewModel.InvoiceType == InvoiceTypeEnumeration.Predračun)
-            {
-                payRefaundViewModel.Payment.Add(new Payment()
-                {
-                    Amount = 0,
-                    PaymentType = PaymentTypeEnumeration.Cash,
-                });
-                payRefaundViewModel.Payment.Add(new Payment()
-                {
-                    Amount = 0,
-                    PaymentType = PaymentTypeEnumeration.Cash,
-                });
-                return;
-            }
+        //private void AddPayment(PayRefaundViewModel payRefaundViewModel)
+        //{
+        //    if (payRefaundViewModel.RefaundViewModel.InvoiceType == InvoiceTypeEnumeration.Predračun)
+        //    {
+        //        payRefaundViewModel.Payment.Add(new Payment()
+        //        {
+        //            Amount = 0,
+        //            PaymentType = PaymentTypeEnumeration.Cash,
+        //        });
+        //        payRefaundViewModel.Payment.Add(new Payment()
+        //        {
+        //            Amount = 0,
+        //            PaymentType = PaymentTypeEnumeration.Cash,
+        //        });
+        //        return;
+        //    }
 
-            decimal Cash = Convert.ToDecimal(payRefaundViewModel.Cash);
-            decimal Card = Convert.ToDecimal(payRefaundViewModel.Card);
-            decimal WireTransfer = Convert.ToDecimal(payRefaundViewModel.WireTransfer);
+        //    decimal Cash = Convert.ToDecimal(payRefaundViewModel.Cash);
+        //    decimal Card = Convert.ToDecimal(payRefaundViewModel.Card);
+        //    decimal WireTransfer = Convert.ToDecimal(payRefaundViewModel.WireTransfer);
 
-            if (Cash == 0 &&
-                Card == 0 &&
-                WireTransfer == 0)
-            {
-                payRefaundViewModel.Payment.Add(new Payment()
-                {
-                    Amount = Cash,
-                    PaymentType = PaymentTypeEnumeration.Cash,
-                });
-                return;
-            }
+        //    if (Cash == 0 &&
+        //        Card == 0 &&
+        //        WireTransfer == 0)
+        //    {
+        //        payRefaundViewModel.Payment.Add(new Payment()
+        //        {
+        //            Amount = Cash,
+        //            PaymentType = PaymentTypeEnumeration.Cash,
+        //        });
+        //        return;
+        //    }
 
-            if (Cash > 0)
-            {
-                payRefaundViewModel.Payment.Add(new Payment()
-                {
-                    Amount = Cash,
-                    PaymentType = PaymentTypeEnumeration.Cash,
-                });
-            }
-            if (Card > 0)
-            {
-                payRefaundViewModel.Payment.Add(new Payment()
-                {
-                    Amount = Card,
-                    PaymentType = PaymentTypeEnumeration.Crta,
-                });
-            }
-            if (WireTransfer > 0)
-            {
-                payRefaundViewModel.Payment.Add(new Payment()
-                {
-                    Amount = WireTransfer,
-                    PaymentType = PaymentTypeEnumeration.WireTransfer,
-                });
-            }
-        }
+        //    if (Cash > 0)
+        //    {
+        //        payRefaundViewModel.Payment.Add(new Payment()
+        //        {
+        //            Amount = Cash,
+        //            PaymentType = PaymentTypeEnumeration.Cash,
+        //        });
+        //    }
+        //    if (Card > 0)
+        //    {
+        //        payRefaundViewModel.Payment.Add(new Payment()
+        //        {
+        //            Amount = Card,
+        //            PaymentType = PaymentTypeEnumeration.Crta,
+        //        });
+        //    }
+        //    if (WireTransfer > 0)
+        //    {
+        //        payRefaundViewModel.Payment.Add(new Payment()
+        //        {
+        //            Amount = WireTransfer,
+        //            PaymentType = PaymentTypeEnumeration.WireTransfer,
+        //        });
+        //    }
+        //}
     }
 }

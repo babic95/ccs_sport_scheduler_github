@@ -30,6 +30,7 @@ namespace UniversalEsir.ViewModels.AppMain
         private ObservableCollection<PaymentPlace> _roundPaymentPlaces;
 
         private PartHall? _currentPartHall;
+        private PartHall _currentMesto;
         private PartHall? _newRoom;
 
         private PaymentPlace? _newPaymentPlace;
@@ -49,11 +50,6 @@ namespace UniversalEsir.ViewModels.AppMain
             _loggedCashier = loggedCashier;
 
             CurrentPartHall = null;
-            Rooms = new ObservableCollection<PartHall>();
-            AllNormalPaymentPlaces = new ObservableCollection<PaymentPlace>();
-            NormalPaymentPlaces = new ObservableCollection<PaymentPlace>();
-            AllRoundPaymentPlaces = new ObservableCollection<PaymentPlace>();
-            RoundPaymentPlaces = new ObservableCollection<PaymentPlace>();
             SetDefaultValueFromDB();
         }
         #endregion Constructors
@@ -151,6 +147,15 @@ namespace UniversalEsir.ViewModels.AppMain
                 }
             }
         }
+        public PartHall CurrentMesto
+        {
+            get { return _currentMesto; }
+            set
+            {
+                _currentMesto = value;
+                OnPropertyChange(nameof(CurrentMesto));
+            }
+        }
         public PartHall? NewRoom
         {
             get { return _newRoom; }
@@ -229,9 +234,15 @@ namespace UniversalEsir.ViewModels.AppMain
         #region Public methods
         #endregion Public methods
 
-        #region Private methods
-        private void SetDefaultValueFromDB()
+        #region Internal methods
+        internal void SetDefaultValueFromDB()
         {
+            Rooms = new ObservableCollection<PartHall>();
+            AllNormalPaymentPlaces = new ObservableCollection<PaymentPlace>();
+            NormalPaymentPlaces = new ObservableCollection<PaymentPlace>();
+            AllRoundPaymentPlaces = new ObservableCollection<PaymentPlace>();
+            RoundPaymentPlaces = new ObservableCollection<PaymentPlace>();
+
             SqliteDbContext sqliteDbContext = new SqliteDbContext();
 
             sqliteDbContext.PartHalls.ToList().ForEach(part =>
@@ -315,7 +326,12 @@ namespace UniversalEsir.ViewModels.AppMain
                         break;
                 }
             });
+
+            if(CurrentPartHall != null)
+            {
+                CurrentPartHall = Rooms.FirstOrDefault(room => room.Id == CurrentPartHall.Id);
+            }
         }
-        #endregion Private methods
+        #endregion Internal methods
     }
 }

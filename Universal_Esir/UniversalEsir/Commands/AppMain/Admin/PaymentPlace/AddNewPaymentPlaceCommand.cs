@@ -69,7 +69,7 @@ namespace UniversalEsir.Commands.AppMain.Admin
                         {
                             LeftCanvas = _currentViewModel.NewPaymentPlace.Left,
                             TopCanvas = _currentViewModel.NewPaymentPlace.Top,
-                            PartHallId = _currentViewModel.CurrentPartHall.Id
+                            PartHallId = _currentViewModel.CurrentMesto.Id,
                         };
 
                         if (_currentViewModel.IsCheckedRoundPaymentPlace)
@@ -166,6 +166,7 @@ namespace UniversalEsir.Commands.AppMain.Admin
                                 paymentPlaces.Height = _currentViewModel.NewPaymentPlace.Height;
                             }
 
+                            paymentPlaces.PartHallId = _currentViewModel.CurrentMesto.Id;
                             sqliteDbContext.PaymentPlaces.Update(paymentPlaces);
                             sqliteDbContext.SaveChanges();
 
@@ -185,6 +186,8 @@ namespace UniversalEsir.Commands.AppMain.Admin
                 _currentViewModel.AddNewPaymentPlaceWindow = null;
             }
             _currentViewModel.IsCheckedRoundPaymentPlace = false;
+
+            _currentViewModel.SetDefaultValueFromDB();
         }
     }
 }

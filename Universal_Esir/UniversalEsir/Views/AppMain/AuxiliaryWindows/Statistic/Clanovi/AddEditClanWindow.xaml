@@ -93,12 +93,12 @@
                                FontSize="24"
                                HorizontalAlignment="Right"
                                Margin="0 5"/>
-                        <Label Height="40"
+                        <!--<Label Height="40"
                                Foreground="Black"
                                Content="Tip člana:"
                                FontSize="24"
                                HorizontalAlignment="Right"
-                               Margin="0 5"/>
+                               Margin="0 5"/>-->
                         <Label Height="40"
                                Foreground="Black"
                                Content="Pol:"
@@ -163,7 +163,7 @@
                                  VerticalContentAlignment="Center"
                                  Margin="0 5"
                                  Text="{Binding CurrentClan.Year}"/>
-                        <ComboBox ItemsSource="{Binding Source={StaticResource typesClanovi}}"
+                        <!--<ComboBox ItemsSource="{Binding Source={StaticResource typesClanovi}}"
                                   SelectedItem="{Binding CurrentClan.Type}"
                                   Height="40"
                                   Width="600"
@@ -171,7 +171,7 @@
                                   FontSize="24"
                                   HorizontalContentAlignment="Center"
                                   VerticalContentAlignment="Center"
-                                  Margin="0 5"/>
+                                  Margin="0 5"/>-->
                         <ComboBox ItemsSource="{Binding Source={StaticResource typesPol}}"
                                   SelectedItem="{Binding CurrentClan.Pol}"
                                   Height="40"

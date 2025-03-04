@@ -12,6 +12,8 @@ using CcsSportScheduler_API.Models.Response;
 using CcsSportScheduler_API.Models.Requests.Racun;
 using CcsSportScheduler_API.Models.Requests.Teren;
 using System.Net.Http;
+using CcsSportScheduler_API.Models.Requests.Zaduzenje;
+using CcsSportScheduler_API.Models.Response.FinancialCard;
 
 namespace CcsSportScheduler_API.Controllers
 {
@@ -77,7 +79,6 @@ namespace CcsSportScheduler_API.Controllers
 
                 var cenaTermina = await responseCenaTermina.Content.ReadFromJsonAsync<NaplataTermina>();
 
-
                 if (!startDate.HasValue)
                 {
                     startDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow,
@@ -116,7 +117,8 @@ namespace CcsSportScheduler_API.Controllers
                             EndDateTime = date.AddHours(1),
                             TerenId = idTeren,
                             User = null, // Oznaka da je termin nezakazan
-                            Price = cenaTermina == null ? 600 : cenaTermina.Price // Postavljanje cene za nezakazane termine
+                            Price = cenaTermina == null ? 600 : cenaTermina.Price, // Postavljanje cene za nezakazane termine
+                            Type = -1 // Oznaka da je termin nezakazan
                         });
                     }
                     else
@@ -275,14 +277,15 @@ namespace CcsSportScheduler_API.Controllers
         [HttpPost("zakazi")]
         public async Task<IActionResult> Post(TerminRequest terminRequest)
         {
-            try {
+            try
+            {
                 terminRequest.StartDateTime = TimeZoneInfo.ConvertTime(terminRequest.StartDateTime,
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
 
                 var terminDB = await _context.Termins.FirstOrDefaultAsync(t => t.StartDateTime.Date == terminRequest.StartDateTime.Date &&
                 t.StartDateTime.Hour == terminRequest.StartDateTime.Hour);
 
-                if(terminDB != null)
+                if (terminDB != null)
                 {
                     return NotFound(new ErrorResponse
                     {
@@ -356,7 +359,7 @@ namespace CcsSportScheduler_API.Controllers
                     {
                         terminType = (int)UserEnumeration.Neclanski;
                     }
-                    else if(terminRequest.Zaduzi == 0)
+                    else if (terminRequest.Zaduzi == 0)
                     {
                         terminType = userDB.Type;
                     }
@@ -394,6 +397,27 @@ namespace CcsSportScheduler_API.Controllers
                         cenaTermina = Decimal.Round(cenaTermina * ((100 - popustTermina.Popust) / 100), 2);
                     }
 
+                    decimal placeno = 0;
+                    if (terminRequest.Zaduzi == 1)
+                    {
+                        if (cenaTermina > 0)
+                        {
+                            decimal pretplata = await GetPretplata(terminRequest.UserId);
+
+                            if (pretplata > 0)
+                            {
+                                if (pretplata >= cenaTermina)
+                                {
+                                    placeno = cenaTermina;
+                                }
+                                else
+                                {
+                                    placeno = pretplata;
+                                }
+                            }
+                        }
+                    }
+
                     terminDB = new Termin()
                     {
                         Id = Guid.NewGuid().ToString(),
@@ -405,7 +429,7 @@ namespace CcsSportScheduler_API.Controllers
                         StartDateTime = terminRequest.StartDateTime,
                         EndDateTime = terminRequest.EndDateTime == null ? terminRequest.StartDateTime.AddHours(1) : terminRequest.EndDateTime,
                         Price = terminRequest.Zaduzi == 1 ? cenaTermina : 0,
-                        Placeno = 0
+                        Placeno = placeno
                     };
 
                     await _context.Termins.AddAsync(terminDB);
@@ -434,6 +458,96 @@ namespace CcsSportScheduler_API.Controllers
             }
 
             return Ok();
+        }
+        // POST: api/Termins/zakazi/fiksni
+        [HttpPost("zakazi/fiksni")]
+        public async Task<IActionResult> PostFiksni(TerminFiksniRequest terminRequest)
+        {
+            try
+            {
+                // Convert and validate dates
+                for (int i = 0; i < terminRequest.Dates.Count; i++)
+                {
+                    terminRequest.Dates[i] = TimeZoneInfo.ConvertTime(terminRequest.Dates[i],
+                        TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
+
+                    var terminDB = await _context.Termins.FirstOrDefaultAsync(t => t.StartDateTime.Date == terminRequest.Dates[i].Date &&
+                    t.StartDateTime.Hour == terminRequest.Dates[i].Hour);
+
+                    if (terminDB != null)
+                    {
+                        return NotFound(new ErrorResponse
+                        {
+                            Controller = "TerminsController",
+                            Message = "Termin je već zauzet.",
+                            Code = ErrorEnumeration.BadRequest,
+                            Action = "PostFiksni"
+                        });
+                    }
+                }
+
+                // Validate user
+                var userDB = await _context.Users.FindAsync(terminRequest.UserId);
+                if (userDB == null)
+                {
+                    return NotFound(new ErrorResponse
+                    {
+                        Controller = "TerminsController",
+                        Message = "Ne postoji član kome se zakazuje termin.",
+                        Code = ErrorEnumeration.NotFound,
+                        Action = "PostFiksni"
+                    });
+                }
+
+                // Validate club
+                var klubDB = await _context.Klubs.FindAsync(userDB.KlubId);
+                if (klubDB == null)
+                {
+                    return NotFound(new ErrorResponse
+                    {
+                        Controller = "TerminsController",
+                        Message = "Ne postoji klub usera koji zakazuje termin.",
+                        Code = ErrorEnumeration.NotFound,
+                        Action = "PostFiksni"
+                    });
+                }
+
+                // Add all terms to context
+                var termini = new List<Termin>();
+                foreach (var t in terminRequest.Dates)
+                {
+                    var terminDB = new Termin()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        TerenId = terminRequest.TerenId,
+                        UserId = terminRequest.UserId,
+                        Type = userDB.Type,
+                        DateRezervacije = TimeZoneInfo.ConvertTime(DateTime.Now,
+                        TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")),
+                        StartDateTime = t,
+                        EndDateTime = t.AddHours(1),
+                        Price = 0,
+                        Placeno = 0
+                    };
+                    termini.Add(terminDB);
+                }
+
+                // Bulk insert
+                await _context.Termins.AddRangeAsync(termini);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Conflict(new ErrorResponse
+                {
+                    Controller = "TerminsController",
+                    Message = $"{ex.Message}",
+                    Code = ErrorEnumeration.Exception,
+                    Action = "PostFiksni"
+                });
+            }
         }
 
         // DELETE: api/Termins/3/id
@@ -511,6 +625,364 @@ namespace CcsSportScheduler_API.Controllers
             }
 
             return Ok();
+        }
+        private async Task<decimal> GetPretplata(int userId)
+        {
+            try
+            {
+                decimal pretplata = 0;
+
+                DateTime from = new DateTime(DateTime.Now.Year, 1, 1);
+                DateTime to = new DateTime(DateTime.Now.Year, 12, 31);
+
+                var clanarice = await GetAllClanarice(userId, from, to);
+                var termini = await GetAllTermins(userId, from, to);
+                var kafic = await GetAllKafic(userId, from, to);
+                var prodavnica = await GetAllProdavnica(userId, from, to);
+                var kotizacije = await GetAllKotizacija(userId, from, to);
+                var otpisPozajmice = await GetAllOtpisPozajmice(userId, from, to);
+                var uplate = await GetAllUplate(userId, from, to);
+                var pokloni = await GetAllPoklon(userId, from, to);
+                var pozajmica = await GetAllPozajmica(userId, from, to);
+
+                var items = new List<FinancialCardItemResponse>();
+                items.AddRange(clanarice);
+                items.AddRange(termini);
+                items.AddRange(kafic);
+                items.AddRange(prodavnica);
+                items.AddRange(kotizacije);
+                items.AddRange(otpisPozajmice);
+                items.AddRange(uplate);
+                items.AddRange(pokloni);
+                items.AddRange(pozajmica);
+
+                decimal totalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
+                        i.Type == FinancialCardTypeEnumeration.Poklon ||
+                        i.Type == FinancialCardTypeEnumeration.Pozajmica).Sum(u => u.Razduzenje);
+
+                decimal totalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
+                i.Type == FinancialCardTypeEnumeration.Termini ||
+                i.Type == FinancialCardTypeEnumeration.Kotizacije ||
+                i.Type == FinancialCardTypeEnumeration.Prodavnica ||
+                i.Type == FinancialCardTypeEnumeration.OtpisPozajmice ||
+                i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
+
+                return totalRazduzenje - totalZaduzenje;
+            }
+            catch (Exception ex)
+            {
+                return 0;
+            }
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllClanarice(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var clanarine = _context.Zaduzenja.Where(z => z.UserId == id &&
+                z.Date >= from.Date && z.Date <= to &&
+                z.Type == (int)FinancialCardTypeEnumeration.Clanarina);
+
+                if (clanarine.Any())
+                {
+                    foreach (var c in clanarine)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = c.Id,
+                            Type = FinancialCardTypeEnumeration.Clanarina,
+                            Date = c.Date,
+                            Razduzenje = c.Placeno,
+                            Zaduzenje = c.TotalAmount,
+                            Otpis = c.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllOtpisPozajmice(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var clanarine = _context.Zaduzenja.Where(z => z.UserId == id &&
+                z.Date >= from.Date && z.Date <= to &&
+                z.Type == (int)FinancialCardTypeEnumeration.OtpisPozajmice);
+
+                if (clanarine.Any())
+                {
+                    foreach (var c in clanarine)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = c.Id,
+                            Type = FinancialCardTypeEnumeration.OtpisPozajmice,
+                            Date = c.Date,
+                            Razduzenje = c.Placeno,
+                            Zaduzenje = c.TotalAmount,
+                            Otpis = c.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllTermins(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var termins = _context.Termins.Where(t => t.UserId == id && t.StartDateTime >= from && t.StartDateTime <= to);
+
+                if (termins.Any())
+                {
+                    foreach (var t in termins)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = t.Id,
+                            Type = FinancialCardTypeEnumeration.Termini,
+                            Date = t.StartDateTime,
+                            Razduzenje = t.Placeno,
+                            Zaduzenje = t.Price,
+                            Otpis = t.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllKafic(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var kafic = _context.Racuns.Where(r => r.UserId == id &&
+                r.Date >= from && r.Date <= to &&
+                r.Type == (int)FinancialCardTypeEnumeration.Kafic);
+
+                if (kafic.Any())
+                {
+                    foreach (var r in kafic)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = r.Id,
+                            Type = FinancialCardTypeEnumeration.Kafic,
+                            Date = r.Date,
+                            Razduzenje = r.Placeno,
+                            Zaduzenje = r.TotalAmount,
+                            Otpis = r.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllProdavnica(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var kafic = _context.Racuns.Where(r => r.UserId == id &&
+                r.Date >= from && r.Date <= to &&
+                r.Type == (int)FinancialCardTypeEnumeration.Prodavnica);
+
+                if (kafic.Any())
+                {
+                    foreach (var r in kafic)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = r.Id,
+                            Type = FinancialCardTypeEnumeration.Prodavnica,
+                            Date = r.Date,
+                            Razduzenje = r.Placeno,
+                            Zaduzenje = r.TotalAmount,
+                            Otpis = r.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllKotizacija(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var kafic = _context.Zaduzenja.Where(r => r.UserId == id &&
+                r.Date >= from && r.Date <= to &&
+                r.Type == (int)FinancialCardTypeEnumeration.Kotizacije);
+
+                if (kafic.Any())
+                {
+                    foreach (var r in kafic)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = r.Id,
+                            Type = FinancialCardTypeEnumeration.Kotizacije,
+                            Date = r.Date,
+                            Razduzenje = r.Placeno,
+                            Zaduzenje = r.TotalAmount,
+                            Otpis = r.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllUplate(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var uplate = _context.Uplata.Where(u => u.UserId == id &&
+                u.Date >= from && u.Date <= to &&
+                u.TypeUplata == (int)UplataEnumeration.Standard);
+
+                if (uplate.Any())
+                {
+                    foreach (var u in uplate)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = u.Id,
+                            Type = FinancialCardTypeEnumeration.Uplate,
+                            Date = u.Date,
+                            Razduzenje = u.TotalAmount,
+                            Zaduzenje = 0,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllPoklon(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var poklon = _context.Uplata.Where(p => p.UserId == id &&
+                p.Date >= from && p.Date <= to &&
+                p.TypeUplata == (int)UplataEnumeration.Poklon);
+
+                if (poklon.Any())
+                {
+                    foreach (var p in poklon)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = p.Id,
+                            Type = FinancialCardTypeEnumeration.Poklon,
+                            Date = p.Date,
+                            Razduzenje = p.TotalAmount,
+                            Zaduzenje = 0,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllPozajmica(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var poklon = _context.Uplata.Where(p => p.UserId == id && p.Date >= from &&
+                p.Date <= to &&
+                p.TypeUplata == (int)UplataEnumeration.Pozajmica);
+
+                if (poklon.Any())
+                {
+                    foreach (var p in poklon)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = p.Id,
+                            Type = FinancialCardTypeEnumeration.Pozajmica,
+                            Date = p.Date,
+                            Razduzenje = p.TotalAmount,
+                            Zaduzenje = 0,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
         }
 
         private bool TerminExists(string id)

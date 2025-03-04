@@ -36,7 +36,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
             {
                 if (_currentViewModel.CurrentClan == null ||
                     _currentViewModel.CurrentZaduzenje.Date == null ||
-                    _currentViewModel.CurrentZaduzenje.TotalAmount <= 0 ||
+                    (_currentViewModel.CurrentZaduzenje.ClanType != ClanEnumeration.Turnir && _currentViewModel.CurrentZaduzenje.TotalAmount <= 0) ||
                     _currentViewModel.CurrentZaduzenje.ClanType == null)
                 {
                     MessageBox.Show("Niste popunili sva polja!",
@@ -46,38 +46,46 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
                     return;
                 }
 
-                ZaduzenjeRequest zaduzenjeRequest = new ZaduzenjeRequest()
-                {
-                    UserId = _currentViewModel.CurrentClan.Id,
-                    Date = _currentViewModel.CurrentZaduzenje.Date,
-                    TotalAmount = _currentViewModel.CurrentZaduzenje.TotalAmount,
-                    Type = (int)ZaduzenjeEnumeration.Clanarina,
-                    NewTypeUser = (int)_currentViewModel.CurrentZaduzenje.ClanType,
-                    Dan = (int)_currentViewModel.CurrentDan,
-                    Sat = _currentViewModel.CurrentSatiTermina.Sat,
-                    Teren = _currentViewModel.CurrentZaduzenje.Teren,
-                };
+                var result = MessageBox.Show("Da li ste sigurni da želite da sačuvate članarinu?",
+                    "Upozorenje",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
-                SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
-
-                if (sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
+                if (result == MessageBoxResult.Yes)
                 {
-                    MessageBox.Show("Uspešno ste dodali članarinu!",
-                                                "Uspeh",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Information);
+                    ZaduzenjeRequest zaduzenjeRequest = new ZaduzenjeRequest()
+                    {
+                        UserId = _currentViewModel.CurrentClan.Id,
+                        Date = _currentViewModel.CurrentZaduzenje.Date,
+                        TotalAmount = _currentViewModel.CurrentZaduzenje.TotalAmount,
+                        Type = (int)ZaduzenjeEnumeration.Clanarina,
+                        NewTypeUser = (int)_currentViewModel.CurrentZaduzenje.ClanType,
+                        Dan = (int)_currentViewModel.CurrentDan,
+                        Sat = _currentViewModel.CurrentSatiTermina.Sat,
+                        Teren = _currentViewModel.CurrentZaduzenje.Teren,
+                    };
+
+                    SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+
+                    if (sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
+                    {
+                        MessageBox.Show("Uspešno ste dodali članarinu!",
+                                                    "Uspeh",
+                                                    MessageBoxButton.OK,
+                                                    MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom dodavanja članarine!",
+                            "Greška",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+
+                        return;
+                    }
+
+                    _currentViewModel.CurrentWindow.Close();
                 }
-                else
-                {
-                    MessageBox.Show("Greška prilikom dodavanja članarine!",
-                        "Greška",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-
-                    return;
-                }
-
-                _currentViewModel.CurrentWindow.Close();
             }
             catch (Exception ex)
             {

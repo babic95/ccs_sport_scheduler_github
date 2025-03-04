@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:UniversalEsir.Views.AppMain.AuxiliaryWindows.Admin" xmlns:appmain="clr-namespace:UniversalEsir.ViewModels.AppMain" d:DataContext="{d:DesignInstance Type=appmain:AdminViewModel}"
         mc:Ignorable="d"
         Background="{StaticResource BrushLogo2}"
-        Height="400"
+        Height="450"
         Width="400"
         WindowStartupLocation="CenterScreen"
         Title="Dodavanje / izmena platnog mesta">
     <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -46,6 +47,34 @@
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
+                    Margin="0 5 0 0">
+            <StackPanel Orientation="Vertical">
+                <Label Height="40"
+                       Foreground="Black"
+                       Content="Mesto:"
+                       FontSize="24"
+                       HorizontalAlignment="Right"
+                       Margin="0 5"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Vertical">
+                <ComboBox ItemsSource="{Binding Rooms}"
+                          SelectedItem="{Binding CurrentMesto, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                          Height="40"
+                          Width="200"
+                          Foreground="Black"
+                          FontSize="24"
+                          HorizontalContentAlignment="Center"
+                          VerticalContentAlignment="Center"
+                          Margin="0 5"/>
+            </StackPanel>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     Margin="0 5 0 0"
                     Visibility="{Binding RoundPaymentPlace}">
             <StackPanel Orientation="Vertical">
@@ -70,7 +99,7 @@
             </StackPanel>
         </StackPanel>
 
-        <StackPanel Grid.Row="2"
+        <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
@@ -114,7 +143,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Button Grid.Row="3"
+        <Button Grid.Row="4"
                 Margin="0 10"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

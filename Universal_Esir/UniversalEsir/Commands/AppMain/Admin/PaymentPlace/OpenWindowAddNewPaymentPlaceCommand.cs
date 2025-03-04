@@ -41,6 +41,18 @@ namespace UniversalEsir.Commands.AppMain.Admin
                     PartHallId = _currentViewModel.CurrentPartHall.Id
                 };
 
+                if (_currentViewModel.Rooms.Any())
+                {
+                    if(_currentViewModel.CurrentPartHall != null)
+                    {
+                        _currentViewModel.CurrentMesto = _currentViewModel.Rooms.FirstOrDefault(r => r.Id == _currentViewModel.CurrentPartHall.Id);
+                    }
+                    else
+                    {
+                        _currentViewModel.CurrentMesto = _currentViewModel.Rooms.FirstOrDefault();
+                    }
+                }
+
                 _currentViewModel.AddNewPaymentPlaceWindow = new AddNewPaymentPlaceWindow(_currentViewModel);
                 _currentViewModel.AddNewPaymentPlaceWindow.ShowDialog();
             }

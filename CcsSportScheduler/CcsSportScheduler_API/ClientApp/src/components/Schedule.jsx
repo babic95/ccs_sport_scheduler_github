@@ -51,21 +51,57 @@ const Schedule = ({ user }) => {
         if (calendarRef.current && calendarRef.current.el) {
             const calendarEl = calendarRef.current.el;
             const containerWidth = calendarEl.parentNode.offsetWidth;
+            const containerHeight = calendarEl.parentNode.offsetHeight;
 
             // Dodajte marginu kontejnera
             const containerMargin = 32; // Primer margine u pikselima, prilagodite prema potrebi
             const containerWidthWithMargin = containerWidth - containerMargin;
+            const containerHeightWithMargin = containerHeight - containerMargin;
 
             // Formula for scaling
-            const columnWidth = 18.5;
+            const columnWidth = 22; // Minimalna širina kolone je sada 22 karaktera
             const daysToShow = 7;
             const desiredWidth = columnWidth * daysToShow;
             const scale = containerWidthWithMargin / desiredWidth;
 
             calendarEl.style.transform = `scale(${scale})`;
-            calendarEl.style.transformOrigin = '0 0';
+            calendarEl.style.transformOrigin = 'top left';
         }
     };
+    const zoomIn = () => {
+        if (calendarRef.current && calendarRef.current.el) {
+            const calendarEl = calendarRef.current.el;
+            const currentScale = parseFloat(calendarEl.style.transform.replace(/[^0-9.-]/g, '')) || 1;
+            const newScale = currentScale + 0.1;
+            calendarEl.style.transform = `scale(${newScale})`;
+            calendarEl.style.transformOrigin = 'top left';
+        }
+    };
+
+    const zoomOut = () => {
+        if (calendarRef.current && calendarRef.current.el) {
+            const calendarEl = calendarRef.current.el;
+            const currentScale = parseFloat(calendarEl.style.transform.replace(/[^0-9.-]/g, '')) || 1;
+            const newScale = currentScale - 0.1;
+            calendarEl.style.transform = `scale(${newScale})`;
+            calendarEl.style.transformOrigin = 'top left';
+        }
+    };
+    const logZoomContainerWidth = () => {
+        const zoomContainer = document.querySelector('.zoom-container');
+        if (zoomContainer) {
+            console.log('Zoom container width:', zoomContainer.offsetWidth);
+        }
+    };
+    useEffect(() => {
+        logZoomContainerWidth(); // Ispiši širinu kada se komponenta učita
+
+        window.addEventListener('resize', logZoomContainerWidth);
+
+        return () => {
+            window.removeEventListener('resize', logZoomContainerWidth);
+        };
+    }, []);
 
     useEffect(() => {
         if (calendarRef.current) {
@@ -129,7 +165,7 @@ const Schedule = ({ user }) => {
                     type: termin.user ? termin.user.type : null
                 },
                 className: termin.user ? eventClassNames({ event: { extendedProps: { type: termin.user.type } } }) : '',
-                backgroundColor: termin.type ? eventBackgoundCollor({ event: { extendedProps: { type: termin.type } } }) : 'white', // Postavljanje bele boje za slobodne termine
+                backgroundColor: termin.type >= 0 ? eventBackgoundCollor({ event: { extendedProps: { type: termin.type } } }) : 'white', // Postavljanje bele boje za slobodne termine
                 textColor: 'black',
                 borderColor: 'black',
             }));
@@ -461,52 +497,53 @@ const Schedule = ({ user }) => {
                         </FormControl>
                     )}
 
-                    <div className="centerContainer">
-                        <Legend />
-                    </div>
-                    <div className="zoom-container">
-                        <div className="zoom-content" ref={calendarRef}>
-                            <FullCalendar
-                                plugins={[timeGridPlugin, interactionPlugin]}
-                                initialView="timeGridWeek"
-                                headerToolbar={{
-                                    left: '',
-                                    center: 'title',
-                                    right: ''
-                                }}
-                                locale='sr' // Serbian locale
-                                allDaySlot={false}
-                                slotMinTime="07:00:00"
-                                slotMaxTime="23:00:00"
-                                slotDuration="01:00:00" // Interval je sada sat vremena
-                                events={termini}
-                                dateClick={handleDateClick}
-                                eventClick={handleEventClick}
-                                eventClassNames={eventClassNames} // Dodato za prilagođene klase
-                                initialDate={selectedDate} // Postavljanje početnog datuma na današnji dan
-                                validRange={{ start: startOfWeek, end: endOfWeek }}
-                                views={{
-                                    timeGridWeek: {
-                                        type: 'timeGridWeek',
-                                        duration: { weeks: 1 },
-                                        buttonText: 'Nedelja'
-                                    },
-                                    timeGridDay: {
-                                        type: 'timeGridDay',
-                                        duration: { days: 1 },
-                                        buttonText: 'Dan'
-                                    }
-                                }}
-                                firstDay={selectedDate.getDay()} // Postavljanje prvog dana na trenutni dan
-                                handleWindowResize={true}
-                                windowResizeDelay={100}
-                                longPressDelay={0}
-                                selectLongPressDelay={0}
-                                eventLongPressDelay={0}
-                                timeZone='local' // Postavljanje vremenske zone na lokalnu
-                                eventContent={renderEventContent} // Koristi prilagođeni sadržaj događaja
-                            />
+                        <div className="centerContainer">
+                            <Legend />
                         </div>
+
+                        <div className="zoom-container">
+                            <div className="zoom-content" ref={calendarRef}>
+                                <FullCalendar
+                                    plugins={[timeGridPlugin, interactionPlugin]}
+                                    initialView="timeGridWeek"
+                                    headerToolbar={{
+                                        left: '',
+                                        center: 'title',
+                                        right: ''
+                                    }}
+                                    locale='sr' // Serbian locale
+                                    allDaySlot={false}
+                                    slotMinTime="07:00:00"
+                                    slotMaxTime="23:00:00"
+                                    slotDuration="01:00:00" // Interval je sada sat vremena
+                                    events={termini}
+                                    dateClick={handleDateClick}
+                                    eventClick={handleEventClick}
+                                    eventClassNames={eventClassNames} // Dodato za prilagođene klase
+                                    initialDate={selectedDate} // Postavljanje početnog datuma na današnji dan
+                                    validRange={{ start: startOfWeek, end: endOfWeek }}
+                                    views={{
+                                        timeGridWeek: {
+                                            type: 'timeGridWeek',
+                                            duration: { weeks: 1 },
+                                            buttonText: 'Nedelja'
+                                        },
+                                        timeGridDay: {
+                                            type: 'timeGridDay',
+                                            duration: { days: 1 },
+                                            buttonText: 'Dan'
+                                        }
+                                    }}
+                                    firstDay={selectedDate.getDay()} // Postavljanje prvog dana na trenutni dan
+                                    handleWindowResize={true}
+                                    windowResizeDelay={100}
+                                    longPressDelay={0}
+                                    selectLongPressDelay={0}
+                                    eventLongPressDelay={0}
+                                    timeZone='local' // Postavljanje vremenske zone na lokalnu
+                                    eventContent={renderEventContent} // Koristi prilagođeni sadržaj događaja
+                                />
+                            </div>
                     </div>
 
                     {notifications.length !== 0 ? (

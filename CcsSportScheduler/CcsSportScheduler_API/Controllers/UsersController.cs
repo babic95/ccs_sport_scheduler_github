@@ -480,55 +480,105 @@ namespace CcsSportScheduler_API.Controllers
                 from = new DateTime(from.Year, from.Month, from.Day, 0, 0, 0);
                 to = new DateTime(to.Year, to.Month, to.Day, 23, 59, 59);
 
+                var clanarice = await GetAllClanarice(id, from, to);
                 var termini = await GetAllTermins(id, from, to);
-                var racuni = await GetAllRacuni(id, from, to);
+                var kafic = await GetAllKafic(id, from, to);
+                var prodavnica = await GetAllProdavnica(id, from, to);
+                var kotizacije = await GetAllKotizacija(id, from, to);
+                var otpisPozajmice = await GetAllOtpisPozajmice(id, from, to);
                 var uplate = await GetAllUplate(id, from, to);
                 var pokloni = await GetAllPoklon(id, from, to);
+                var pozajmica = await GetAllPozajmica(id, from, to);
 
                 var items = new List<FinancialCardItemResponse>();
 
                 if (type == null ||
                     type == -1)
                 {
+                    items.AddRange(clanarice);
                     items.AddRange(termini);
-                    items.AddRange(racuni);
+                    items.AddRange(kafic);
+                    items.AddRange(prodavnica);
+                    items.AddRange(kotizacije);
+                    items.AddRange(otpisPozajmice);
                     items.AddRange(uplate);
                     items.AddRange(pokloni);
+                    items.AddRange(pozajmica);
 
                     financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
-                    i.Type == FinancialCardTypeEnumeration.Poklon).Sum(u => u.Razduzenje);
+                    i.Type == FinancialCardTypeEnumeration.Poklon ||
+                    i.Type == FinancialCardTypeEnumeration.Pozajmica).Sum(u => u.Razduzenje);
 
                     financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
-                    i.Type == FinancialCardTypeEnumeration.Termini).Sum(t => t.Zaduzenje);
+                    i.Type == FinancialCardTypeEnumeration.Termini ||
+                    i.Type == FinancialCardTypeEnumeration.Kotizacije ||
+                    i.Type == FinancialCardTypeEnumeration.Prodavnica ||
+                    i.Type == FinancialCardTypeEnumeration.OtpisPozajmice ||
+                    i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
                 }
                 else
                 {
-                    if (type == 1)
+                    if (type == (int)FinancialCardTypeEnumeration.Clanarina)
+                    {
+                        items.AddRange(clanarice);
+
+                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(u => u.Razduzenje);
+                        financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
+                    }
+                    else if (type == (int)FinancialCardTypeEnumeration.Termini)
                     {
                         items.AddRange(termini);
 
                         financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Termini).Sum(u => u.Razduzenje);
                         financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Termini).Sum(t => t.Zaduzenje);
                     }
-                    if (type == 0)
+                    else if (type == (int)FinancialCardTypeEnumeration.Kafic)
                     {
-                        items.AddRange(racuni);
+                        items.AddRange(kafic);
 
                         financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic).Sum(u => u.Razduzenje);
                         financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic).Sum(t => t.Zaduzenje);
                     }
-                    if (type == 2)
+                    else if (type == (int)FinancialCardTypeEnumeration.Prodavnica)
+                    {
+                        items.AddRange(prodavnica);
+
+                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Prodavnica).Sum(u => u.Razduzenje);
+                        financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Prodavnica).Sum(t => t.Zaduzenje);
+                    }
+                    else if (type == (int)FinancialCardTypeEnumeration.Kotizacije)
+                    {
+                        items.AddRange(kotizacije);
+
+                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kotizacije).Sum(u => u.Razduzenje);
+                        financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kotizacije).Sum(t => t.Zaduzenje);
+                    }
+                    else if (type == (int)FinancialCardTypeEnumeration.OtpisPozajmice)
+                    {
+                        items.AddRange(otpisPozajmice);
+
+                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.OtpisPozajmice).Sum(u => u.Razduzenje);
+                        financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.OtpisPozajmice).Sum(t => t.Zaduzenje);
+                    }
+                    else if (type == (int)FinancialCardTypeEnumeration.Uplate)
                     {
                         items.AddRange(uplate);
 
                         financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate).Sum(u => u.Razduzenje);
                         financialCardResponse.TotalZaduzenje = 0;
                     }
-                    if (type == 3)
+                    else if(type == (int)FinancialCardTypeEnumeration.Poklon)
                     {
                         items.AddRange(pokloni);
 
                         financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Poklon).Sum(u => u.Razduzenje);
+                        financialCardResponse.TotalZaduzenje = 0;
+                    }
+                    else if(type == (int)FinancialCardTypeEnumeration.Pozajmica)
+                    {
+                        items.AddRange(pozajmica);
+
+                        financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Pozajmica).Sum(u => u.Razduzenje);
                         financialCardResponse.TotalZaduzenje = 0;
                     }
                 }
@@ -584,6 +634,76 @@ namespace CcsSportScheduler_API.Controllers
           return (_context.Users?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
+        private async Task<List<FinancialCardItemResponse>> GetAllClanarice(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var clanarine = _context.Zaduzenja.Where(z => z.UserId == id &&
+                z.Date >= from.Date && z.Date <= to &&
+                z.Type == (int)FinancialCardTypeEnumeration.Clanarina);
+
+                if (clanarine.Any())
+                {
+                    foreach (var c in clanarine)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = c.Id,
+                            Type = FinancialCardTypeEnumeration.Clanarina,
+                            Date = c.Date,
+                            Razduzenje = c.Placeno,
+                            Zaduzenje = c.TotalAmount,
+                            Otpis = c.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllOtpisPozajmice(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var clanarine = _context.Zaduzenja.Where(z => z.UserId == id &&
+                z.Date >= from.Date && z.Date <= to &&
+                z.Type == (int)FinancialCardTypeEnumeration.OtpisPozajmice);
+
+                if (clanarine.Any())
+                {
+                    foreach (var c in clanarine)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = c.Id,
+                            Type = FinancialCardTypeEnumeration.OtpisPozajmice,
+                            Date = c.Date,
+                            Razduzenje = c.Placeno,
+                            Zaduzenje = c.TotalAmount,
+                            Otpis = c.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
         private async Task<List<FinancialCardItemResponse>> GetAllTermins(int id, DateTime from, DateTime to)
         {
             List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
@@ -594,7 +714,7 @@ namespace CcsSportScheduler_API.Controllers
 
                 if (termins.Any())
                 {
-                    await termins.ForEachAsync(t =>
+                    foreach(var t in termins )
                     {
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
@@ -607,7 +727,7 @@ namespace CcsSportScheduler_API.Controllers
                         };
 
                         items.Add(financialCardItemResponse);
-                    });
+                    }
                 }
             }
             catch (Exception ex)
@@ -617,18 +737,19 @@ namespace CcsSportScheduler_API.Controllers
 
             return items;
         }
-
-        private async Task<List<FinancialCardItemResponse>> GetAllRacuni(int id, DateTime from, DateTime to)
+        private async Task<List<FinancialCardItemResponse>> GetAllKafic(int id, DateTime from, DateTime to)
         {
             List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
 
             try
             {
-                var racuni = _context.Racuns.Where(r => r.UserId == id && r.Date >= from && r.Date <= to);
+                var kafic = _context.Racuns.Where(r => r.UserId == id &&
+                r.Date >= from && r.Date <= to &&
+                r.Type == (int)FinancialCardTypeEnumeration.Kafic);
 
-                if (racuni.Any())
+                if (kafic.Any())
                 {
-                    await racuni.ForEachAsync(r =>
+                    foreach (var r in kafic)
                     {
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
@@ -641,7 +762,7 @@ namespace CcsSportScheduler_API.Controllers
                         };
 
                         items.Add(financialCardItemResponse);
-                    });
+                    }
                 }
             }
             catch (Exception ex)
@@ -651,18 +772,89 @@ namespace CcsSportScheduler_API.Controllers
 
             return items;
         }
+        private async Task<List<FinancialCardItemResponse>> GetAllProdavnica(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
 
+            try
+            {
+                var kafic = _context.Racuns.Where(r => r.UserId == id &&
+                r.Date >= from && r.Date <= to &&
+                r.Type == (int)FinancialCardTypeEnumeration.Prodavnica);
+
+                if (kafic.Any())
+                {
+                    foreach (var r in kafic)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = r.Id,
+                            Type = FinancialCardTypeEnumeration.Prodavnica,
+                            Date = r.Date,
+                            Razduzenje = r.Placeno,
+                            Zaduzenje = r.TotalAmount,
+                            Otpis = r.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        private async Task<List<FinancialCardItemResponse>> GetAllKotizacija(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var kafic = _context.Zaduzenja.Where(r => r.UserId == id &&
+                r.Date >= from && r.Date <= to &&
+                r.Type == (int)FinancialCardTypeEnumeration.Kotizacije);
+
+                if (kafic.Any())
+                {
+                    foreach (var r in kafic)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = r.Id,
+                            Type = FinancialCardTypeEnumeration.Kotizacije,
+                            Date = r.Date,
+                            Razduzenje = r.Placeno,
+                            Zaduzenje = r.TotalAmount,
+                            Otpis = r.Otpis,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
         private async Task<List<FinancialCardItemResponse>> GetAllUplate(int id, DateTime from, DateTime to)
         {
             List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
 
             try
             {
-                var uplate = _context.Uplata.Where(u => u.UserId == id && u.Date >= from && u.Date <= to && u.TypeUplata == (int)UplataEnumeration.Standard);
+                var uplate = _context.Uplata.Where(u => u.UserId == id && 
+                u.Date >= from && u.Date <= to &&
+                u.TypeUplata == (int)UplataEnumeration.Standard);
 
                 if (uplate.Any())
                 {
-                    await uplate.ForEachAsync(u =>
+                    foreach(var u in uplate )
                     {
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
@@ -674,7 +866,7 @@ namespace CcsSportScheduler_API.Controllers
                         };
 
                         items.Add(financialCardItemResponse);
-                    });
+                    }
                 }
             }
             catch (Exception ex)
@@ -684,18 +876,19 @@ namespace CcsSportScheduler_API.Controllers
 
             return items;
         }
-
         private async Task<List<FinancialCardItemResponse>> GetAllPoklon(int id, DateTime from, DateTime to)
         {
             List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
 
             try
             {
-                var poklon = _context.Uplata.Where(p => p.UserId == id && p.Date >= from && p.Date <= to && p.TypeUplata == (int)UplataEnumeration.Poklon);
+                var poklon = _context.Uplata.Where(p => p.UserId == id && 
+                p.Date >= from && p.Date <= to && 
+                p.TypeUplata == (int)UplataEnumeration.Poklon);
 
                 if (poklon.Any())
                 {
-                    await poklon.ForEachAsync(p =>
+                    foreach (var p in poklon)
                     {
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
@@ -707,7 +900,7 @@ namespace CcsSportScheduler_API.Controllers
                         };
 
                         items.Add(financialCardItemResponse);
-                    });
+                    }
                 }
             }
             catch (Exception ex)
@@ -717,5 +910,40 @@ namespace CcsSportScheduler_API.Controllers
 
             return items;
         }
+        private async Task<List<FinancialCardItemResponse>> GetAllPozajmica(int id, DateTime from, DateTime to)
+        {
+            List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
+
+            try
+            {
+                var poklon = _context.Uplata.Where(p => p.UserId == id && p.Date >= from &&
+                p.Date <= to &&
+                p.TypeUplata == (int)UplataEnumeration.Pozajmica);
+
+                if (poklon.Any())
+                {
+                    foreach (var p in poklon)
+                    {
+                        FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
+                        {
+                            Id = p.Id,
+                            Type = FinancialCardTypeEnumeration.Pozajmica,
+                            Date = p.Date,
+                            Razduzenje = p.TotalAmount,
+                            Zaduzenje = 0,
+                        };
+
+                        items.Add(financialCardItemResponse);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Handle exception
+            }
+
+            return items;
+        }
+        
     }
 }

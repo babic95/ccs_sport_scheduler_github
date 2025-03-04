@@ -44,36 +44,43 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
                         MessageBoxImage.Error);
                     return;
                 }
+                var result = MessageBox.Show("Da li ste sigurni da želite da sačuvate isplatu pozajmice?",
+                    "Upozorenje",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
-                ZaduzenjeRequest zaduzenjeRequest = new ZaduzenjeRequest()
+                if (result == MessageBoxResult.Yes)
                 {
-                    UserId = _currentViewModel.CurrentClan.Id,
-                    Date = _currentViewModel.CurrentZaduzenje.Date,
-                    TotalAmount = _currentViewModel.CurrentZaduzenje.TotalAmount,
-                    Type = (int)ZaduzenjeEnumeration.Pozajmica,
-                    Opis = _currentViewModel.CurrentZaduzenje.Opis
-                };
+                    ZaduzenjeRequest zaduzenjeRequest = new ZaduzenjeRequest()
+                    {
+                        UserId = _currentViewModel.CurrentClan.Id,
+                        Date = _currentViewModel.CurrentZaduzenje.Date,
+                        TotalAmount = _currentViewModel.CurrentZaduzenje.TotalAmount,
+                        Type = (int)ZaduzenjeEnumeration.Pozajmica,
+                        Opis = _currentViewModel.CurrentZaduzenje.Opis
+                    };
 
-                SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+                    SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
 
-                if (sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
-                {
-                    MessageBox.Show("Uspešno ste dodali isplatu pozajmice!",
-                                                "Uspeh",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Information);
+                    if (sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
+                    {
+                        MessageBox.Show("Uspešno ste dodali isplatu pozajmice!",
+                                                    "Uspeh",
+                                                    MessageBoxButton.OK,
+                                                    MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom dodavanja isplate pozajmice!",
+                            "Greška",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+
+                        return;
+                    }
+
+                    _currentViewModel.CurrentWindow.Close();
                 }
-                else
-                {
-                    MessageBox.Show("Greška prilikom dodavanja isplate pozajmice!",
-                        "Greška",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-
-                    return;
-                }
-
-                _currentViewModel.CurrentWindow.Close();
             }
             catch (Exception ex)
             {

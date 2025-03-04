@@ -566,45 +566,43 @@ namespace UniversalEsir_Common.Models.Invoice.Helpers
             string paymentString = string.Empty;
 
             totalPayment = 0;
-            foreach (Payment payment in invoiceRequest.Payment)
+            
+            string paymentType = string.Empty;
+            switch (invoiceRequest.Payment.PaymentType)
             {
-                string paymentType = string.Empty;
-                switch (payment.PaymentType)
-                {
-                    case Enums.PaymentTypeEnumeration.Other:
-                        paymentType = "Уплаћено - друго безготовинско плаћање:";
-                        break;
-                    case Enums.PaymentTypeEnumeration.Cash:
-                        paymentType = "Уплаћено - готовина:";
-                        break;
-                    case Enums.PaymentTypeEnumeration.Crta:
-                        paymentType = "Уплаћено - црта:";
-                        break;
-                    case Enums.PaymentTypeEnumeration.Check:
-                        paymentType = "Уплаћено - чек:";
-                        break;
-                    case Enums.PaymentTypeEnumeration.WireTransfer:
-                        paymentType = "Уплаћено - пренос на рачун:";
-                        break;
-                    case Enums.PaymentTypeEnumeration.Voucher:
-                        paymentType = "Уплаћено - ваучер:";
-                        break;
-                    case Enums.PaymentTypeEnumeration.MobileMoney:
-                        paymentType = "Уплаћено - инстант плаћање:";
-                        break;
-                }
+                case Enums.PaymentTypeEnumeration.Other:
+                    paymentType = "Уплаћено - друго безготовинско плаћање:";
+                    break;
+                case Enums.PaymentTypeEnumeration.Cash:
+                    paymentType = "Уплаћено - готовина:";
+                    break;
+                case Enums.PaymentTypeEnumeration.Crta:
+                    paymentType = "Уплаћено - црта:";
+                    break;
+                case Enums.PaymentTypeEnumeration.Check:
+                    paymentType = "Уплаћено - чек:";
+                    break;
+                case Enums.PaymentTypeEnumeration.WireTransfer:
+                    paymentType = "Уплаћено - пренос на рачун:";
+                    break;
+                case Enums.PaymentTypeEnumeration.Voucher:
+                    paymentType = "Уплаћено - ваучер:";
+                    break;
+                case Enums.PaymentTypeEnumeration.MobileMoney:
+                    paymentType = "Уплаћено - инстант плаћање:";
+                    break;
+            }
 
-                totalPayment += payment.Amount;
-                if (payment.PaymentType != Enums.PaymentTypeEnumeration.Other)
-                {
-                    paymentString += string.Format("{0}{1}\r\n", paymentType.PadRight(29),
-                        payment.Amount.ToString("0.00").Replace('.', ',').PadLeft(11));
-                }
-                else
-                {
-                    paymentString += string.Format("{0}\n{1}\r\n", paymentType.PadRight(40),
-                        payment.Amount.ToString("0.00").Replace('.', ',').PadLeft(40));
-                }
+            totalPayment += invoiceRequest.Payment.Amount;
+            if (invoiceRequest.Payment.PaymentType != Enums.PaymentTypeEnumeration.Other)
+            {
+                paymentString += string.Format("{0}{1}\r\n", paymentType.PadRight(29),
+                    invoiceRequest.Payment.Amount.ToString("0.00").Replace('.', ',').PadLeft(11));
+            }
+            else
+            {
+                paymentString += string.Format("{0}\n{1}\r\n", paymentType.PadRight(40),
+                    invoiceRequest.Payment.Amount.ToString("0.00").Replace('.', ',').PadLeft(40));
             }
 
             return paymentString;

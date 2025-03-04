@@ -44,35 +44,42 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
                         MessageBoxImage.Error);
                     return;
                 }
+                var result = MessageBox.Show("Da li ste sigurni da želite da sačuvate uplatu?",
+                    "Upozorenje",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
 
-                UplataRequest uplataRequest = new UplataRequest()
+                if (result == MessageBoxResult.Yes)
                 {
-                    UserId = _currentViewModel.CurrentClan.Id,
-                    Date = _currentViewModel.CurrentUplata.Date,
-                    TotalAmount = _currentViewModel.CurrentUplata.TotalAmount,
-                    TypeUplata = (int)UplataEnumeration.Standard
-                };
+                    UplataRequest uplataRequest = new UplataRequest()
+                    {
+                        UserId = _currentViewModel.CurrentClan.Id,
+                        Date = _currentViewModel.CurrentUplata.Date,
+                        TotalAmount = _currentViewModel.CurrentUplata.TotalAmount,
+                        TypeUplata = (int)UplataEnumeration.Standard
+                    };
 
-                SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
+                    SportSchedulerAPI_Manager sportSchedulerAPI_Manager = new SportSchedulerAPI_Manager();
 
-                if (sportSchedulerAPI_Manager.PostUplataAsync(uplataRequest).Result)
-                {
-                    MessageBox.Show("Uspešno ste dodali uplatu!",
-                                                "Uspeh",
-                                                MessageBoxButton.OK,
-                                                MessageBoxImage.Information);
+                    if (sportSchedulerAPI_Manager.PostUplataAsync(uplataRequest).Result)
+                    {
+                        MessageBox.Show("Uspešno ste dodali uplatu!",
+                                                    "Uspeh",
+                                                    MessageBoxButton.OK,
+                                                    MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Greška prilikom dodavanja uplate!",
+                            "Greška",
+                            MessageBoxButton.OK,
+                            MessageBoxImage.Error);
+
+                        return;
+                    }
+
+                    _currentViewModel.CurrentWindow.Close();
                 }
-                else
-                {
-                    MessageBox.Show("Greška prilikom dodavanja uplate!",
-                        "Greška",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Error);
-
-                    return;
-                }
-
-                _currentViewModel.CurrentWindow.Close();
             }
             catch (Exception ex)
             {

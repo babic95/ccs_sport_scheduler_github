@@ -57,7 +57,7 @@ namespace UniversalEsir.Commands.AppMain.Admin
                                         TopCanvas = p.Top,
                                         Height = p.Height,
                                         Width = p.Width,
-                                        PartHallId = p.PartHallId,
+                                        PartHallId = _currentViewModel.CurrentMesto != null ? _currentViewModel.CurrentMesto.Id : p.PartHallId,
                                         Type = (int)p.Type
                                     };
                                     sqliteDbContext.PaymentPlaces.Add(paymentPlaceDB);
@@ -85,7 +85,7 @@ namespace UniversalEsir.Commands.AppMain.Admin
                                         TopCanvas = p.Top,
                                         Height = p.Height,
                                         Width = p.Width,
-                                        PartHallId = p.PartHallId,
+                                        PartHallId = _currentViewModel.CurrentMesto != null ? _currentViewModel.CurrentMesto.Id : p.PartHallId,
                                         Type = (int)p.Type
                                     };
                                     sqliteDbContext.PaymentPlaces.Add(paymentPlaceDB);

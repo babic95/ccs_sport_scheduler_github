@@ -228,9 +228,9 @@
                         <Label FontSize="16"
                            Content="Promet Prodaja - Gotovina:"/>
                         <Label FontSize="16"
-                           Content="Promet Prodaja - Kartica:"/>
-                        <Label FontSize="16"
-                           Content="Promet Prodaja - Prenos na račun:"/>
+                           Content="Promet Prodaja - Crta:"/>
+                        <!--<Label FontSize="16"
+                           Content="Promet Prodaja - Prenos na račun:"/>-->
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <Label FontSize="16"
@@ -239,12 +239,12 @@
                         <Label FontSize="16"
                            FontWeight="Bold"
                            Content="{Binding Path=CurrentKnjizenjePazara.NormalSaleCard, Converter={StaticResource decimalToString}}"/>
-                        <Label FontSize="16"
+                        <!--<Label FontSize="16"
                            FontWeight="Bold"
-                           Content="{Binding Path=CurrentKnjizenjePazara.NormalSaleWireTransfer, Converter={StaticResource decimalToString}}"/>
+                           Content="{Binding Path=CurrentKnjizenjePazara.NormalSaleWireTransfer, Converter={StaticResource decimalToString}}"/>-->
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal"
+                <!--<StackPanel Orientation="Horizontal"
                             HorizontalAlignment="Right">
                     <StackPanel Orientation="Vertical">
                         <Label FontSize="16"
@@ -265,7 +265,7 @@
                            FontWeight="Bold"
                            Content="{Binding Path=CurrentKnjizenjePazara.NormalRefundWireTransfer, Converter={StaticResource decimalToString}}"/>
                     </StackPanel>
-                </StackPanel>
+                </StackPanel>-->
             </Grid>
 
         </StackPanel>

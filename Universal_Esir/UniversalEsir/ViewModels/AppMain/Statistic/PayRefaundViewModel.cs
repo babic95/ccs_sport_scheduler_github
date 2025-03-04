@@ -46,7 +46,7 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
             Window = window;
             RefaundViewModel = refaundViewModel;
 
-            Payment = new List<Payment>();
+            //Payment = new List<Payment>();
 
             Amount = 0;
 
@@ -65,24 +65,19 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
             Card = "0";
             WireTransfer = "0";
 
-            RefaundViewModel.CurrentInvoiceRequest.Payment.ToList().ForEach(pay =>
+
+            switch (RefaundViewModel.CurrentInvoiceRequest.Payment.PaymentType)
             {
-                if (pay != null)
-                {
-                    switch (pay.PaymentType)
-                    {
-                        case PaymentTypeEnumeration.Cash:
-                            Cash = pay.Amount.ToString().Replace(',', '.');
-                            break;
-                        case PaymentTypeEnumeration.Crta:
-                            Card = pay.Amount.ToString().Replace(',', '.');
-                            break;
-                        case PaymentTypeEnumeration.WireTransfer:
-                            WireTransfer = pay.Amount.ToString().Replace(',', '.');
-                            break;
-                    }
-                }
-            });
+                case PaymentTypeEnumeration.Cash:
+                    Cash = RefaundViewModel.CurrentInvoiceRequest.Payment.Amount.ToString().Replace(',', '.');
+                    break;
+                case PaymentTypeEnumeration.Crta:
+                    Card = RefaundViewModel.CurrentInvoiceRequest.Payment.Amount.ToString().Replace(',', '.');
+                    break;
+                case PaymentTypeEnumeration.WireTransfer:
+                    WireTransfer = RefaundViewModel.CurrentInvoiceRequest.Payment.Amount.ToString().Replace(',', '.');
+                    break;
+            }
 
             if (!string.IsNullOrEmpty(RefaundViewModel.CurrentInvoiceRequest.BuyerId))
             {
@@ -125,7 +120,7 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
         #endregion Properties Internal
 
         #region Properties
-        public List<Payment> Payment { get; set; }
+        public Payment Payment { get; set; }
         public RefaundViewModel RefaundViewModel { get; set; }
         public Window Window { get; set; }
 
