@@ -11,14 +11,14 @@ const FinancialCardAll = ({ user }) => {
         const thisYear = today.getFullYear();
         const firstDayOfYear = new Date(thisYear, 0, 1);
         const year = firstDayOfYear.getFullYear();
-        return `${year}-1-1`;
+        return `${year}-01-01T00:00:00`;
     };
     const getEndDate = () => {
         const today = new Date();
         const thisYear = today.getFullYear();
         const firstDayOfYear = new Date(thisYear, 0, 1);
         const year = firstDayOfYear.getFullYear();
-        return `${year}-1-1`;
+        return `${year}-12-31T23:59:59`;
     };
     const [fromDate, setFromDate] = useState(getStartDate());
     const [toDate, setToDate] = useState(getEndDate());
