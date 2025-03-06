@@ -4,7 +4,7 @@
   "start_url": "/",
   "icons": [
     {
-      "src": "/assets/logo.png",
+      "src": "/CcsSportScheduler/CcsSportScheduler_API/ClientApp/public/assets/logo.png",
       "sizes": "644x646",
       "type": "image/png"
     }
