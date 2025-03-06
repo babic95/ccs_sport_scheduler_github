@@ -24,7 +24,7 @@ registerRoute(
         }
         return true;
     },
-    createHandlerBoundToURL('%PUBLIC_URL%/index.html')
+    createHandlerBoundToURL('/index.html')
 );
 
 registerRoute(
