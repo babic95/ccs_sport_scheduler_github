@@ -37,6 +37,22 @@ registerRoute(
     })
 );
 
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open('ccs-sport-scheduler-v1').then((cache) => {
+            return cache.addAll([
+                '/',
+                '/index.html',
+                '/manifest.json',
+                '/assets/logo.png',
+                '/assets/logo_192x192.png',
+                '/assets/logo_512x512.png',
+                // Dodaj ostale resurse koje treba keširati
+            ]);
+        })
+    );
+});
+
 self.addEventListener('message', (event) => {
     if (event.data && event.data.type === 'SKIP_WAITING') {
         self.skipWaiting();

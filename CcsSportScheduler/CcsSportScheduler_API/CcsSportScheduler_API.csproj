@@ -40,6 +40,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\Verdana.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\Verdana.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CcsSportScheduler_Database\CcsSportScheduler_Database.csproj" />
   </ItemGroup>
 
