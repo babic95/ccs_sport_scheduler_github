@@ -56,7 +56,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
                         UserId = _currentViewModel.CurrentClan.Id,
                         Date = _currentViewModel.CurrentZaduzenje.Date,
                         TotalAmount = _currentViewModel.CurrentZaduzenje.TotalAmount,
-                        Type = (int)ZaduzenjeEnumeration.Pozajmica,
+                        Type = (int)ZaduzenjeEnumeration.OtpisPozajmica,
                         Opis = _currentViewModel.CurrentZaduzenje.Opis
                     };
 

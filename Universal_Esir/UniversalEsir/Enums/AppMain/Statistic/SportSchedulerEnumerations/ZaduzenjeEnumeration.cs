@@ -9,7 +9,7 @@ namespace UniversalEsir.Enums.AppMain.Statistic.SportSchedulerEnumerations
     public enum ZaduzenjeEnumeration
     {
         Kotizacije = 4,
-        Pozajmica = 6,
+        OtpisPozajmica = 7,
         Clanarina = 8
     }
 }

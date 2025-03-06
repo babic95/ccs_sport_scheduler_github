@@ -579,7 +579,7 @@ namespace CcsSportScheduler_API.Controllers
 
         // DELETE: api/Termins/3/id
         [HttpDelete("{idUser}/{id}")]
-        public async Task<IActionResult> Otkazivanje(int idUser, string id, [FromBody] bool isFree = true)
+        public async Task<IActionResult> Otkazivanje(int idUser, string id, [FromQuery] bool isFree = true)
         {
             var userDB = await _context.Users.FindAsync(idUser);
 

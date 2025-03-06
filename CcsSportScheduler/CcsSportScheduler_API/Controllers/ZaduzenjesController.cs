@@ -171,8 +171,8 @@ namespace CcsSportScheduler_API.Controllers
             int sat)
         {
             List<DateTime> dates = new List<DateTime>();
-            DateTime startDate = new DateTime(year, 4, 1, sat, 0, 0);
-            DateTime endDate = new DateTime(year, 10, 31, sat + 1, 0, 0);
+            DateTime startDate = new DateTime(year, 3, 1, sat, 0, 0);
+            DateTime endDate = new DateTime(year, 10, 31, 23, 0, 0);
 
             // Pronađi prvi željeni dan u nedelji
             while (startDate.DayOfWeek != dayOfWeek)
@@ -181,7 +181,7 @@ namespace CcsSportScheduler_API.Controllers
             }
 
             // Dodaj svaki željeni dan u nedelji do endtDate
-            while (startDate.Date >= endDate.Date)
+            while (startDate.Date < endDate.Date)
             {
                 dates.Add(startDate);
                 startDate = startDate.AddDays(7); // Dodaj 7 dana da dobiješ sledeći željeni dan u nedelji

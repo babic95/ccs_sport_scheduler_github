@@ -306,13 +306,8 @@ const Schedule = ({ user }) => {
     const handleOtkaziNoFree = async () => {
         if (selectedEvent) {
             try {
-                await axios.request({
-                    url: `/api/termins/${user.id}/${selectedEvent.id}`,
-                    method: 'DELETE',
-                    data: {
-                        isFree: false // ili true u zavisnosti od vašeg slučaja
-                    }
-                });
+
+                await axios.delete(`/api/termins/${user.id}/${selectedEvent.id}?isFree=false`);
                 alert('Termin uspešno otkazan!');
 
                 setTermini([]);
@@ -476,7 +471,7 @@ const Schedule = ({ user }) => {
         </Box>
     );
 
-    const saldo = financialData.totalRazduzenje - financialData.totalRazduzenje;
+    const saldo = financialData.totalRazduzenje - financialData.totalZaduzenje;
 
     return (
         <Container component="main" maxWidth="lg" sx={{ mt: 8, mb: 4 }}>

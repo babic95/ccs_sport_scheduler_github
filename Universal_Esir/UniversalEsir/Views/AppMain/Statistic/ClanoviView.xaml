@@ -23,7 +23,7 @@
                 <MenuItem Header="Članarina"
                           Command="{Binding AddNewClanarinaCommand}"/>
                 <MenuItem Header="Povrat pozajmice"
-                          Command="{Binding PovratPozajmiceCommand}"/>
+                          Command="{Binding AddNewPozajmicaIsplataCommand}"/>
             </MenuItem>
             <MenuItem Header="Uplate">
                 <MenuItem Header="Uplata"

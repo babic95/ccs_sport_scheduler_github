@@ -302,7 +302,7 @@ const FinancialCard = ({ user }) => {
                             <CardContent>
                                 <Typography variant="h6">{new Date(item.date).toLocaleDateString('sr-RS')}</Typography>
                                 <Typography>{`Tip: ${getTypeLabel(item.type)}`}</Typography>
-                                {item.type !== 2 && item.type !== 3 && (
+                                {item.type !== 2 && item.type !== 3 && item.type !== 6 && item.type !== 9 && (
                                     <>
                                         <Typography>{`Zaduženje: ${item.zaduzenje} RSD`}</Typography>
                                         <Typography>{`Otpis: ${item.otpis} RSD`}</Typography>
