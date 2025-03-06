@@ -58,3 +58,20 @@ self.addEventListener('notificationclick', (event) => {
         })
     );
 });
+
+self.addEventListener('fetch', (event) => {
+    if (event.request.mode === 'navigate') {
+        event.respondWith(
+            (async () => {
+                const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+                for (const client of clientList) {
+                    if (client.url.includes('tksirmium.com') && 'focus' in client) {
+                        client.focus();
+                        return new Response('', { status: 200, statusText: 'OK' });
+                    }
+                }
+                return fetch(event.request);
+            })()
+        );
+    }
+});
