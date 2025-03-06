@@ -433,6 +433,36 @@ namespace CcsSportScheduler_API.Controllers
                     };
 
                     await _context.Termins.AddAsync(terminDB);
+
+                    if (placeno > 0)
+                    {
+                        var pretplate = _context.Uplata.Where(p => p.UserId == terminRequest.UserId &&
+                        p.Razduzeno != p.TotalAmount);
+
+                        if (pretplate.Any())
+                        {
+                            foreach (var pretplata in pretplate)
+                            {
+                                if (placeno <= 0)
+                                {
+                                    break;
+                                }
+                                if (pretplata.TotalAmount - pretplata.Razduzeno - placeno >= 0)
+                                {
+                                    pretplata.Razduzeno += placeno;
+
+                                    placeno = 0;
+                                }
+                                else
+                                {
+                                    placeno = (pretplata.Razduzeno + placeno) - pretplata.TotalAmount;
+                                    pretplata.Razduzeno = pretplata.TotalAmount;
+                                }
+                                _context.Uplata.Update(pretplata);
+                            }
+                        }
+                    }
+
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception ex)

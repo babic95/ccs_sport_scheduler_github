@@ -65,7 +65,7 @@ self.addEventListener('fetch', (event) => {
             (async () => {
                 const clientList = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
                 for (const client of clientList) {
-                    if (client.url.includes('tksirmium.com') && 'focus' in client) {
+                    if (client.url.includes('tksirmium.com')) {
                         client.focus();
                         return new Response('', { status: 200, statusText: 'OK' });
                     }
