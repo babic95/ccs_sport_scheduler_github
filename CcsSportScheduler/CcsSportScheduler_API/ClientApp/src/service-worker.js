@@ -24,7 +24,7 @@ registerRoute(
         }
         return true;
     },
-    createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
+    createHandlerBoundToURL('%PUBLIC_URL%/index.html')
 );
 
 registerRoute(
@@ -45,8 +45,8 @@ self.addEventListener('install', (event) => {
                 '/index.html',
                 '/manifest.json',
                 '/assets/logo.png',
-                '/assets/logo_192x192.png',
                 '/assets/logo_512x512.png',
+                '/assets/logo_192x192.png',
                 // Dodaj ostale resurse koje treba keširati
             ]);
         })
