@@ -1,0 +1,15 @@
+{
+  "short_name": "TK Sirmium",
+  "name": "TK Sirmium",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "src/assets/logo.png",
+      "sizes": "512x512 192x192 64x64 32x32 24x24 16x16",
+      "type": "image/png"
+    }
+  ],
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}

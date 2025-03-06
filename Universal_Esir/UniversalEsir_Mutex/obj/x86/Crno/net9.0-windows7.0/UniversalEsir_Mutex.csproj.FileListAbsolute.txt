@@ -1,0 +1,13 @@
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\bin\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.deps.json
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\bin\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.dll
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\bin\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.pdb
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.csproj.AssemblyReference.cache
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.AssemblyInfoInputs.cache
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.AssemblyInfo.cs
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.csproj.CoreCompileInputs.cache
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.sourcelink.json
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.dll
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\refint\UniversalEsir_Mutex.dll
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\UniversalEsir_Mutex.pdb
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Mutex\obj\x86\Crno\net9.0-windows7.0\ref\UniversalEsir_Mutex.dll

@@ -1,0 +1,146 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ccs-sport-scheduler
+  namespace: ccs-sport-scheduler
+  labels:
+    app: ccs-sport-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ccs-sport-scheduler
+  template:
+    metadata:
+      labels:
+        app: ccs-sport-scheduler
+    spec:
+      containers:
+      - name: ccs-sport-scheduler
+        image: registry.gitlab.com/cleancodesirmium/ccs_sport_scheduler:latest
+        # image: {{image}}
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        env:
+          - name: ConnectionStrings
+            valueFrom:
+              secretKeyRef:
+                name: ccs-sport-scheduler
+                key: ConnectionStrings
+      imagePullSecrets:
+      - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ccs-sport-scheduler
+  namespace: ccs-sport-scheduler
+spec:
+  selector:
+    app: ccs-sport-scheduler
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tksirmium.com
+  namespace: ccs-sport-scheduler
+  annotations:
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: tksirmium.com 
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ccs-sport-scheduler
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - tksirmium.com
+    secretName: tksirmium.com-cert
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app.tksirmium.com
+  namespace: ccs-sport-scheduler
+  annotations:
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: app.tksirmium.com 
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ccs-sport-scheduler
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - app.tksirmium.com
+    secretName: app.tksirmium.com-cert
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tk.cleancodesirmium.com
+  namespace: ccs-sport-scheduler
+  annotations:
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+    nginx.ingress.kubernetes.io/send-timeout: "3600"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 1024m
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: tk.cleancodesirmium.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ccs-sport-scheduler
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - tk.cleancodesirmium.com
+    secretName: tk.cleancodesirmium.com-cert

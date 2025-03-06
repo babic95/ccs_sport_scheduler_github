@@ -1,0 +1,13 @@
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\bin\Debug\net9.0\UniversalEsir_Logging.deps.json
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\bin\Debug\net9.0\UniversalEsir_Logging.dll
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\bin\Debug\net9.0\UniversalEsir_Logging.pdb
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.csproj.AssemblyReference.cache
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.GeneratedMSBuildEditorConfig.editorconfig
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.AssemblyInfoInputs.cache
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.AssemblyInfo.cs
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.csproj.CoreCompileInputs.cache
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.sourcelink.json
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.dll
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\refint\UniversalEsir_Logging.dll
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\UniversalEsir_Logging.pdb
+C:\Git_Private\ccs_sport_scheduler\Universal_Esir\UniversalEsir_Logging\obj\Debug\net9.0\ref\UniversalEsir_Logging.dll
