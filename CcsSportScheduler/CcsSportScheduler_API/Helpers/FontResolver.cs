@@ -25,7 +25,14 @@ namespace CcsSportScheduler_API.Helpers
 
         private byte[] LoadFontData(string resourceName)
         {
-            using (Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceNames = assembly.GetManifestResourceNames();
+            foreach (var resource in resourceNames)
+            {
+                Console.WriteLine(resource); // Dodaj logovanje svih resursa
+            }
+
+            using (Stream stream = assembly.GetManifestResourceStream(resourceName))
             {
                 if (stream == null)
                 {

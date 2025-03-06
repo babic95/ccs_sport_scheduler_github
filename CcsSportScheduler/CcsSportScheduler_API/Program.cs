@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using PdfSharpCore.Fonts;
-using PdfSharpCore.Utils;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
