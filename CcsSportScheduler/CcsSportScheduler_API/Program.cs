@@ -1,10 +1,13 @@
 ﻿using Amazon.Runtime;
 using Amazon.S3;
+using CcsSportScheduler_API.Helpers; // Dodaj ovaj namespace
 using CcsSportScheduler_API.Models.Background;
 using CcsSportScheduler_Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
+using PdfSharpCore.Fonts;
+using PdfSharpCore.Utils;
 using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,21 +69,14 @@ awsOption.Credentials = new BasicAWSCredentials(builder.Configuration["AWS:Acces
 builder.Services.AddDefaultAWSOptions(awsOption);
 builder.Services.AddAWSService<IAmazonS3>();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyMethod()
-               .AllowAnyHeader();
-    });
-});
-
 // Register HttpClient with BaseAddress from configuration
 builder.Services.AddHttpClient("MyHttpClient", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["BaseAddress"]);
 });
+
+// Register FontResolver
+GlobalFontSettings.FontResolver = CcsSportScheduler_API.Helpers.FontResolver.Instance;
 
 var app = builder.Build();
 
@@ -99,13 +95,9 @@ app.UseSwaggerUI(c =>
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseCors("AllowAll");
-
 app.UseAuthorization();
-
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
