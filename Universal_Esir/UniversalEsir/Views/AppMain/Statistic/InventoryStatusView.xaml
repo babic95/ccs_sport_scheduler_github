@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <converters:DecimalNumberToString x:Key="decimalToString"/>
         <converters:DecimalNumberQuantityToString x:Key="decimalQuantityToString"/>
+        <converters:DecimalQuantityCeoBrojToString x:Key="decimalQuantityCeoBrojToString"/> 
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -182,7 +183,7 @@
                 <DataGridTextColumn Width="auto"
                                     Header="Količina"
                                     MinWidth="100"
-                                    Binding="{Binding Quantity, Converter={StaticResource decimalQuantityToString}}">
+                                    Binding="{Binding Quantity, Converter={StaticResource decimalQuantityCeoBrojToString}}">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="TextBlock">
                             <Setter Property="HorizontalAlignment" Value="Center" />

@@ -48,12 +48,12 @@
                        FontSize="24"
                        HorizontalAlignment="Right"
                        Margin="0 5"/>
-                        <Label Height="40"
+                        <!--<Label Height="40"
                        Foreground="Black"
                        Content="Barkod:"
                        FontSize="24"
                        HorizontalAlignment="Right"
-                       Margin="0 5"/>
+                       Margin="0 5"/>-->
                         <Label Height="40"
                        Foreground="Black"
                        Content="Naziv:"
@@ -73,12 +73,12 @@
                        FontSize="24"
                        HorizontalAlignment="Right"
                        Margin="0 5"/>
-                        <Label Height="40"
+                        <!--<Label Height="40"
                        Foreground="Black"
                        Content="Labela poreza:"
                        FontSize="24"
                        HorizontalAlignment="Right"
-                       Margin="0 5"/>
+                       Margin="0 5"/>-->
                         <Label Height="40"
                        Foreground="Black"
                        Content="Alarm:"
@@ -106,7 +106,7 @@
                              Margin="0 5"
                              Text="{Binding CurrentInventoryStatus.Item.Id, 
                             Mode=TwoWay}"/>
-                        <TextBox Height="40"
+                        <!--<TextBox Height="40"
                              Width="600"
                              Foreground="Black"
                              FontSize="24"
@@ -114,7 +114,7 @@
                              VerticalContentAlignment="Center"
                              Margin="0 5"
                              Text="{Binding CurrentInventoryStatus.Item.Barcode, 
-                            Mode=TwoWay}"/>
+                            Mode=TwoWay}"/>-->
                         <TextBox Height="40"
                              Width="600"
                              Foreground="Black"
@@ -142,7 +142,7 @@
                              VerticalContentAlignment="Center"
                              Margin="0 5"
                              Text="{Binding CurrentInventoryStatus.Item.Jm, Mode=TwoWay}"/>
-                        <ComboBox Height="40"
+                        <!--<ComboBox Height="40"
                                   Width="600"
                                   Foreground="Black"
                                   FontSize="24"
@@ -151,7 +151,7 @@
                                   Margin="0 5"
                                   ItemsSource="{Binding AllLabels}"
                                   DisplayMemberPath="Name"
-                                  SelectedItem="{Binding CurrentLabel}"/>
+                                  SelectedItem="{Binding CurrentLabel}"/>-->
                         <TextBox Height="40"
                              Width="600"
                              Foreground="Black"

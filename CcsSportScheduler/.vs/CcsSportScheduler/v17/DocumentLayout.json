@@ -3,40 +3,36 @@
   "WorkspaceRootPath": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\src\\components\\schedule.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\src\\components\\schedule.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\controllers\\terminscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\controllers\\terminscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\src\\components\\profile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\src\\components\\profile.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\src\\components\\financialcard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\src\\components\\financialcard.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\controllers\\zaduzenjescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\controllers\\zaduzenjescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\public\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\public\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\public\\manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\public\\manifest.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\enumeration\\userenumeration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\enumeration\\userenumeration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\src\\service-worker.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\src\\service-worker.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\src\\serviceworkerregistration.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\src\\serviceworkerregistration.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\clientapp\\package-lock.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\clientapp\\package-lock.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|c:\\git_private\\ccs_sport_scheduler\\ccssportscheduler\\ccssportscheduler_api\\controllers\\klubscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2FBE1FFB-B1D3-4C1E-9DD4-6A0540D5D04A}|CcsSportScheduler_API\\CcsSportScheduler_API.csproj|solutionrelative:ccssportscheduler_api\\controllers\\klubscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -46,19 +42,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\public\\index.html",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\public\\index.html",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\public\\index.html",
+              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\public\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-03-06T15:30:28.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "serviceWorkerRegistration.js",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\serviceWorkerRegistration.js",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\src\\serviceWorkerRegistration.js",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\serviceWorkerRegistration.js",
+              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\src\\serviceWorkerRegistration.js",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAwwGUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-06T12:01:43.098Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "launchSettings.json",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Properties\\launchSettings.json",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\Properties\\launchSettings.json",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Properties\\launchSettings.json",
-              "RelativeToolTip": "CcsSportScheduler_API\\Properties\\launchSettings.json",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAuwCcAAAABAAAAAAAAAA==",
+              "Title": "service-worker.js",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\service-worker.js",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\src\\service-worker.js",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\service-worker.js",
+              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\src\\service-worker.js",
+              "ViewState": "AgIAACwAAAAAAAAAAAAwwEwAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-03-06T12:01:36.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "manifest.json",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
+              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-05T20:46:11.85Z",
+              "WhenOpened": "2025-03-06T11:55:52.297Z",
               "EditorCaption": ""
             },
             {
@@ -69,100 +104,48 @@
               "RelativeDocumentMoniker": "CcsSportScheduler_API\\appsettings.json",
               "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\appsettings.json",
               "RelativeToolTip": "CcsSportScheduler_API\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-05T20:45:56.536Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Profile.jsx",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\components\\Profile.jsx",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\src\\components\\Profile.jsx",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\components\\Profile.jsx",
-              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\src\\components\\Profile.jsx",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-03-05T20:40:45.844Z",
+              "WhenOpened": "2025-03-06T11:58:19.782Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "FinancialCard.jsx",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\components\\FinancialCard.jsx",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\src\\components\\FinancialCard.jsx",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\components\\FinancialCard.jsx",
-              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\src\\components\\FinancialCard.jsx",
-              "ViewState": "AgIAAEwBAAAAAAAAAADwv1cBAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-03-05T20:34:51.884Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "manifest.json",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
-              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\public\\manifest.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAZAAAAAAAAAA==",
+              "Title": "package-lock.json",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\package-lock.json",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\package-lock.json",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\package-lock.json",
+              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\package-lock.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-05T19:46:18.078Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Schedule.jsx",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\components\\Schedule.jsx",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\ClientApp\\src\\components\\Schedule.jsx",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\ClientApp\\src\\components\\Schedule.jsx",
-              "RelativeToolTip": "CcsSportScheduler_API\\ClientApp\\src\\components\\Schedule.jsx",
-              "ViewState": "AgIAAGQCAAAAAAAAAAAAAHcCAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-03-05T09:40:20.748Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TerminsController.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Controllers\\TerminsController.cs",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\Controllers\\TerminsController.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Controllers\\TerminsController.cs",
-              "RelativeToolTip": "CcsSportScheduler_API\\Controllers\\TerminsController.cs",
-              "ViewState": "AgIAABECAAAAAAAAAAAgwCcCAABjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T14:17:17.357Z",
+              "WhenOpened": "2025-03-06T11:55:19.722Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "ZaduzenjesController.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Controllers\\ZaduzenjesController.cs",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\Controllers\\ZaduzenjesController.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Controllers\\ZaduzenjesController.cs",
-              "RelativeToolTip": "CcsSportScheduler_API\\Controllers\\ZaduzenjesController.cs",
-              "ViewState": "AgIAANsAAAAAAAAAAADgv90AAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T14:15:56.078Z",
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Properties\\launchSettings.json",
+              "RelativeToolTip": "CcsSportScheduler_API\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-03-06T11:55:09.983Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "UserEnumeration.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Enumeration\\UserEnumeration.cs",
-              "RelativeDocumentMoniker": "CcsSportScheduler_API\\Enumeration\\UserEnumeration.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Enumeration\\UserEnumeration.cs",
-              "RelativeToolTip": "CcsSportScheduler_API\\Enumeration\\UserEnumeration.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "KlubsController.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Controllers\\KlubsController.cs",
+              "RelativeDocumentMoniker": "CcsSportScheduler_API\\Controllers\\KlubsController.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\CcsSportScheduler\\CcsSportScheduler_API\\Controllers\\KlubsController.cs",
+              "RelativeToolTip": "CcsSportScheduler_API\\Controllers\\KlubsController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T12:58:27.328Z",
+              "WhenOpened": "2025-03-06T11:36:17.515Z",
               "EditorCaption": ""
             }
           ]

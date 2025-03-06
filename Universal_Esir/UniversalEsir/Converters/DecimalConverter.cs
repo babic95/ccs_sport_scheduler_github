@@ -185,4 +185,17 @@ namespace UniversalEsir.Converters
             throw new NotImplementedException();
         }
     }
+    public class DecimalQuantityCeoBrojToString : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return string.Format("{0:#,##0}", Decimal.Round(System.Convert.ToDecimal(value), 3)).Replace(',', '#').Replace('.', ',').Replace('#', '.');
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
 }

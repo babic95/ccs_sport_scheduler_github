@@ -209,7 +209,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic
                             Name = inventoryStatusViewModel.CurrentInventoryStatus.Item.Name,
                             InputUnitPrice = 0,
                             SellingUnitPrice = inventoryStatusViewModel.CurrentInventoryStatus.Item.SellingUnitPrice,
-                            Label = inventoryStatusViewModel.CurrentLabel.Id,
+                            Label = "А",
                             Jm = inventoryStatusViewModel.CurrentInventoryStatus.Item.Jm,
                             AlarmQuantity = inventoryStatusViewModel.CurrentInventoryStatus.Alarm,
                             TotalQuantity = 0,
@@ -332,10 +332,10 @@ namespace UniversalEsir.Commands.AppMain.Statistic
                             itemDB.IdNorm = inventoryStatusViewModel.CurrentNorm;
                         }
 
-                        itemDB.Barcode = inventoryStatusViewModel.CurrentInventoryStatus.Item.Barcode;
+                        //itemDB.Barcode = inventoryStatusViewModel.CurrentInventoryStatus.Item.Barcode;
                         itemDB.Name = inventoryStatusViewModel.CurrentInventoryStatus.Item.Name;
                         itemDB.SellingUnitPrice = inventoryStatusViewModel.CurrentInventoryStatus.Item.SellingUnitPrice;
-                        itemDB.Label = inventoryStatusViewModel.CurrentLabel.Id;
+                        //itemDB.Label = inventoryStatusViewModel.CurrentLabel.Id;
                         itemDB.Jm = inventoryStatusViewModel.CurrentInventoryStatus.Item.Jm;
                         itemDB.AlarmQuantity = inventoryStatusViewModel.CurrentInventoryStatus.Alarm;
                         itemDB.IdItemGroup = inventoryStatusViewModel.CurrentGroupItems.Id;
