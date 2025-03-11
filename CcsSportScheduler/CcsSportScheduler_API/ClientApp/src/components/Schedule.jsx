@@ -625,9 +625,11 @@ const Schedule = ({ user }) => {
                                                     <Button variant="contained" color="primary" onClick={handleOtkazi}>
                                                         Otkaži
                                                     </Button>
-                                                    <Button variant="contained" color="primary" onClick={handleOtkaziNoFree}>
-                                                        Otkaži i zaduži
-                                                    </Button>
+                                                    {user.type === 9 || user.type === 8 ?
+                                                        <Button variant="contained" color="primary" onClick={handleOtkaziNoFree}>
+                                                            Otkaži i zaduži
+                                                        </Button> : null
+                                                    }
                                                 </Box> : 
                                                 <Button variant="contained" color="primary" onClick={() => setShowModal(false)} sx={{ display: 'block', margin: '20px auto' }}>
                                                     Zatvori
