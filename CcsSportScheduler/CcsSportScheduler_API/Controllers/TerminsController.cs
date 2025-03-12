@@ -500,7 +500,8 @@ namespace CcsSportScheduler_API.Controllers
                 for (int i = 0; i < terminRequest.Dates.Count; i++)
                 {
                     var terminDB = await _context.Termins.FirstOrDefaultAsync(t => t.StartDateTime.Date == terminRequest.Dates[i].Date &&
-                    t.StartDateTime.Hour == terminRequest.Dates[i].Hour);
+                    t.StartDateTime.Hour == terminRequest.Dates[i].Hour &&
+                    t.TerenId == terminRequest.TerenId);
 
                     if (terminDB != null)
                     {
