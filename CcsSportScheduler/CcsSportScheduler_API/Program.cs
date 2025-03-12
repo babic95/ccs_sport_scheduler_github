@@ -18,8 +18,8 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "CCS SportScheduler",
-        Description = "Dostupni API za Ccs SportScheduler!",
+        Title = "TK Sirmium",
+        Description = "Dostupni API za TK Sirmium!",
     });
     c.OperationFilter<SwaggerFileOperationFilter>(); // Dodato za podršku IFormFile
     c.MapType<IFormFile>(() => new OpenApiSchema { Type = "string", Format = "binary" }); // Dodato za mapiranje IFormFile
