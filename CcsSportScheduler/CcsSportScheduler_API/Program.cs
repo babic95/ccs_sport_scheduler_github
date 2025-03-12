@@ -8,7 +8,6 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using PdfSharpCore.Fonts;
 using System.Configuration;
-using System.Net.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -73,9 +72,9 @@ builder.Services.AddAWSService<IAmazonS3>();
 builder.Services.AddHttpClient("MyHttpClient", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["BaseAddress"]);
-}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-{
-    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+//}).ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+//{
+//    ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
 // Register FontResolver
