@@ -110,7 +110,7 @@ namespace CcsSportScheduler_API.Controllers
                             TerenId = zaduzenjeRequest.Teren.Value,
                             UserId = zaduzenjeRequest.UserId,
                             Zaduzi = 0,
-                            Dates = GetDatesForDayOfWeek(year, dayOfWeek, zaduzenjeRequest.Sat.Value)
+                            Dates = GetDatesForDayOfWeek(zaduzenjeRequest.Date, year, dayOfWeek, zaduzenjeRequest.Sat.Value)
                         };
 
                         // Dohvati cene termina sa API-ja
@@ -166,12 +166,23 @@ namespace CcsSportScheduler_API.Controllers
                 _ => throw new ArgumentOutOfRangeException(nameof(danNedelje), danNedelje, null)
             };
         }
-        private List<DateTime> GetDatesForDayOfWeek(int year, 
+        private List<DateTime> GetDatesForDayOfWeek(DateTime startDate, int year, 
             DayOfWeek dayOfWeek,
             int sat)
         {
             List<DateTime> dates = new List<DateTime>();
-            DateTime startDate = new DateTime(year, 3, 1, sat, 0, 0);
+
+            startDate = new DateTime(startDate.Year,
+                startDate.Month,
+                startDate.Day,
+                sat,
+                0,
+                0);
+            DateTime firstDate = new DateTime(year, 3, 1, sat, 0, 0);
+            if (startDate < firstDate)
+            {
+                startDate = firstDate;
+            }
             DateTime endDate = new DateTime(year, 10, 31, 23, 0, 0);
 
             // Pronađi prvi željeni dan u nedelji

@@ -10,8 +10,7 @@ const Profile = ({ user }) => {
         id: user.id || null,
         username: user.username || '',
         fullName: user.fullName || '',
-        birthday: user.birthday ? user.birthday.split('T')[0] : '',
-        contact: user.contact || '',
+        year: user.year || '',
         email: user.email || '',
         jmbg: user.jmbg || '',
         profileImageUrl: user.profileImageUrl || ''
@@ -54,7 +53,7 @@ const Profile = ({ user }) => {
                     id: selectedUser.id,
                     username: response.data.username || '',
                     fullName: response.data.fullName || '',
-                    birthday: response.data.birthday ? response.data.birthday.split('T')[0] : '',
+                    year: response.data.year || '',
                     contact: response.data.contact || '',
                     email: response.data.email || '',
                     jmbg: response.data.jmbg || '',
@@ -251,15 +250,14 @@ const Profile = ({ user }) => {
                         variant="outlined"
                         margin="normal"
                         fullWidth
-                        name="birthday"
-                        label="Datum rođenja"
-                        type="date"
-                        id="birthday"
+                        name="year"
+                        label="Godina rođenja"
+                        id="year"
                         InputLabelProps={{
                             shrink: true,
                             style: { color: '#000000' }
                         }}
-                        value={userData.birthday || ''}
+                        value={userData.year || ''}
                         InputProps={{
                             readOnly: true,
                         }}
@@ -296,22 +294,22 @@ const Profile = ({ user }) => {
                             readOnly: true,
                         }}
                     />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        id="jmbg"
-                        label="JMBG"
-                        name="jmbg"
-                        autoComplete="jmbg"
-                        value={userData.jmbg || ''}
-                        InputLabelProps={{
-                            style: { color: '#000000' }
-                        }}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                    />
+                    {/*<TextField*/}
+                    {/*    variant="outlined"*/}
+                    {/*    margin="normal"*/}
+                    {/*    fullWidth*/}
+                    {/*    id="jmbg"*/}
+                    {/*    label="JMBG"*/}
+                    {/*    name="jmbg"*/}
+                    {/*    autoComplete="jmbg"*/}
+                    {/*    value={userData.jmbg || ''}*/}
+                    {/*    InputLabelProps={{*/}
+                    {/*        style: { color: '#000000' }*/}
+                    {/*    }}*/}
+                    {/*    InputProps={{*/}
+                    {/*        readOnly: true,*/}
+                    {/*    }}*/}
+                    {/*/>*/}
                     {selectedUser.id === user.id && (
                         <Button
                             type="button"

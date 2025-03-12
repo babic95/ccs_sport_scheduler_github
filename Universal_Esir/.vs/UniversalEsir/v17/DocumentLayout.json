@@ -93,32 +93,32 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TableOverviewViewModel.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
-              "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
-              "ToolTip": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
-              "RelativeToolTip": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "SaveClanarinaCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAwwEMAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T23:32:42.027Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-06T17:12:26.274Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ClickBar_Report.csproj",
-              "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
-              "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
-              "ToolTip": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
-              "RelativeToolTip": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-03-08T23:32:41.765Z"
+              "DocumentIndex": 0,
+              "Title": "SportSchedulerAPI_Manager.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
+              "RelativeDocumentMoniker": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
+              "RelativeToolTip": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
+              "ViewState": "AgIAAHYBAAAAAAAAAAAgwIkBAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-04T12:52:39.433Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -134,15 +134,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SaveClanarinaCommand.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAwwEMAAAAUAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T17:12:26.274Z"
+              "DocumentIndex": 4,
+              "Title": "ClickBar_Report.csproj",
+              "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
+              "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
+              "ToolTip": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
+              "RelativeToolTip": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-03-08T23:32:41.765Z"
             },
             {
               "$type": "Document",
@@ -169,15 +169,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SportSchedulerAPI_Manager.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
-              "RelativeDocumentMoniker": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
-              "RelativeToolTip": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAIAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "TableOverviewViewModel.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
+              "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
+              "ToolTip": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
+              "RelativeToolTip": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T12:52:39.433Z",
+              "WhenOpened": "2025-03-08T23:32:42.027Z",
               "EditorCaption": ""
             },
             {
@@ -260,7 +260,8 @@
               "RelativeToolTip": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
               "ViewState": "AgIAALgAAAAAAAAAAAAcwMoAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T13:37:02.161Z"
+              "WhenOpened": "2025-03-04T13:37:02.161Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

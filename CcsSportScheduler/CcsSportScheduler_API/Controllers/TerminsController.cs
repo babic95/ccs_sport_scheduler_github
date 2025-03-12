@@ -283,7 +283,8 @@ namespace CcsSportScheduler_API.Controllers
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
 
                 var terminDB = await _context.Termins.FirstOrDefaultAsync(t => t.StartDateTime.Date == terminRequest.StartDateTime.Date &&
-                t.StartDateTime.Hour == terminRequest.StartDateTime.Hour);
+                t.StartDateTime.Hour == terminRequest.StartDateTime.Hour &&
+                t.TerenId == terminRequest.TerenId);
 
                 if (terminDB != null)
                 {
@@ -653,6 +654,24 @@ namespace CcsSportScheduler_API.Controllers
                     };
 
                     await _context.Uplata.AddAsync(uplata);
+                }
+
+                if (terminDB.Type == (int)TerminEnumeration.Plivajuci)
+                {
+                    if (terminDB.StartDateTime.Month == DateTime.Now.Month &&
+                        terminDB.StartDateTime.Year == DateTime.Now.Year)
+                    {
+                        var userPlivajuci = await _context.Users.FindAsync(terminDB.UserId);
+
+                        if (userPlivajuci != null &&
+                            userPlivajuci.Type == (int)UserEnumeration.Plivajuci)
+                        {
+                            {
+                                userPlivajuci.FreeTermin++;
+                                _context.Users.Update(userPlivajuci);
+                            }
+                        }
+                    }
                 }
 
                 _context.Termins.Remove(terminDB);

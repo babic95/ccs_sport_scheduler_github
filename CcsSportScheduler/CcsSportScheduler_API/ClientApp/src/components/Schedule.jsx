@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Schedule.css'; // Uverite se da je CSS datoteka pravilno importovana
 import srLocale from '@fullcalendar/core/locales/sr'; // Import Serbian locale
 import Notifications from './Notifications'; // Import Notification component
+//import { createPlugin, locale as coreLocale } from '@fullcalendar/core';
 
 const CustomModal = styled(Modal)({
     display: 'flex',
@@ -22,6 +23,29 @@ const CustomBox = styled(Box)({
     borderRadius: '8px',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 });
+
+const customLocale = {
+    code: "sr",
+    week: {
+        dow: 1, // Prvi dan u sedmici (ponedeljak)
+        doy: 7, // Prva sedmica u godini koja ima barem 7 dana
+    },
+    buttonText: {
+        prev: "Prethodna",
+        next: "Sledeća",
+        today: "Danas",
+        month: "Mesec",
+        week: "Sedmica",
+        day: "Dan",
+        list: "Planer",
+    },
+    weekText: "Sed",
+    allDayText: "Ceo dan",
+    moreLinkText: function (n) {
+        return "+ još " + n;
+    },
+    noEventsText: "Nema događaja za prikaz",
+};
 
 const Schedule = ({ user }) => {
     const calendarRef = useRef(null);
@@ -148,10 +172,13 @@ const Schedule = ({ user }) => {
 
     }, []);
 
-    const fetchTermini = async (startDate, endDate) => {
+    const fetchTermini = async (startDate) => {
         try {
             setLoading(true);
-            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${selectedUser}`);
+            // Formatiraj startDate u ISO string bez vremenske zone
+            const startDateString = startDate.toISOString().split('T')[0];
+            // Dodaj startDate kao query parametar
+            const response = await axios.get(`/api/termins/zakazaniTermini/${terenId}/${selectedUser}?startDate=${startDateString}`);
             console.log(response.data);
 
             const zakazaniTermini = response.data.map((termin, i) => ({
@@ -170,14 +197,33 @@ const Schedule = ({ user }) => {
                 borderColor: 'black',
             }));
 
-            setTermini([]);
-            console.log(zakazaniTermini);
             setTermini(zakazaniTermini);
 
         } catch (error) {
             console.error('Error fetching termini:', error);
         }
         setLoading(false);
+    };
+
+    // Unutar komponente ili useEffect-a
+    const previousStartDate = useRef(null);
+
+    const handleDatesSet = (arg) => {
+        const { startOfWeek, endOfWeek } = getWeekRange(arg.start);
+
+        var startOfWeek7h = new Date(startOfWeek.setHours(7, 0, 0, 0));
+
+        console.log("startOfWeek7h");
+        console.log(startOfWeek7h);
+        const oldStartDate = previousStartDate.current ? new Date(previousStartDate.current) : null;
+
+        console.log("oldStartDate");
+        console.log(oldStartDate);
+        if (!oldStartDate || startOfWeek7h.getDate() !== oldStartDate.getDate()) {
+            fetchTermini(startOfWeek7h);
+            previousStartDate.current = startOfWeek7h;
+            setSelectedDate(startOfWeek7h);
+        }
     };
 
     const generateSlobodniTermini = (startDate, endDate, cenaTermina) => {
@@ -222,10 +268,18 @@ const Schedule = ({ user }) => {
         }
     };
 
+    const previousTerenId = useRef(terenId);
+    const previousSelectedUser = useRef(selectedUser);
+
     useEffect(() => {
-        if (terenId !== '') {
-            fetchTermini(startOfWeek, endOfWeek);
+        const today = new Date();
+        today.setHours(7, 0, 0, 0);
+        if (terenId !== '' && (previousTerenId.current !== terenId || previousSelectedUser.current !== selectedUser)) {
+            previousTerenId.current = terenId;
+            previousSelectedUser.current = selectedUser;
+            fetchTermini(today);  // Koristi današnji datum umesto startOfWeek
         }
+        setSelectedDate(today);
         fetchUnreadNotifications();
         fetchFinancialData();
     }, [terenId, selectedUser]);
@@ -246,6 +300,7 @@ const Schedule = ({ user }) => {
         endTime.setHours(startTime.getHours() + 1);
 
         const today = new Date();
+        today = today.setHours(7, 0, 0, 0);
         const nextMonday = new Date(today);
         nextMonday.setDate(today.getDate() + 7);
 
@@ -287,12 +342,13 @@ const Schedule = ({ user }) => {
         const eventStart = convertToCEST(new Date(clickInfo.event.startStr));
         const now = convertToCEST(new Date());
 
-        if (eventStart < now) {
+        console.log(clickInfo.event.extendedProps);
+        if (clickInfo.event.extendedProps.user === null &&
+            eventStart < now) {
             alert('Ne možete rezervisati termin koji je prošao.');
             return;
         }
 
-        console.log(clickInfo.event.extendedProps);
         setSelectedEvent({
             id: clickInfo.event.id,
             start: new Date(clickInfo.event.startStr),
@@ -311,7 +367,7 @@ const Schedule = ({ user }) => {
                 alert('Termin uspešno otkazan!');
 
                 setTermini([]);
-                fetchTermini(startOfWeek, endOfWeek);
+                fetchTermini(selectedDate);
 
                 setSelectedEvent(null);
                 setShowModal(false);
@@ -329,7 +385,7 @@ const Schedule = ({ user }) => {
                 alert('Termin uspešno otkazan!');
 
                 setTermini([]);
-                fetchTermini(startOfWeek, endOfWeek);
+                fetchTermini(selectedDate);
 
                 setSelectedEvent(null);
                 setShowModal(false);
@@ -354,7 +410,7 @@ const Schedule = ({ user }) => {
                 alert('Termin rezervisan uspešno!');
 
                 setTermini([]);
-                fetchTermini(startOfWeek, endOfWeek);
+                fetchTermini(selectedDate);
 
                 setSelectedEvent(null);
                 setShowModal(false);
@@ -365,13 +421,12 @@ const Schedule = ({ user }) => {
         }
     };
 
-    function getWeekRange() {
-        const today = new Date();
-        const startOfWeek = new Date(today);
-        const endOfWeek = new Date(today);
+    function getWeekRange(start) {
+        const startOfWeek = new Date(start);
+        const endOfWeek = new Date(startOfWeek);
 
-        startOfWeek.setDate(today.getDate());
-        endOfWeek.setDate(today.getDate() + 7);
+        // Postavi kraj nedelje na nedelju
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
 
         return { startOfWeek, endOfWeek };
     }
@@ -471,6 +526,73 @@ const Schedule = ({ user }) => {
         </Box>
     );
 
+    // Definiši validRange na osnovu autorizacije korisnika
+    const validRange = user.type === 9 || user.type === 8 ? {} : { start: startOfWeek, end: endOfWeek };
+
+    // Definiši headerToolbar na osnovu autorizacije korisnika
+    const headerToolbar = {
+        left: '',
+        center: 'title',
+        right: ''
+    };
+
+    const footerToolbar = user.type === 9 || user.type === 8
+        ? {
+            left: 'prev,next',
+            center: 'today',
+            right: 'timeGridWeek,timeGridDay'
+        }
+        : {
+            left: '',
+            center: '',
+            right: ''
+        };
+    function updateTitle(view) {
+        const customMonthNames = [
+            'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun',
+            'Jul', 'Avg', 'Sep', 'Okt', 'Novr', 'Dec'
+        ];
+
+        // Dobijamo trenutni mesec i godinu
+        const currentMonth = customMonthNames[view.currentStart.getMonth()];
+        const currentYear = view.currentStart.getFullYear();
+
+        // Početni i krajnji datum prikaza
+        const startDate = view.activeStart;
+        const endDate = view.activeEnd;
+
+        // Formatiramo datume u "dd.mm"
+        const formatDate = (date) => {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            return `${day}.${month}`;
+        };
+
+        const formattedStartDate = formatDate(startDate);
+        const formattedEndDate = formatDate(endDate);
+
+        // Promeni naslov kalendara
+        const titleElement = document.querySelector('.fc-toolbar-title');
+        if (titleElement) {
+            // Naslov u formatu: "12.03 - 18.03, Mart 2025"
+            titleElement.innerText = `${formattedStartDate} - ${formattedEndDate} ${currentMonth} ${currentYear}`;
+        }
+    }
+
+
+
+    //const headerToolbar = user.type === 9 || user.type === 8
+    //    ? {
+    //        left: '',
+    //        center: 'title',
+    //        right: ''
+    //    }
+    //    : {
+    //        left: '',
+    //        center: 'title',
+    //        right: ''
+    //    };
+
     const saldo = financialData.totalRazduzenje - financialData.totalZaduzenje;
 
     return (
@@ -481,19 +603,23 @@ const Schedule = ({ user }) => {
                 </Box>
             ) : (
                 <>
-                    <Typography variant="h6" align="center" gutterBottom>
-                        Ukupno zaduženje: {financialData.totalZaduzenje} RSD
-                    </Typography>
-                    <Typography variant="h6" align="center" gutterBottom>
-                        Ukupno razduženje: {financialData.totalRazduzenje} RSD
-                    </Typography>
+                        {
+                            //<Typography variant="h6" align="center" gutterBottom>
+                            //    Ukupno zaduženje: {financialData.totalZaduzenje} RSD
+                            //</Typography>
+                            //<Typography variant="h6" align="center" gutterBottom>
+                            //    Ukupno razduženje: {financialData.totalRazduzenje} RSD
+                            //</Typography>
+                        }
                     <Typography variant="h6" align="center" gutterBottom sx={{ color: saldo < 0 ? 'red' : saldo > 0 ? 'green' : 'inherit' }}>
                         SALDO: {saldo} RSD
                     </Typography>
 
-                    <Typography component="h1" variant="h4" color="primary" align="center" gutterBottom>
-                        Rezervacija Termina
-                    </Typography>
+                        {
+                            //<Typography component="h1" variant="h4" color="primary" align="center" gutterBottom>
+                            //    Rezervacija Termina
+                            //</Typography>
+                        }
 
                     <FormControl fullWidth variant="outlined" sx={{ mb: 3 }}>
                         <InputLabel id="teren-label" sx={{ color: '#000000' }}>Izaberi Teren</InputLabel>
@@ -540,12 +666,23 @@ const Schedule = ({ user }) => {
                                 <FullCalendar
                                     plugins={[timeGridPlugin, interactionPlugin]}
                                     initialView="timeGridWeek"
-                                    headerToolbar={{
-                                        left: '',
-                                        center: 'title',
-                                        right: ''
+                                    headerToolbar={headerToolbar}
+                                    footerToolbar={footerToolbar}
+                                    locale={customLocale} // Koristi prilagođenu lokalizaciju
+                                    viewDidMount={(args) => {
+                                        updateTitle(args.view); // Ažuriranje naslova
                                     }}
-                                    locale='sr' // Serbian locale
+                                    dayHeaderContent={(args) => {
+                                        // Skraćeni nazivi dana na latinici
+                                        const customDayNamesShort = ['Ned', 'Pon', 'Uto', 'Sre', 'Čet', 'Pet', 'Sub'];
+                                        const dayIndex = args.date.getDay(); // Dobijamo indeks dana
+                                        const dayName = customDayNamesShort[dayIndex]; // Odgovarajući naziv dana
+                                        const date = args.date.getDate(); // Datum u mesecu
+                                        const month = args.date.getMonth() + 1; // Meseci su indeksirani od 0, pa dodajemo 1
+
+                                        // Format: "Sre 12.03"
+                                        return `${dayName} ${date.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}`;
+                                    }}
                                     allDaySlot={false}
                                     slotMinTime="07:00:00"
                                     slotMaxTime="23:00:00"
@@ -555,7 +692,7 @@ const Schedule = ({ user }) => {
                                     eventClick={handleEventClick}
                                     eventClassNames={eventClassNames} // Dodato za prilagođene klase
                                     initialDate={selectedDate} // Postavljanje početnog datuma na današnji dan
-                                    validRange={{ start: startOfWeek, end: endOfWeek }}
+                                    validRange={validRange}
                                     views={{
                                         timeGridWeek: {
                                             type: 'timeGridWeek',
@@ -576,9 +713,10 @@ const Schedule = ({ user }) => {
                                     eventLongPressDelay={0}
                                     timeZone='local' // Postavljanje vremenske zone na lokalnu
                                     eventContent={renderEventContent} // Koristi prilagođeni sadržaj događaja
+                                    datesSet={handleDatesSet} // Dodaj ovu liniju
                                 />
                             </div>
-                    </div>
+                        </div>
 
                     {notifications.length !== 0 ? (
                         <Notifications

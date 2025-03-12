@@ -12,6 +12,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import MenuIcon from '@mui/icons-material/Menu';
 import logo from '../assets/logo.png'; // assuming you have a logo.png in your project
+import Login from './Login';
 
 const Header = ({ toggleSidebar, unreadCount, handleNotificationClick, anchorEl, openMenu, closeMenu, notifications, user, navigate }) => (
     <AppBar position="static" sx={{ backgroundColor: '#4caf50' }}>
@@ -113,6 +114,11 @@ const Sidebar = ({ isOpen, closeSidebar, navigate, user }) => (
                         <ListItemText primary="Novo obavestenje" />
                     </ListItem>
                 )}
+                <ListItem button onClick={() => {
+                    navigate('/');
+                }}>
+                    <ListItemText primary="Odjava" />
+                </ListItem>
             </List>
         </Box>
         <div className="backdrop" onClick={closeSidebar}></div>
@@ -197,6 +203,7 @@ const Main = () => {
                     {user.type === 9 && (
                         <Route path="/new-notification" element={<NewNotification user={user} />} />
                     )}
+                    <Route path="/" element={<Login/>} />
                 </Routes>
             </main>
             {selectedNotification && (
