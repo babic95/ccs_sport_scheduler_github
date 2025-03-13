@@ -286,7 +286,7 @@ const Schedule = ({ user }) => {
 
     const fetchUnreadNotifications = async () => {
         try {
-            const response = await axios.get('/api/obavestenjas/nepregledan/1');
+            const response = await axios.get('/api/obavestenjas/nepregledan/' + user.id);
             setUnreadCount(response.data ? response.data.length : 0);
             setNotifications(response.data || []);
         } catch (error) {
