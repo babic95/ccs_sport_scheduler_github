@@ -11,17 +11,19 @@ const FinancialCardAll = ({ user }) => {
         const thisYear = today.getFullYear();
         const firstDayOfYear = new Date(thisYear, 0, 1);
         const year = firstDayOfYear.getFullYear();
-        return `${year}-01-01T00:00:00`;
+        const month = (firstDayOfYear.getMonth() + 1).toString().padStart(2, '0'); // meseci su 0-indexed, pa dodajemo 1
+        const day = firstDayOfYear.getDate().toString().padStart(2, '0');
+        return `${year}-${month}-${day}`;
     };
     const getEndDate = () => {
         const today = new Date();
         const thisYear = today.getFullYear();
         const firstDayOfYear = new Date(thisYear, 0, 1);
         const year = firstDayOfYear.getFullYear();
-        return `${year}-12-31T23:59:59`;
+        return `${year}-12-31`;
     };
-    const [fromDate, setFromDate] = useState(getStartDate());
-    const [toDate, setToDate] = useState(getEndDate());
+    const [fromDateReport, setFromDateReport] = useState(getStartDate());
+    const [toDateReport, setToDateReport] = useState(getEndDate());
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -50,8 +52,8 @@ const FinancialCardAll = ({ user }) => {
         try {
             const response = await axios.post('/api/Report/createAll', {
                 UserId: 0,
-                FromDate: fromDate, // Primer datuma, promenite po potrebi
-                ToDate: toDate // Primer datuma, promenite po potrebi
+                FromDate: fromDateReport, // Primer datuma, promenite po potrebi
+                ToDate: toDateReport // Primer datuma, promenite po potrebi
             }, {
                 responseType: 'blob'
             });
@@ -75,8 +77,8 @@ const FinancialCardAll = ({ user }) => {
         try {
             const response = await axios.post('/api/Report/create', {
                 UserId: selectedUser.id,
-                FromDate: fromDate, // Primer datuma, promenite po potrebi
-                ToDate: toDate // Primer datuma, promenite po potrebi
+                FromDate: fromDateReport, // Primer datuma, promenite po potrebi
+                ToDate: toDateReport // Primer datuma, promenite po potrebi
             }, {
                 responseType: 'blob'
             });
@@ -99,8 +101,8 @@ const FinancialCardAll = ({ user }) => {
                     <TextField
                         label="Od datuma"
                         type="date"
-                        value={fromDate}
-                        onChange={(e) => setFromDate(e.target.value)}
+                        value={fromDateReport}
+                        onChange={(e) => setFromDateReport(e.target.value)}
                         InputLabelProps={{
                             shrink: true,
                             style: { color: 'black' }, // Dodato za crna slova
@@ -110,8 +112,8 @@ const FinancialCardAll = ({ user }) => {
                     <TextField
                         label="Do datuma"
                         type="date"
-                        value={toDate}
-                        onChange={(e) => setToDate(e.target.value)}
+                        value={toDateReport}
+                        onChange={(e) => setToDateReport(e.target.value)}
                         InputLabelProps={{
                             shrink: true,
                             style: { color: 'black' }, // Dodato za crna slova
