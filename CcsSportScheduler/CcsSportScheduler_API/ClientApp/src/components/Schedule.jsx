@@ -184,8 +184,8 @@ const Schedule = ({ user }) => {
             const zakazaniTermini = response.data.map((termin, i) => ({
                 id: termin.id ? termin.id : `slobodan-${cenaTermina.id}-${i}-${new Date(termin.startDateTime).getHours()}`,
                 title: termin.user ? `${termin.user.username}` : `${termin.price}`,
-                start: new Date(termin.startDateTime).toISOString(),
-                end: new Date(termin.endDateTime).toISOString(),
+                start: new Date(termin.startDateTime).toISOString('en-US', { timeZone: 'Europe/Belgrade' }),
+                end: new Date(termin.endDateTime).toISOString('en-US', { timeZone: 'Europe/Belgrade' }),
                 extendedProps: {
                     user: termin.user,
                     price: termin.price,
