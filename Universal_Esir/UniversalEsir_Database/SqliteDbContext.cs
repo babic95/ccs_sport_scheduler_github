@@ -59,6 +59,7 @@ namespace UniversalEsir_Database
         public virtual DbSet<DriverDB> Drivers { get; set; } = null!;
         public virtual DbSet<DriverInvoiceDB> DriverInvoices { get; set; } = null!;
         public virtual DbSet<IsporukaDB> Isporuke { get; set; } = null!;
+        public virtual DbSet<UplateDB> Uplate { get; set; } = null!;
 
         #region Public method
 
@@ -850,7 +851,18 @@ namespace UniversalEsir_Database
 
                 entity.Property(e => e.DateIsporuka).HasColumnType("datetime");
 
-                entity.Property(e => e.TotalAmount).HasPrecision(4);
+                entity.Property(e => e.TotalAmount).HasPrecision(16, 2);
+            });
+
+            modelBuilder.Entity<UplateDB>(entity =>
+            {
+                entity.ToTable(SQLiteManagerTableNames.Uplate);
+
+                entity.Property(e => e.Id).HasMaxLength(36);
+
+                entity.Property(e => e.Date).HasColumnType("datetime");
+
+                entity.Property(e => e.Amount).HasPrecision(16, 2);
             });
 
             OnModelCreatingPartial(modelBuilder);
@@ -987,6 +999,7 @@ namespace UniversalEsir_Database
                         "'TotalQuantity'   NUMERIC NOT NULL, " +
                         "'AlarmQuantity'   NUMERIC NOT NULL, " +
                         "'IdNorm'   INTEGER, " +
+                        "'IsKonobarItem'   INTEGER NOT NULL DEFAULT 0, " +
                         "PRIMARY KEY(Id), " +
                         "FOREIGN KEY(IdNorm) REFERENCES Norm(Id), " +
                         "CONSTRAINT `fk_Item_ItemGroup` " +
@@ -1001,6 +1014,11 @@ namespace UniversalEsir_Database
                 {
                     try
                     {
+                        sql = string.Format("ALTER TABLE {0}  " +
+                           "ADD COLUMN 'IsKonobarItem'    INTEGER NOT NULL DEFAULT 0" +
+                           "; ", SQLiteManagerTableNames.Item);
+                        CreateTable(SQLiteManagerTableNames.Item, sql);
+
                         sql = string.Format("ALTER TABLE {0}  " +
                            "RENAME COLUMN 'UnitPrice' TO 'SellingUnitPrice'" +
                            "; ", SQLiteManagerTableNames.Item);
@@ -1504,51 +1522,21 @@ namespace UniversalEsir_Database
                         "); ", SQLiteManagerTableNames.Partner);
                     CreateTable(SQLiteManagerTableNames.Partner, sql);
                 }
-                if (!TableExists(SQLiteManagerTableNames.Driver, _sqliteConnection))
-                {
-                    sql = string.Format("CREATE TABLE {0} ( " +
-                        "'Id'	INTEGER NOT NULL, " +
-                        "'Name'    TEXT NOT NULL, " +
-                        "'Address'    TEXT, " +
-                        "'ContractNumber'    TEXT, " +
-                        "'Email'    TEXT, " +
-                        "'City'    TEXT, " +
-                        "'Jmbg'    TEXT, " +
-                        "PRIMARY KEY(Id AUTOINCREMENT) " +
-                        "); ", SQLiteManagerTableNames.Driver);
-                    CreateTable(SQLiteManagerTableNames.Driver, sql);
-                }
-                if (!TableExists(SQLiteManagerTableNames.Isporuka, _sqliteConnection))
-                {
-                    sql = string.Format("CREATE TABLE {0} ( " +
-                        "'Id'	TEXT NOT NULL, " +
-                        "'Counter'    INTEGER NOT NULL, " +
-                        "'CreateDate'    TEXT NOT NULL, " +
-                        "'DateIsporuka'    TEXT NOT NULL, " +
-                        "'TotalAmount'    NUMERIC NOT NULL, " +
-                        "PRIMARY KEY(Id) " +
-                        "); ", SQLiteManagerTableNames.Isporuka);
-                    CreateTable(SQLiteManagerTableNames.Isporuka, sql);
-                }
-                if (!TableExists(SQLiteManagerTableNames.DriverInvoice, _sqliteConnection))
+                if (!TableExists(SQLiteManagerTableNames.Uplate, _sqliteConnection))
                 {
                     sql = string.Format("CREATE TABLE {0} (" +
-                        "'InvoiceId'    TEXT NOT NULL," +
-                        "'DriverId'  INTEGER NOT NULL," +
-                        "'IsporukaId'  TEXT," +
-                        "PRIMARY KEY(InvoiceId, DriverId), " +
-                        "CONSTRAINT `fk_DriverInvoice_Invoice1`" +
-                        "    FOREIGN KEY(InvoiceId)" +
-                        "    REFERENCES Invoice (Id)" +
+                        "'Id'    TEXT NOT NULL," +
+                        "'ClanId'  INTEGER NOT NULL," +
+                        "'Date'  TEXT NOT NULL," +
+                        "'Amount'  NUMERIC NOT NULL," +
+                        "PRIMARY KEY(Id), " +
+                        "CONSTRAINT `fk_Uplate_PaymentPlace1`" +
+                        "    FOREIGN KEY(ClanId)" +
+                        "    REFERENCES PaymentPlace (Id)" +
                         "    ON DELETE NO ACTION" +
-                        "    ON UPDATE NO ACTION, " +
-                        "CONSTRAINT `fk_DriverInvoice_Invoice1`" +
-                        "    FOREIGN KEY(InvoiceId)" +
-                        "    REFERENCES Invoice (Id)" +
-                        "    ON DELETE NO ACTION" +
-                        "    ON UPDATE NO ACTION" +
-                        "); ", SQLiteManagerTableNames.DriverInvoice);
-                    CreateTable(SQLiteManagerTableNames.DriverInvoice, sql);
+                        "    ON UPDATE NO ACTION " +
+                        "); ", SQLiteManagerTableNames.Uplate);
+                    CreateTable(SQLiteManagerTableNames.Uplate, sql);
                 }
             }
             catch (Exception ex)

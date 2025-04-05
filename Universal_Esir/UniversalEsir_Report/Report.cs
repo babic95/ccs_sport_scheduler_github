@@ -3,6 +3,7 @@ using UniversalEsir_Common.Models.Invoice;
 using UniversalEsir_Database;
 using UniversalEsir_Database.Models;
 using UniversalEsir_Report.Models;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace UniversalEsir_Report
 {
@@ -10,6 +11,7 @@ namespace UniversalEsir_Report
     {
         #region Fields
         private List<InvoiceDB> _invoices;
+        private List<UplateDB> _uplate;
         private bool _includeItems;
         #endregion Fields
 
@@ -23,6 +25,29 @@ namespace UniversalEsir_Report
             SqliteDbContext sqliteDbContext = new SqliteDbContext();
 
             _invoices = sqliteDbContext.GetInvoiceForReport(startReport, endReport);
+            _uplate = sqliteDbContext.Uplate.Where(u => u.Date >= startReport && u.Date <= endReport)
+                .ToList();
+
+            SamoKonobar = 0;
+
+            var itemsKonobar = sqliteDbContext.Invoices.Join(sqliteDbContext.ItemInvoices,
+                i => i.Id,
+                ii => ii.InvoiceId,
+                (i, ii) => new { i, ii })
+                .Join(sqliteDbContext.Items,
+                i => i.ii.ItemCode,
+                ii => ii.Id,
+                (i, ii) => new { i, ii })
+                .Where(x => x.i.i.SdcDateTime != null &&
+                x.i.i.SdcDateTime >= startReport &&
+                x.i.i.SdcDateTime <= endReport &&
+                x.ii.IsKonobarItem == 1)
+                .ToList();
+
+            if(itemsKonobar != null && itemsKonobar.Any())
+            {
+                SamoKonobar = itemsKonobar.Sum(x => x.i.ii.TotalAmout.Value);
+            }
 
             SetReport();
         }
@@ -35,6 +60,29 @@ namespace UniversalEsir_Report
             SqliteDbContext sqliteDbContext = new SqliteDbContext();
 
             _invoices = sqliteDbContext.GetInvoiceForReport(startReport, endReport, smartCard);
+            _uplate = sqliteDbContext.Uplate.Where(u => u.Date >= startReport && u.Date <= endReport)
+                .ToList();
+
+            SamoKonobar = 0;
+
+            var itemsKonobar = sqliteDbContext.Invoices.Join(sqliteDbContext.ItemInvoices,
+                i => i.Id,
+                ii => ii.InvoiceId,
+                (i, ii) => new { i, ii })
+                .Join(sqliteDbContext.Items,
+                i => i.ii.ItemCode,
+                ii => ii.Id,
+                (i, ii) => new { i, ii })
+                .Where(x => x.i.i.SdcDateTime != null &&
+                x.i.i.SdcDateTime >= startReport &&
+                x.i.i.SdcDateTime <= endReport &&
+                x.ii.IsKonobarItem == 1)
+                .ToList();
+
+            if (itemsKonobar != null && itemsKonobar.Any())
+            {
+                SamoKonobar = itemsKonobar.Sum(x => x.i.ii.TotalAmout.Value);
+            }
 
             SetReport();
         }
@@ -47,6 +95,29 @@ namespace UniversalEsir_Report
             _includeItems = false;
             SqliteDbContext sqliteDbContext = new SqliteDbContext();
             _invoices = sqliteDbContext.GetInvoiceForReport(startReport, endReport, cashier);
+            _uplate = sqliteDbContext.Uplate.Where(u => u.Date >= startReport && u.Date <= endReport)
+                .ToList();
+
+            SamoKonobar = 0;
+
+            var itemsKonobar = sqliteDbContext.Invoices.Join(sqliteDbContext.ItemInvoices,
+                i => i.Id,
+                ii => ii.InvoiceId,
+                (i, ii) => new { i, ii })
+                .Join(sqliteDbContext.Items,
+                i => i.ii.ItemCode,
+                ii => ii.Id,
+                (i, ii) => new { i, ii })
+                .Where(x => x.i.i.SdcDateTime != null &&
+                x.i.i.SdcDateTime >= startReport &&
+                x.i.i.SdcDateTime <= endReport &&
+                x.ii.IsKonobarItem == 1)
+                .ToList();
+
+            if (itemsKonobar != null && itemsKonobar.Any())
+            {
+                SamoKonobar = itemsKonobar.Sum(x => x.i.ii.TotalAmout.Value);
+            }
 
             SetReport();
         }
@@ -63,6 +134,8 @@ namespace UniversalEsir_Report
         //public Dictionary<InvoiceTypeEenumeration, List<ReportInvoiceType>> InvoiceTypes { get; set; }
         public decimal CashInHand { get; set; }
         public decimal TotalTraffic { get; set; }
+        public decimal SamoKonobar { get; set; }
+        public decimal TotalUplate { get; set; }
         #endregion Properties
 
         #region Private method
@@ -73,10 +146,19 @@ namespace UniversalEsir_Report
             ReportItems = new Dictionary<string, Dictionary<string, ReportItem>>();
             ReportCashiers = new Dictionary<string, decimal>();
             //InvoiceTypes = new Dictionary<InvoiceTypeEenumeration, List<ReportInvoiceType>>();
+
             CashInHand = 0;
             TotalTraffic = 0;
+            TotalUplate = 0;
 
-            _invoices.ForEach(async invoice =>
+            if(_uplate != null &&
+                _uplate.Any())
+            {
+                TotalUplate = _uplate.Sum(x => x.Amount);
+                CashInHand += TotalUplate;
+            }
+
+            foreach (var invoice in _invoices)
             {
                 if (invoice.SdcDateTime.HasValue)
                 {
@@ -95,7 +177,7 @@ namespace UniversalEsir_Report
                     }
                     await SetReportCashiers(invoice);
                 }
-            });
+            }
         }
         private async Task SetReportCashiers(InvoiceDB invoice)
         {

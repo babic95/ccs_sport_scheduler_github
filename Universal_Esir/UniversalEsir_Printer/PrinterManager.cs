@@ -18,6 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using UniversalEsir_Printer.Models;
 
 namespace UniversalEsir_Printer
 {
@@ -63,6 +64,23 @@ namespace UniversalEsir_Printer
                         break;
                     case PrinterFormatEnumeration.Pos80mm:
                         PrintPos80mm(invoiceRequest);
+                        break;
+                }
+            }
+        }
+        public void PrintUplata(UplataPrint uplataPrint)
+        {
+            PrinterFormatEnumeration? printerFormatEnumeration = SettingsManager.Instance.GetPrinterFormat();
+
+            if (printerFormatEnumeration != null)
+            {
+                switch (printerFormatEnumeration.Value)
+                {
+                    case PrinterFormatEnumeration.Pos58mm:
+                        PrintUplataPos58mm(uplataPrint);
+                        break;
+                    case PrinterFormatEnumeration.Pos80mm:
+                        PrintUplataPos80mm(uplataPrint);
                         break;
                 }
             }
@@ -205,6 +223,15 @@ namespace UniversalEsir_Printer
         {
             FormatPos.PrintJournalBlack(invoiceRequest, PosTypeEnumeration.Pos58mm);
         }
+        private void PrintUplataPos80mm(UplataPrint uplataPrint)
+        {
+            FormatPos.PrintUplataBlack(uplataPrint, PosTypeEnumeration.Pos80mm);
+        }
+        private void PrintUplataPos58mm(UplataPrint uplataPrint)
+        {
+            FormatPos.PrintUplataBlack(uplataPrint, PosTypeEnumeration.Pos58mm);
+        }
+        
         //private void PrintPos58mm(InvoiceResult invoiceResult, InvoiceRequest invoiceRequest)
         //{
         //    FormatPos.PrintJournal(invoiceResult, invoiceRequest, PosTypeEnumeration.Pos58mm);

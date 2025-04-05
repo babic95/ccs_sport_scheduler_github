@@ -150,14 +150,29 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="CheckBox">
-                                                <StackPanel Orientation="Horizontal">
-                                                    <Rectangle Name="box" 
-                                                               Width="30"
-                                                               VerticalAlignment="Bottom"
-                                                               Height="30"
-                                                               Stroke="Black"
-                                                               StrokeThickness="1"/>
-                                                </StackPanel>
+                                                <Grid Width="40" Height="40">
+                                                    <Rectangle Name="box"
+                                       Width="40"
+                                       Height="40"
+                                       Stroke="Black"
+                                       StrokeThickness="1"
+                                       Fill="White"/>
+                                                    <Path Name="checkMark"
+                                  Data="M 0 0 L 10 10 M 10 0 L 0 10"
+                                  Stroke="Black"
+                                  StrokeThickness="2"
+                                  Visibility="Collapsed"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"/>
+                                                </Grid>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsChecked" Value="True">
+                                                        <Setter TargetName="checkMark" Property="Visibility" Value="Visible"/>
+                                                    </Trigger>
+                                                    <Trigger Property="IsChecked" Value="False">
+                                                        <Setter TargetName="checkMark" Property="Visibility" Value="Collapsed"/>
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>

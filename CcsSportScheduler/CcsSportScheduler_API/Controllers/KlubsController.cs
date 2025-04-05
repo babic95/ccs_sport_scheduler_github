@@ -299,7 +299,24 @@ namespace CcsSportScheduler_API.Controllers
             if(userDB.Type == (int)UserEnumeration.Plivajuci &&
                 userDB.FreeTermin > 0)
             {
-                cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == (int)TerminEnumeration.Free);
+                DateTime now = DateTime.Now;
+                DateTime startDate = new DateTime(now.Year, now.Month, 1);
+                DateTime endDate = startDate.AddMonths(1).AddDays(-1);
+
+                var freeTermins = _context.Termins.Where(t => t.UserId == userDB.Id &&
+                t.StartDateTime.Date >= startDate.Date &&
+                t.StartDateTime.Date <= endDate.Date &&
+                t.Price == 0);
+
+                if(freeTermins != null &&
+                    freeTermins.Count() <= 3)
+                {
+                    cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == (int)TerminEnumeration.Free);
+                }
+                else
+                {
+                    cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == userDB.Type);
+                }
             }
             else
             {

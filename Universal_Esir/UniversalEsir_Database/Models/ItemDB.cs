@@ -25,6 +25,7 @@ namespace UniversalEsir_Database.Models
         public string Jm { get; set; } = null!;
         public decimal TotalQuantity { get; set; }
         public decimal? AlarmQuantity { get; set; }
+        public int IsKonobarItem { get; set; }
         public string DisplayName 
         {
             get

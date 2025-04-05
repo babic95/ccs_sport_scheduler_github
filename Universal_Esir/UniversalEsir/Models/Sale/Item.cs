@@ -19,6 +19,7 @@ namespace UniversalEsir.Models.Sale
         private decimal _quantity;
         private string _label;
         private string _jm;
+        private bool _isKonobar;
 
         public Item() { }
         public Item(ItemDB itemDB)
@@ -32,6 +33,7 @@ namespace UniversalEsir.Models.Sale
             Label = itemDB.Label;
             Jm = itemDB.Jm;
             Quantity = itemDB.TotalQuantity;
+            IsKonobar = itemDB.IsKonobarItem == 1 ? true : false;
         }
         public string Id
         {
@@ -121,6 +123,15 @@ namespace UniversalEsir.Models.Sale
             {
                 _label = value;
                 OnPropertyChange(nameof(Label));
+            }
+        }
+        public bool IsKonobar
+        {
+            get { return _isKonobar; }
+            set
+            {
+                _isKonobar = value;
+                OnPropertyChange(nameof(IsKonobar));
             }
         }
     }

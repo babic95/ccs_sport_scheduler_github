@@ -38,5 +38,6 @@ namespace UniversalEsir_Database
         public const string Driver = "Driver";
         public const string DriverInvoice = "DriverInvoice";
         public const string Isporuka = "Isporuka";
+        public const string Uplate = "Uplate";
     }
 }

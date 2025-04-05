@@ -214,7 +214,8 @@ namespace UniversalEsir.Commands.AppMain.Statistic
                             AlarmQuantity = inventoryStatusViewModel.CurrentInventoryStatus.Alarm,
                             TotalQuantity = 0,
                             IdItemGroup = inventoryStatusViewModel.CurrentGroupItems.Id,
-                            IdNorm = inventoryStatusViewModel.CurrentNorm > 0 ? inventoryStatusViewModel.CurrentNorm : null
+                            IdNorm = inventoryStatusViewModel.CurrentNorm > 0 ? inventoryStatusViewModel.CurrentNorm : null,
+                            IsKonobarItem = inventoryStatusViewModel.CurrentInventoryStatus.Item.IsKonobar ? 1 : 0,
                         };
 
                         if (sqliteDbContext.Items != null)
@@ -339,6 +340,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic
                         itemDB.Jm = inventoryStatusViewModel.CurrentInventoryStatus.Item.Jm;
                         itemDB.AlarmQuantity = inventoryStatusViewModel.CurrentInventoryStatus.Alarm;
                         itemDB.IdItemGroup = inventoryStatusViewModel.CurrentGroupItems.Id;
+                        itemDB.IsKonobarItem = inventoryStatusViewModel.CurrentInventoryStatus.Item.IsKonobar ? 1 : 0;
 
                         inventoryStatusViewModel.Norma.ToList().ForEach(item =>
                         {

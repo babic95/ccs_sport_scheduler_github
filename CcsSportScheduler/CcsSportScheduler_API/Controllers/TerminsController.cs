@@ -62,22 +62,22 @@ namespace CcsSportScheduler_API.Controllers
                     });
                 }
 
-                // Dohvati cene termina sa API-ja
-                var client = _httpClientFactory.CreateClient("MyHttpClient");
-                var responseCenaTermina = await client.GetAsync($"/api/klubs/naplataTermina/{idUser}");
+                //// Dohvati cene termina sa API-ja
+                //var client = _httpClientFactory.CreateClient("MyHttpClient");
+                //var responseCenaTermina = await client.GetAsync($"/api/klubs/naplataTermina/{idUser}");
 
-                if (!responseCenaTermina.IsSuccessStatusCode)
-                {
-                    return StatusCode((int)responseCenaTermina.StatusCode, new ErrorResponse
-                    {
-                        Controller = "TerminsController",
-                        Message = "Greška prilikom dohvatanja cena termina.",
-                        Code = ErrorEnumeration.NotFound,
-                        Action = "ZakazaniTermini"
-                    });
-                }
+                //if (!responseCenaTermina.IsSuccessStatusCode)
+                //{
+                //    return StatusCode((int)responseCenaTermina.StatusCode, new ErrorResponse
+                //    {
+                //        Controller = "TerminsController",
+                //        Message = "Greška prilikom dohvatanja cena termina.",
+                //        Code = ErrorEnumeration.NotFound,
+                //        Action = "ZakazaniTermini"
+                //    });
+                //}
 
-                var cenaTermina = await responseCenaTermina.Content.ReadFromJsonAsync<NaplataTermina>();
+                //var cenaTermina = await responseCenaTermina.Content.ReadFromJsonAsync<NaplataTermina>();
 
                 if (!startDate.HasValue)
                 {
@@ -99,11 +99,56 @@ namespace CcsSportScheduler_API.Controllers
 
                 // Generisanje svih mogućih termina u zadanom periodu
                 var allTermini = new List<Termin>();
+
+                NaplataTermina? cenaTermina = null;
+                DateTime? lastDate = null;
+
                 for (var date = start; date <= end; date = date.AddHours(1))
                 {
                     if (date.Hour < 7 || date.Hour > 22)
                     {
                         continue; // Preskoči termine van intervala 7-22h
+                    }
+
+                    if (lastDate == null ||
+                        lastDate.Value.Date != date.Date)
+                    {
+                        lastDate = date.Date;
+                        if (userDB.Type == (int)UserEnumeration.Plivajuci)
+                        {
+                            DateTime startForNaplata = new DateTime(date.Year, date.Month, 1, 0, 0, 0);
+                            DateTime endForNaplata = startForNaplata.AddMonths(1).AddDays(-1);
+
+                            var freeTermins = _context.Termins.Where(t => t.UserId == userDB.Id &&
+                            t.StartDateTime.Date >= startForNaplata &&
+                            t.StartDateTime.Date <= endForNaplata &&
+                            t.Price == 0);
+
+                            if (freeTermins != null &&
+                                freeTermins.Count() <= 3)
+                            {
+                                cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == (int)TerminEnumeration.Free);
+                            }
+                            else
+                            {
+                                cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == userDB.Type);
+                            }
+                        }
+                        else
+                        {
+                            cenaTermina = _context.Naplataterminas.FirstOrDefault(n => n.Id == userDB.Type);
+                        }
+
+                        if (cenaTermina == null)
+                        {
+                            return BadRequest(new ErrorResponse
+                            {
+                                Controller = "TerminsController",
+                                Message = $"Ne postoje cene za termine.",
+                                Code = ErrorEnumeration.BadRequest,
+                                Action = "ZakazaniTermini",
+                            });
+                        }
                     }
 
                     // Proveravamo da li je termin već zakazan
@@ -113,6 +158,8 @@ namespace CcsSportScheduler_API.Controllers
                         // Ako termin nije zakazan, dodajemo nezakazani termin sa odgovarajućom cenom
                         var dayOfWeek = date.DayOfWeek;
                         var isWeekend = (dayOfWeek == DayOfWeek.Saturday || dayOfWeek == DayOfWeek.Sunday);
+
+
 
                         allTermini.Add(new Termin
                         {

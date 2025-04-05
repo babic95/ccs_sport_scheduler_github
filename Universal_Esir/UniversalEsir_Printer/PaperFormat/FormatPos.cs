@@ -250,29 +250,88 @@ namespace UniversalEsir_Printer.PaperFormat
                 pdoc.PrintPage -= new PrintPageEventHandler(dailyDep);
             }
         }
+        public static void PrintUplataBlack(UplataPrint uplataPrint, PosTypeEnumeration posTypeEnumeration)
+        {
+            try
+            {
+                _journal = "===========UPLATA===========\r\n";
 
+                _journal += string.Format("Član:{0}\r\n", uplataPrint.ClanName.PadLeft(28 - "Član:".Length));
+                _journal += string.Format("Vreme:{0}\r\n", uplataPrint.Date.ToString("dd.MM.yyyy HH:mm:ss").PadLeft(28 - "Vreme:".Length));
+                _journal += string.Format("Ukupan iznos:{0}\r\n", string.Format("{0:#,##0.00}", uplataPrint.Amount).Replace(',', '#').Replace('.', ',').Replace('#', '.').PadLeft(28 - "Ukupan iznos:".Length));
+
+                _journal += "============================\r\n";
+
+                string? prName = SettingsManager.Instance.GetPrinterName();
+
+                if (!string.IsNullOrEmpty(prName))
+                {
+                    var pdoc = new PrintDocument();
+                    PrinterSettings ps = new PrinterSettings();
+                    pdoc.PrinterSettings.PrinterName = prName;
+
+                    int width = Convert.ToInt32(pdoc.PrinterSettings.DefaultPageSettings.PaperSize.Width / 100 * 25.4);
+                    switch (posTypeEnumeration)
+                    {
+                        case PosTypeEnumeration.Pos80mm:
+                            _fontSizeInMM = _fontSize80mm;
+
+                            if (width > 72)
+                            {
+                                width = 72;
+                            }
+
+                            _width = width;
+                            break;
+                        case PosTypeEnumeration.Pos58mm:
+                            _fontSizeInMM = _fontSize58mm;
+
+                            if (width > 50)
+                            {
+                                width = 50;
+                            }
+
+                            _width = width;
+                            break;
+                    }
+
+                    pdoc.PrintPage += new PrintPageEventHandler(dailyUplata);
+
+                    pdoc.Print();
+                    pdoc.Print();
+
+                    pdoc.PrintPage -= new PrintPageEventHandler(dailyUplata);
+                }
+            }
+            catch
+            {
+
+            }
+        }
         public static void PrintJournalBlack(InvoceRequestFileSystemWatcher invoiceRequest, PosTypeEnumeration posTypeEnumeration)
         {
+            bool isCrta = false;
             _totalAmount = 0;
             try
             {
-                _journal = string.Format("Касир:{0}\r\n", invoiceRequest.Cashier.PadLeft(28 - "Касир:".Length));
-                _journal += string.Format("Члан:{0}\r\n", invoiceRequest.ClanName.PadLeft(28 - "Члан:".Length));
-                _journal += string.Format("Време:{0}\r\n", DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss").PadLeft(28 - "Време:".Length));
+                _journal = string.Format("Kasir:{0}\r\n", invoiceRequest.Cashier.PadLeft(28 - "Kasir:".Length));
+                _journal += string.Format("Član:{0}\r\n", invoiceRequest.ClanName.PadLeft(28 - "Član:".Length));
+                _journal += string.Format("Vreme:{0}\r\n", DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss").PadLeft(28 - "Vreme:".Length));
                 _journal += GetItemsForJournal(invoiceRequest);
 
                 _journal += "----------------------------\r\n";
 
-                _journal += string.Format("Укупан износ:{0}\r\n", string.Format("{0:#,##0.00}", _totalAmount).Replace(',', '#').Replace('.', ',').Replace('#', '.').PadLeft(28 - "Укупан износ:".Length));
+                _journal += string.Format("Ukupan iznos:{0}\r\n", string.Format("{0:#,##0.00}", _totalAmount).Replace(',', '#').Replace('.', ',').Replace('#', '.').PadLeft(28 - "Ukupan iznos:".Length));
 
                 if(invoiceRequest.Payment.PaymentType == PaymentTypeEnumeration.Cash)
                 {
-                    _journal += string.Format("{0}{1}\r\n", "Готовина:".PadRight(18),
+                    _journal += string.Format("{0}{1}\r\n", "Gotovina:".PadRight(18),
                         string.Format("{0:#,##0.00}", _totalAmount).Replace(',', '#').Replace('.', ',').Replace('#', '.').PadLeft(10));
                 }
                 else
                 {
-                    _journal += string.Format("{0}{1}\r\n", "Црта:".PadRight(18),
+                    isCrta = true;
+                    _journal += string.Format("{0}{1}\r\n", "Crta:".PadRight(18),
                         string.Format("{0:#,##0.00}", _totalAmount).Replace(',', '#').Replace('.', ',').Replace('#', '.').PadLeft(10));
                 }
 
@@ -314,7 +373,12 @@ namespace UniversalEsir_Printer.PaperFormat
 
                     pdoc.PrintPage += new PrintPageEventHandler(dailyDep);
 
-                    for(int i = 0; i < SettingsManager.Instance.GetNumberCopy(); i++)
+                    if(isCrta)
+                    {
+                        pdoc.Print();
+                        pdoc.Print();
+                    }
+                    else
                     {
                         pdoc.Print();
                     }
@@ -470,6 +534,11 @@ namespace UniversalEsir_Printer.PaperFormat
             //reportText += "============NAČINI PLAĆANJA=============\r\n";
             //reportText += ReportPayments(report.Payments);
             //reportText += "========================================\r\n";
+
+
+            reportText += "=========TIP UPLATE=========\r\n";
+            reportText += ReportTipUplate(report);
+            reportText += "============================\r\n";
 
             if (report.ReportItems.Any())
             {
@@ -856,6 +925,94 @@ namespace UniversalEsir_Printer.PaperFormat
 
             }
         }
+        private static void dailyUplata(object sender, PrintPageEventArgs e)
+        {
+            try
+            {
+                Graphics graphics = e.Graphics;
+                graphics.PageUnit = GraphicsUnit.Point;
+                Font drawFontRegular = new Font("Cascadia Code",
+                    _fontSizeInMM,
+                    System.Drawing.FontStyle.Regular, GraphicsUnit.Millimeter);
+                Font drawFontUpperBold = new Font("Cascadia Code",
+                    drawFontRegular.SizeInPoints * 1.5f,
+                    System.Drawing.FontStyle.Bold, GraphicsUnit.Point);
+
+                SolidBrush drawBrush = new SolidBrush(System.Drawing.Color.Black);
+
+                string[] splitForPrint = _journal.Split("\r\n");
+
+                float x = 0;
+                float y = 0;
+                float width = 0; // max width I found through trial and error
+                float height = 0F;
+                int length = splitForPrint.Length;
+
+                for (int i = 0; i < length - 1; i++)
+                {
+                    if (width == 0)
+                    {
+                        width = graphics.MeasureString(splitForPrint[i], drawFontRegular).Width;
+                        height = graphics.MeasureString(splitForPrint[i], drawFontRegular).Height;
+
+                        float v = _width / 100f;
+                        x = (v * 72 - width) / 2;
+                        if (x < 5)
+                        {
+                            x = 5;
+                        }
+
+                        string strBLOBFilePath = SettingsManager.Instance.GetPathToLogo();
+
+                        if (File.Exists(strBLOBFilePath))
+                        {
+                            FileStream fsBLOBFile = new FileStream(strBLOBFilePath, FileMode.Open, FileAccess.Read);
+                            Byte[] bytBLOBData = new Byte[fsBLOBFile.Length];
+                            fsBLOBFile.Read(bytBLOBData, 0, bytBLOBData.Length);
+                            fsBLOBFile.Close();
+                            using (MemoryStream ms = new MemoryStream(bytBLOBData))
+                            {
+                                var img = System.Drawing.Image.FromStream(ms);
+
+                                var size = width * 0.30F;
+                                var xx = x + width * 0.35F;
+                                graphics.DrawImage(img, new RectangleF(xx, y + height, size, size));
+                                y += 2 * height + size;
+                            }
+                        }
+                    }
+                    if (splitForPrint[i].Contains("ОВО НИЈЕ ФИСКАЛНИ РАЧУН") &&
+                        !splitForPrint[i].Contains("="))
+                    {
+                        float xLeft = (width - graphics.MeasureString(splitForPrint[i], drawFontUpperBold).Width) / 2f;
+
+                        graphics.DrawString(splitForPrint[i], drawFontUpperBold, drawBrush, xLeft, y);
+                        y += graphics.MeasureString(splitForPrint[i], drawFontUpperBold).Height;
+                    }
+                    else
+                    {
+                        graphics.DrawString(splitForPrint[i], drawFontRegular, drawBrush, x, y);
+                        y += graphics.MeasureString(splitForPrint[i], drawFontRegular).Height;
+                    }
+                }
+
+                byte[] byteBuffer = Convert.FromBase64String(_verificationQRCode);
+                using (MemoryStream ms = new MemoryStream(byteBuffer))
+                {
+                    var img = System.Drawing.Image.FromStream(ms);
+
+                    var size = _sizeQRmm * 2.8346456693F;
+                    var xx = x + (width - size) / 2F;
+                    graphics.DrawImage(img, new RectangleF(xx, y + height, size, size));
+                    y += 2 * height + size;
+                }
+                graphics.DrawString(splitForPrint[length - 1], drawFontRegular, drawBrush, x, y);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
         //private static string ReportReportTaxes(Dictionary<string, ReportTax> reportTaxes)
         //{
         //    string result = string.Empty;
@@ -930,6 +1087,18 @@ namespace UniversalEsir_Printer.PaperFormat
 
             result += "---------- Ukupno ----------\r\n";
             result += SplitInParts($"{string.Format("{0:#,##0.00}", total).Replace(',', '#').Replace('.', ',').Replace('#', '.')} din", "Bruto:", 28);
+
+            return result;
+        }
+        private static string ReportTipUplate(Report report)
+        {
+            string result = string.Empty;
+
+            result += SplitInParts($"{string.Format("{0:#,##0.00}", report.TotalUplate).Replace(',', '#').Replace('.', ',').Replace('#', '.')}", "Uplate:", 28);
+            result += SplitInParts($"{string.Format("{0:#,##0.00}", report.SamoKonobar).Replace(',', '#').Replace('.', ',').Replace('#', '.')}", "Samo konobar:", 28);
+
+            result += "---------- Ukupno ----------\r\n";
+            result += SplitInParts($"{string.Format("{0:#,##0.00}", report.CashInHand).Replace(',', '#').Replace('.', ',').Replace('#', '.')} din", "Ukupno:", 28);
 
             return result;
         }
