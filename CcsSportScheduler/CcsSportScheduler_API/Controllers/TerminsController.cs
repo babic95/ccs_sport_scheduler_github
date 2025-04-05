@@ -84,9 +84,12 @@ namespace CcsSportScheduler_API.Controllers
                     startDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow,
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
                 }
-                DateTime start = TimeZoneInfo.ConvertTime(new DateTime(startDate.Value.Year, startDate.Value.Month, startDate.Value.Day, 7, 0, 0),
-                    TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
-
+                else
+                {
+                    startDate = TimeZoneInfo.ConvertTime(startDate.Value,
+                        TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
+                }
+                DateTime start = new DateTime(startDate.Value.Year, startDate.Value.Month, startDate.Value.Day, 7, 0, 0);
 
                 DateTime end = start.AddDays(6).AddHours(16);
 
