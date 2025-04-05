@@ -3,8 +3,48 @@
   "WorkspaceRootPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\enums\\appmain\\statistic\\sportschedulerenumerations\\clanenumeration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\enums\\appmain\\statistic\\sportschedulerenumerations\\clanenumeration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\sale\\saleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\sale\\saleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F396F8CB-2D18-485B-8BAD-803D67D9B250}|UniversalEsir_SportSchedulerAPI\\UniversalEsir_SportSchedulerAPI.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir_sportschedulerapi\\sportschedulerapi_manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F396F8CB-2D18-485B-8BAD-803D67D9B250}|UniversalEsir_SportSchedulerAPI\\UniversalEsir_SportSchedulerAPI.csproj|solutionrelative:universalesir_sportschedulerapi\\sportschedulerapi_manager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\statistic\\clanovi\\saveclanarinacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\appmain\\statistic\\clanovi\\saveclanarinacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\viewmodels\\appmain\\statistic\\clanoviviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\viewmodels\\appmain\\statistic\\clanoviviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\appmain\\auxiliarywindows\\statistic\\clanovi\\addnewclanarinawindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\appmain\\auxiliarywindows\\statistic\\clanovi\\addnewclanarinawindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\models\\appmain\\statistic\\clanovi\\zaduzenje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\models\\appmain\\statistic\\clanovi\\zaduzenje.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\statistic\\clanovi\\saveclancommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\appmain\\statistic\\clanovi\\saveclancommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\tableoverview\\clickonpaymentplacecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\tableoverview\\clickonpaymentplacecommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\models\\appmain\\statistic\\clanovi\\clan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\models\\appmain\\statistic\\clanovi\\clan.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\appmain\\statistic\\clanoviview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\appmain\\statistic\\clanoviview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -20,10 +60,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ClickBar.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\statistic\\clanovi\\saveclanarinacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\appmain\\statistic\\clanovi\\saveclanarinacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\statistic\\clanovi\\savepozajmicaisplatacommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -97,32 +133,147 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "SaveClanarinaCommand.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAwwEMAAAAUAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "ClanEnumeration.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Enums\\AppMain\\Statistic\\SportSchedulerEnumerations\\ClanEnumeration.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Enums\\AppMain\\Statistic\\SportSchedulerEnumerations\\ClanEnumeration.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Enums\\AppMain\\Statistic\\SportSchedulerEnumerations\\ClanEnumeration.cs",
+              "RelativeToolTip": "UniversalEsir\\Enums\\AppMain\\Statistic\\SportSchedulerEnumerations\\ClanEnumeration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-06T17:12:26.274Z"
+              "WhenOpened": "2025-04-04T16:14:02.194Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
+              "Title": "SaleView.xaml",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "RelativeDocumentMoniker": "UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "RelativeToolTip": "UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-04T15:52:21.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AddNewClanarinaWindow.xaml",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\Clanovi\\AddNewClanarinaWindow.xaml",
+              "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\Clanovi\\AddNewClanarinaWindow.xaml",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\Clanovi\\AddNewClanarinaWindow.xaml",
+              "RelativeToolTip": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\Clanovi\\AddNewClanarinaWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-04T15:24:59.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "SportSchedulerAPI_Manager.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
               "RelativeDocumentMoniker": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
               "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
               "RelativeToolTip": "UniversalEsir_SportSchedulerAPI\\SportSchedulerAPI_Manager.cs",
-              "ViewState": "AgIAAHYBAAAAAAAAAAAgwIkBAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAgwO8AAAA7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-04T12:52:39.433Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
+              "Title": "Zaduzenje.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Zaduzenje.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Zaduzenje.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Zaduzenje.cs",
+              "RelativeToolTip": "UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Zaduzenje.cs",
+              "ViewState": "AgIAAEEAAAAAAAAAAIAwwFgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T15:31:12.542Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "ClickOnPaymentPlaceCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\TableOverview\\ClickOnPaymentPlaceCommand.cs",
+              "ViewState": "AgIAAG0AAAAAAAAAAAAewHgAAABgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T15:23:35.871Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ClanoviViewModel.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\AppMain\\Statistic\\ClanoviViewModel.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\ViewModels\\AppMain\\Statistic\\ClanoviViewModel.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\AppMain\\Statistic\\ClanoviViewModel.cs",
+              "RelativeToolTip": "UniversalEsir\\ViewModels\\AppMain\\Statistic\\ClanoviViewModel.cs",
+              "ViewState": "AgIAALsAAAAAAAAAAAAkwMQAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T15:23:03.368Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "SaveClanCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanCommand.cs",
+              "ViewState": "AgIAAJIAAAAAAAAAAAAMwHUAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T15:21:01.531Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SaveClanarinaCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs*",
+              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SaveClanarinaCommand.cs*",
+              "ViewState": "AgIAADkAAAAAAAAAAAAmwEUAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-06T17:12:26.274Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Clan.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Clan.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Clan.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Clan.cs",
+              "RelativeToolTip": "UniversalEsir\\Models\\AppMain\\Statistic\\Clanovi\\Clan.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAQwB0AAAAPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-04T15:19:56.605Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ClanoviView.xaml",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\Statistic\\ClanoviView.xaml",
+              "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\Statistic\\ClanoviView.xaml",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\Statistic\\ClanoviView.xaml",
+              "RelativeToolTip": "UniversalEsir\\Views\\AppMain\\Statistic\\ClanoviView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-04T15:19:18.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "ClickBar.csproj",
               "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ClickBar.csproj",
               "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ClickBar.csproj",
@@ -134,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 14,
               "Title": "ClickBar_Report.csproj",
               "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
               "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Report\\ClickBar_Report.csproj",
@@ -146,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 18,
               "Title": "InventoryStatusView.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\Statistic\\InventoryStatusView.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\Statistic\\InventoryStatusView.xaml",
@@ -157,7 +308,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 19,
               "Title": "SaveCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\SaveCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\SaveCommand.cs",
@@ -169,7 +320,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 11,
               "Title": "TableOverviewViewModel.cs",
               "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
               "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
@@ -177,12 +328,11 @@
               "RelativeToolTip": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar\\ViewModels\\TableOverviewViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-08T23:32:42.027Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-08T23:32:42.027Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 13,
               "Title": "ClickBar_Porudzbine.Server.csproj",
               "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Porudzbine\\ClickBar_Porudzbine.Server\\ClickBar_Porudzbine.Server.csproj",
               "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar_Porudzbine\\ClickBar_Porudzbine.Server\\ClickBar_Porudzbine.Server.csproj",
@@ -194,7 +344,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 12,
               "Title": "ClickBar.sln",
               "DocumentMoniker": "C:\\Git_Private\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar.sln",
               "RelativeDocumentMoniker": "..\\..\\ClickBar_github\\ClickBar\\ClickBar\\ClickBar.sln",
@@ -206,7 +356,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 20,
               "Title": "AddEditItemWindow.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\InventoryStatus\\AddEditItemWindow.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\InventoryStatus\\AddEditItemWindow.xaml",
@@ -217,7 +367,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 17,
               "Title": "AddNewPozajmicaIsplataWindow.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\Clanovi\\AddNewPozajmicaIsplataWindow.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\Clanovi\\AddNewPozajmicaIsplataWindow.xaml",
@@ -228,7 +378,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 16,
               "Title": "SavePozajmicaIsplataCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SavePozajmicaIsplataCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Statistic\\Clanovi\\SavePozajmicaIsplataCommand.cs",
@@ -240,7 +390,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 23,
               "Title": "InvoceRequestFileSystemWatcher.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Common\\Models\\Invoice\\FileSystemWatcher\\InvoceRequestFileSystemWatcher.cs",
               "RelativeDocumentMoniker": "UniversalEsir_Common\\Models\\Invoice\\FileSystemWatcher\\InvoceRequestFileSystemWatcher.cs",
@@ -252,7 +402,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 22,
               "Title": "PayCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\PayCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
@@ -260,12 +410,11 @@
               "RelativeToolTip": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
               "ViewState": "AgIAALgAAAAAAAAAAAAcwMoAAABNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-04T13:37:02.161Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-04T13:37:02.161Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 21,
               "Title": "FormatPos.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\PaperFormat\\FormatPos.cs",
               "RelativeDocumentMoniker": "UniversalEsir_Printer\\PaperFormat\\FormatPos.cs",
@@ -277,7 +426,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 24,
               "Title": "PregledPazaraView.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\Statistic\\PregledPazaraView.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\Statistic\\PregledPazaraView.xaml",
@@ -288,7 +437,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 26,
               "Title": "TableOverviewViewModel.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\ViewModels\\TableOverviewViewModel.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\ViewModels\\TableOverviewViewModel.cs",
@@ -300,7 +449,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 28,
               "Title": "SelectItemCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\SelectItemCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\SelectItemCommand.cs",
@@ -312,7 +461,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 29,
               "Title": "SaveCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Admin\\PaymentPlace\\SaveCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Admin\\PaymentPlace\\SaveCommand.cs",
@@ -324,7 +473,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 30,
               "Title": "AddNewPaymentPlaceWindow.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Admin\\AddNewPaymentPlaceWindow.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Admin\\AddNewPaymentPlaceWindow.xaml",
@@ -335,7 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 25,
               "Title": "KnjizenjeView.xaml",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\Statistic\\KnjizenjeView.xaml",
               "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\Statistic\\KnjizenjeView.xaml",
@@ -346,7 +495,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 27,
               "Title": "HookOrderOnTableCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\HookOrderOnTableCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\HookOrderOnTableCommand.cs",

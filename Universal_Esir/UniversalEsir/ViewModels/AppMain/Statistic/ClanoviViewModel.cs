@@ -55,9 +55,10 @@ namespace UniversalEsir.ViewModels.AppMain.Statistic
 
             if(clanovi.Any())
             {
+                int rb = 1;
                 foreach(var clan in clanovi)
                 {
-                    Clanovi.Add(new Clan(clan));
+                    Clanovi.Add(new Clan(clan, rb++));
                 }
             }
         }

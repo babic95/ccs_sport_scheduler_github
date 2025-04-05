@@ -1,6 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { MenuItem, Select, Typography, Box, Container, FormControl, InputLabel, Button } from '@mui/material';
+import { MenuItem, Select, Typography, Box, Container, FormControl, InputLabel, Button, TextField } from '@mui/material';
 import FinancialCard from './FinancialCard';
 
 const FinancialCardAll = ({ user }) => {
@@ -95,6 +95,30 @@ const FinancialCardAll = ({ user }) => {
     return (
         <Container component="main" maxWidth="md" sx={{ mt: 8, mb: 4 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
+                    <TextField
+                        label="Od datuma"
+                        type="date"
+                        value={fromDate}
+                        onChange={(e) => setFromDate(e.target.value)}
+                        InputLabelProps={{
+                            shrink: true,
+                            style: { color: 'black' }, // Dodato za crna slova
+                        }}
+                        sx={{ marginRight: 2 }}
+                    />
+                    <TextField
+                        label="Do datuma"
+                        type="date"
+                        value={toDate}
+                        onChange={(e) => setToDate(e.target.value)}
+                        InputLabelProps={{
+                            shrink: true,
+                            style: { color: 'black' }, // Dodato za crna slova
+                        }}
+                    />
+                </Box>
+
                 <Button variant="contained" color="primary" onClick={handlePrintAll} sx={{ mt: 3 }}>
                     Štampa svi korisnici
                 </Button>

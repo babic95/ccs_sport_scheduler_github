@@ -36,7 +36,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
             {
                 if (_currentViewModel.CurrentClan == null ||
                     _currentViewModel.CurrentZaduzenje.Date == null ||
-                    (_currentViewModel.CurrentZaduzenje.ClanType != ClanEnumeration.Turnir && _currentViewModel.CurrentZaduzenje.TotalAmount <= 0) ||
+                     _currentViewModel.CurrentZaduzenje.TotalAmount < 0 ||
                     _currentViewModel.CurrentZaduzenje.ClanType == null)
                 {
                     MessageBox.Show("Niste popunili sva polja!",

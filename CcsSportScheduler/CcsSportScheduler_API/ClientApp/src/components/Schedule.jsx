@@ -354,10 +354,11 @@ const Schedule = ({ user }) => {
             start: new Date(clickInfo.event.startStr),
             end: new Date(clickInfo.event.endStr),
             user: clickInfo.event.extendedProps.user,
-            price: clickInfo.event.extendedProps.price
+            price: clickInfo.event.extendedProps.price,
+            type: clickInfo.event.extendedProps.type
         });
         setShowModal(true);
-    };
+    }; 
 
     const handleOtkaziNoFree = async () => {
         if (selectedEvent) {
@@ -374,6 +375,29 @@ const Schedule = ({ user }) => {
             } catch (error) {
                 console.error('Error making otkazivanje:', error);
                 alert('Greška prilikom otkazivanja: ' + (error.response?.data?.message || error.message));
+            }
+        }
+    };
+    const handleOtkaziFiksni = async () => {
+        if (selectedEvent) {
+            try {
+                const otkazivanjeData = {
+                    TerenId: terenId,
+                    UserId: selectedEvent.user.id,
+                    Date: selectedEvent.start.toISOString()
+                };
+
+                await axios.post(`/api/termins/otkazi/fiksni`, otkazivanjeData);
+                alert('Fiksni termini uspešno otkazani!');
+
+                setTermini([]);
+                fetchTermini(selectedDate);
+
+                setSelectedEvent(null);
+                setShowModal(false);
+            } catch (error) {
+                console.error('Error making otkazivanje fiksnog:', error);
+                alert('Greška prilikom otkazivanja fiksnog: ' + (error.response?.data?.message || error.message));
             }
         }
     };
@@ -749,7 +773,7 @@ const Schedule = ({ user }) => {
                             aria-describedby="reservation-modal-description"
                         >
                             <CustomBox>
-                                {selectedEvent && selectedEvent.user ? (
+                                    {selectedEvent && selectedEvent.user ? (
                                     <>
                                         <Typography variant="h6" id="reservation-modal-title">Pregled Termina</Typography>
                                         <Typography variant="body1">Rezervisano od: {selectedEvent.user.username}</Typography>
@@ -766,6 +790,11 @@ const Schedule = ({ user }) => {
                                                     {user.type === 9 || user.type === 8 ?
                                                         <Button variant="contained" color="primary" onClick={handleOtkaziNoFree}>
                                                             Otkaži i zaduži
+                                                        </Button> : null
+                                                    }
+                                                    {selectedEvent.type === 0 && (user.type === 9 || user.type === 8) ?
+                                                        <Button variant="contained" color="primary" onClick={handleOtkaziFiksni}>
+                                                            Otkaži fiksni
                                                         </Button> : null
                                                     }
                                                 </Box> : 

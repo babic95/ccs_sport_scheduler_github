@@ -20,6 +20,8 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
         private string _opis;
         private string _totalAmountString;
         private Visibility _fiksnoVisibility;
+        private bool _trenerskiFiksniIsCheck;
+        private Visibility _trenerskiVisibility; 
         private int? _teren;
 
         public Zaduzenje() { }
@@ -77,14 +79,18 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 _clanType = value;
                 OnPropertyChange(nameof(ClanType));
 
-                if(value == ClanEnumeration.Fiksni ||
-                    value == ClanEnumeration.Trenerski)
+                if(value == ClanEnumeration.Fiksni)
                 {
                     FiksnoVisibility = Visibility.Visible;
+                }
+                else if (value == ClanEnumeration.Trenerski)
+                {
+                    TrenerskiVisibility = Visibility.Visible;
                 }
                 else
                 {
                     FiksnoVisibility = Visibility.Collapsed;
+                    TrenerskiVisibility = Visibility.Collapsed;
                 }
             }
         }
@@ -132,6 +138,33 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             {
                 _fiksnoVisibility = value;
                 OnPropertyChange(nameof(FiksnoVisibility));
+            }
+        }
+        public bool TrenerskiFiksniIsCheck
+        {
+            get { return _trenerskiFiksniIsCheck; }
+            set
+            {
+                _trenerskiFiksniIsCheck = value;
+                OnPropertyChange(nameof(TrenerskiFiksniIsCheck));
+
+                if(value)
+                {
+                    FiksnoVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    FiksnoVisibility = Visibility.Collapsed;
+                }
+            }
+        }
+        public Visibility TrenerskiVisibility
+        {
+            get { return _trenerskiVisibility; }
+            set
+            {
+                _trenerskiVisibility = value;
+                OnPropertyChange(nameof(TrenerskiVisibility));
             }
         }
     }

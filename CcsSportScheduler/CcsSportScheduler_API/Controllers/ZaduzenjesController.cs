@@ -101,25 +101,28 @@ namespace CcsSportScheduler_API.Controllers
                     if (zaduzenjeRequest.NewTypeUser.Value == (int)UserEnumeration.Fiksni ||
                         zaduzenjeRequest.NewTypeUser.Value == (int)UserEnumeration.Trenerski)
                     {
-                        int year = DateTime.Now.Year;
-
-                        DayOfWeek dayOfWeek = ConvertToDayOfWeek(zaduzenjeRequest.Dan.Value);
-
-                        TerminFiksniRequest terminRequest = new TerminFiksniRequest()
+                        if (zaduzenjeRequest.Sat.HasValue)
                         {
-                            TerenId = zaduzenjeRequest.Teren.Value,
-                            UserId = zaduzenjeRequest.UserId,
-                            Zaduzi = 0,
-                            Dates = GetDatesForDayOfWeek(zaduzenjeRequest.Date, year, dayOfWeek, zaduzenjeRequest.Sat.Value)
-                        };
+                            int year = DateTime.Now.Year;
 
-                        // Dohvati cene termina sa API-ja
-                        var client = _httpClientFactory.CreateClient("MyHttpClient");
-                        var responseCenaTermina = await client.PostAsJsonAsync($"/api/Termins/zakazi/fiksni", terminRequest);
+                            DayOfWeek dayOfWeek = ConvertToDayOfWeek(zaduzenjeRequest.Dan.Value);
 
-                        if (!responseCenaTermina.IsSuccessStatusCode)
-                        {
-                            return BadRequest("Error while creating termin.");
+                            TerminFiksniRequest terminRequest = new TerminFiksniRequest()
+                            {
+                                TerenId = zaduzenjeRequest.Teren.Value,
+                                UserId = zaduzenjeRequest.UserId,
+                                Zaduzi = 0,
+                                Dates = GetDatesForDayOfWeek(zaduzenjeRequest.Date, year, dayOfWeek, zaduzenjeRequest.Sat.Value)
+                            };
+
+                            // Dohvati cene termina sa API-ja
+                            var client = _httpClientFactory.CreateClient("MyHttpClient");
+                            var responseCenaTermina = await client.PostAsJsonAsync($"/api/Termins/zakazi/fiksni", terminRequest);
+
+                            if (!responseCenaTermina.IsSuccessStatusCode)
+                            {
+                                return BadRequest("Error while creating termin.");
+                            }
                         }
                     }
                 }

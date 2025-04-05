@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CcsSportScheduler_Database")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87470974564fc6d3fb717416e20356da86ed889b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0e79a78d09d5f8cfbfd33e123c0288a703f80ce")]
 [assembly: System.Reflection.AssemblyProductAttribute("CcsSportScheduler_Database")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CcsSportScheduler_Database")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -12,6 +12,7 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
 {
     public class Clan : ObservableObject
     {
+        private int _rb;
         private int _id;
         private int _klubId;
         private string _fullName;
@@ -26,8 +27,9 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
         private int _freeTermin;
 
         public Clan() { }
-        public Clan(UserResponse clan)
+        public Clan(UserResponse clan, int rb)
         {
+            Rb = rb;
             Id = clan.Id;
             KlubId = clan.KlubId;
             FullName = clan.FullName;
@@ -42,6 +44,15 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
             FreeTermin = clan.FreeTermin;
         }
 
+        public int Rb
+        {
+            get { return _rb; }
+            set
+            {
+                _rb = value;
+                OnPropertyChange(nameof(Rb));
+            }
+        }
         public int Id
         {
             get { return _id; }

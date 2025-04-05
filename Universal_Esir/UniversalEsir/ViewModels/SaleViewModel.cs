@@ -70,6 +70,7 @@ namespace UniversalEsir.ViewModels
         private string _searchNameText;
 
         private string _focusedTextBox;
+        private string _uplataAmountString;
         #endregion Fields
 
         #region Constructors
@@ -167,6 +168,7 @@ namespace UniversalEsir.ViewModels
         internal List<ItemDB> AllItems { get; set; }
         internal CashierDB LoggedCashier { get; set; }
         internal Window CurrentWindow { get; private set; }
+        internal Window UplataWindow { get; set; }
         #endregion Internal Properties
 
         #region Properties
@@ -691,6 +693,33 @@ namespace UniversalEsir.ViewModels
                 }
             }
         }
+        public string UplataAmountString
+        {
+            get { return _uplataAmountString; }
+            set
+            {
+                if (value.Contains(','))
+                {
+                    value = value.Replace(',', '.');
+                }
+
+                try
+                {
+                    UplataAmount = Decimal.Round(Convert.ToDecimal(value), 2);
+                }
+                catch
+                {
+                    MessageBox.Show("Neispravan format uplata iznosa.", "", MessageBoxButton.OK, MessageBoxImage.Error);
+                    value = "0";
+                    UplataAmount = 0;
+                }
+
+                _uplataAmountString = value;
+                OnPropertyChange(nameof(UplataAmountString));
+
+            }
+        }
+        public decimal UplataAmount { get; set; }
         #endregion Properties
 
         #region Commands
@@ -701,6 +730,8 @@ namespace UniversalEsir.ViewModels
         public ICommand SelectGroupCommand => new SelectGroupCommand(this);
         public ICommand SelectItemCommand => new SelectItemCommand(this);
         public ICommand ResetAllCommand => new ResetAllCommand(this);
+        public ICommand OpenUplataKonobarCommand => new OpenUplataKonobarCommand(this);
+        public ICommand UplataKonobarCommand => new UplataKonobarCommand(this);
         public ICommand PayCommand => new PayCommand(this);
         public ICommand HookOrderOnTableCommand => new HookOrderOnTableCommand(this);
         public ICommand TableOverviewCommand => new TableOverviewCommand(this);
@@ -728,6 +759,7 @@ namespace UniversalEsir.ViewModels
         {
             CurrentOrder = null;
             CashierNema = LoggedCashier.Name;
+            UplataAmountString = "0";
             TableId = 0;
             TotalAmount = 0;
             ItemsInvoice = new ObservableCollection<ItemInvoice>();

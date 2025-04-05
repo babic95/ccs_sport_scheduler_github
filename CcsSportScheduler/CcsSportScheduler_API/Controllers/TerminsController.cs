@@ -380,15 +380,31 @@ namespace CcsSportScheduler_API.Controllers
 
                     decimal cenaTermina = naplataTermina.Price;
 
-                    if (userDB.Type == (int)UserEnumeration.Plivajuci &&
-                        userDB.FreeTermin > 0)
+                    if (userDB.Type == (int)UserEnumeration.Plivajuci 
+                        /*&& userDB.FreeTermin > 0*/)
                     {
-                        cenaTermina = 0;
-                        userDB.FreeTermin--;
+                        DateTime date = TimeZoneInfo.ConvertTime(terminRequest.StartDateTime,
+                            TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
 
-                        _context.Users.Update(userDB);
+                        DateTime startDate = new DateTime(date.Year, date.Month, 1, 0, 0, 0);
+                        DateTime endDate = startDate.AddMonths(1).AddDays(-1);
 
-                        terminType = (int)UserEnumeration.Plivajuci;
+                        var freetermins = await _context.Termins.Where(t => t.UserId == userDB.Id &&
+                        t.StartDateTime.Date >= startDate .Date && t.StartDateTime.Date <= endDate.Date).ToListAsync();
+
+                        if(freetermins.Count < 5)
+                        {
+                            cenaTermina = 0;
+                            //userDB.FreeTermin--;
+
+                            //_context.Users.Update(userDB);
+
+                            terminType = (int)UserEnumeration.Plivajuci;
+                        }
+                    }
+                    else if(userDB.Type == (int)UserEnumeration.Trenerski)
+                    {
+                        terminType = (int)UserEnumeration.Trenerski;
                     }
 
                     var popustTermina = await _context.Popustiterminas.FirstOrDefaultAsync(p => p.TypeUser == userDB.Type);
@@ -575,6 +591,76 @@ namespace CcsSportScheduler_API.Controllers
                     Message = $"{ex.Message}",
                     Code = ErrorEnumeration.Exception,
                     Action = "PostFiksni"
+                });
+            }
+        }
+        // POST: api/Termins/otkazi/fiksni
+        [HttpPost("otkazi/fiksni")]
+        public async Task<IActionResult> PostOtkaziFiksni(TerminOtkazFiksniRequest terminRequest)
+        {
+            try
+            {
+                terminRequest.Date = TimeZoneInfo.ConvertTime(terminRequest.Date,
+                        TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time"));
+                // Validate user
+                var userDB = await _context.Users.FindAsync(terminRequest.UserId);
+                if (userDB == null)
+                {
+                    return NotFound(new ErrorResponse
+                    {
+                        Controller = "TerminsController",
+                        Message = "Ne postoji član kome se otkazuje fiksni termin.",
+                        Code = ErrorEnumeration.NotFound,
+                        Action = "PostOtkaziFiksni"
+                    });
+                }
+
+                // Validate club
+                var klubDB = await _context.Klubs.FindAsync(userDB.KlubId);
+                if (klubDB == null)
+                {
+                    return NotFound(new ErrorResponse
+                    {
+                        Controller = "TerminsController",
+                        Message = "Ne postoji klub usera koji okazuje fiksni termin.",
+                        Code = ErrorEnumeration.NotFound,
+                        Action = "PostOtkaziFiksni"
+                    });
+                }
+
+                // Add all terms to context
+                var termini = new List<Termin>();
+
+                var dates = GetDatesForDayOfWeek(terminRequest.Date,
+                    terminRequest.Date.DayOfWeek);
+
+                foreach (var t in dates)
+                {
+                    var terminDB = await _context.Termins.FirstOrDefaultAsync(termin => termin.TerenId == terminRequest.TerenId &&
+                    termin.UserId == terminRequest.UserId &&
+                    termin.StartDateTime == t &&
+                    termin.Type == (int)TerminEnumeration.Fiksni); 
+
+                    if(terminDB != null)
+                    {
+                        termini.Add(terminDB);
+                    }
+                }
+
+                // Bulk insert
+                _context.Termins.RemoveRange(termini);
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return Conflict(new ErrorResponse
+                {
+                    Controller = "TerminsController",
+                    Message = $"{ex.Message}",
+                    Code = ErrorEnumeration.Exception,
+                    Action = "PostOtkaziFiksni"
                 });
             }
         }
@@ -1086,7 +1172,34 @@ namespace CcsSportScheduler_API.Controllers
 
             return items;
         }
+        private List<DateTime> GetDatesForDayOfWeek(DateTime startDate,
+            DayOfWeek dayOfWeek)
+        {
+            List<DateTime> dates = new List<DateTime>();
 
+            startDate = new DateTime(startDate.Year,
+                startDate.Month,
+                startDate.Day,
+                startDate.Hour,
+                0,
+                0);
+            DateTime endDate = new DateTime(startDate.Year, 10, 31, 23, 0, 0);
+
+            // Pronađi prvi željeni dan u nedelji
+            while (startDate.DayOfWeek != dayOfWeek)
+            {
+                startDate = startDate.AddDays(1);
+            }
+
+            // Dodaj svaki željeni dan u nedelji do endtDate
+            while (startDate.Date < endDate.Date)
+            {
+                dates.Add(startDate);
+                startDate = startDate.AddDays(7); // Dodaj 7 dana da dobiješ sledeći željeni dan u nedelji
+            }
+
+            return dates;
+        }
         private bool TerminExists(string id)
         {
             return (_context.Termins?.Any(e => e.Id == id)).GetValueOrDefault();

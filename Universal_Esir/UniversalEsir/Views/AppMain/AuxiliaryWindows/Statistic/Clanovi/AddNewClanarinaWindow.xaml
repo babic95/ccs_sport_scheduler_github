@@ -8,7 +8,7 @@
         xmlns:local="clr-namespace:UniversalEsir.Views.AppMain.AuxiliaryWindows.Statistic.Clanovi" xmlns:statistic="clr-namespace:UniversalEsir.ViewModels.AppMain.Statistic" d:DataContext="{d:DesignInstance Type=statistic:ClanoviViewModel}"
         mc:Ignorable="d"
         Title="Članarina"
-        Height="600" Width="850"
+        Height="650" Width="850"
         Background="{StaticResource BrushLogo2}"
         WindowStartupLocation="CenterScreen">
     <Window.Resources>
@@ -76,6 +76,13 @@
                                Margin="0 5"/>
                         <Label Height="40"
                                Foreground="Black"
+                               Content="Trenerski fiksni:"
+                               FontSize="24"
+                               HorizontalAlignment="Right"
+                               Margin="0 5"
+                               Visibility="{Binding CurrentZaduzenje.TrenerskiVisibility}"/>
+                        <Label Height="40"
+                               Foreground="Black"
                                Content="*Dan:"
                                FontSize="24"
                                HorizontalAlignment="Right"
@@ -130,6 +137,33 @@
                                  VerticalContentAlignment="Center"
                                  Margin="0 5"
                                  Text="{Binding CurrentZaduzenje.TotalAmountString}"/>
+                        <CheckBox IsChecked="{Binding CurrentZaduzenje.TrenerskiFiksniIsCheck}"
+                                  Foreground="Black"
+                                  HorizontalAlignment="Left"
+                                  Margin="0 5"
+                                  Visibility="{Binding CurrentZaduzenje.TrenerskiVisibility}">
+                            <CheckBox.Style>
+                                <Style TargetType="CheckBox">
+                                    <Setter Property="FontSize" Value="24"/>
+                                    <Setter Property="Height" Value="40"/>
+                                    <Setter Property="Width" Value="40"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="CheckBox">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Rectangle Name="box" 
+                                                               Width="30"
+                                                               VerticalAlignment="Bottom"
+                                                               Height="30"
+                                                               Stroke="Black"
+                                                               StrokeThickness="1"/>
+                                                </StackPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </CheckBox.Style>
+                        </CheckBox>
                         <ComboBox ItemsSource="{Binding Source={StaticResource typesDan}}"
                                   SelectedItem="{Binding CurrentDan}"
                                   Height="40"

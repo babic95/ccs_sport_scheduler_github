@@ -34,6 +34,9 @@
     <Compile Update="Views\AppMain\AuxiliaryWindows\Sale\LastAdvanceInvoiceWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\AppMain\AuxiliaryWindows\Sale\UplataKonobarWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\AppMain\AuxiliaryWindows\Statistic\AddEditPartnerWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -247,6 +250,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Sale\LastAdvanceInvoiceWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\AppMain\AuxiliaryWindows\Sale\UplataKonobarWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\AppMain\AuxiliaryWindows\Statistic\AddEditPartnerWindow.xaml">

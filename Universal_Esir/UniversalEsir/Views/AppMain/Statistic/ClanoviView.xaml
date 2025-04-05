@@ -82,6 +82,19 @@
                                     AncestorType=DataGrid}}"/>
             </DataGrid.InputBindings>
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Rb" 
+                                    Width="70"
+                                    IsReadOnly="True"
+                                    MinWidth="70"
+                                    Binding="{Binding Rb}">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="HorizontalAlignment" Value="Center" />
+                            <Setter Property="VerticalAlignment" Value="Center" />
+                            <Setter Property="FontSize" Value="14" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Ime i prezime" 
                                     Width="*"
                                     IsReadOnly="True"

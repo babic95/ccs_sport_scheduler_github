@@ -127,22 +127,8 @@ namespace CcsSportScheduler_API.Controllers
                 });
             }
 
-            var userDB = await _context.Users.FirstOrDefaultAsync(u => u.KlubId == user.KlubId &&
-            u.Jmbg == user.Jmbg);
-
-            if (userDB != null)
-            {
-                return BadRequest(new ErrorResponse
-                {
-                    Controller = "UsersController",
-                    Message = "Korisnik je već registrovan.",
-                    Code = ErrorEnumeration.AlreadyExists,
-                    Action = "PostUser"
-                });
-            }
-
             if (user.KlubId == null ||
-                user.Type == null ||
+                //user.Type == null ||
                 string.IsNullOrEmpty(user.Password) ||
                 string.IsNullOrEmpty(user.Username))
             {
@@ -151,6 +137,20 @@ namespace CcsSportScheduler_API.Controllers
                     Controller = "UsersController",
                     Message = "Morate popuniti obavezna polja.",
                     Code = ErrorEnumeration.BadRequest,
+                    Action = "PostUser"
+                });
+            }
+
+            var userDB = await _context.Users.FirstOrDefaultAsync(u => u.KlubId == user.KlubId &&
+            (u.Jmbg == user.Jmbg || u.Username == user.Username));
+
+            if (userDB != null)
+            {
+                return BadRequest(new ErrorResponse
+                {
+                    Controller = "UsersController",
+                    Message = "Korisnik je već registrovan.",
+                    Code = ErrorEnumeration.AlreadyExists,
                     Action = "PostUser"
                 });
             }
@@ -167,7 +167,7 @@ namespace CcsSportScheduler_API.Controllers
                     KlubId = user.KlubId.Value,
                     Password = user.Password,
                     Username = user.Username,
-                    Type = user.Type.Value,
+                    Type = (int)UserEnumeration.Neclanski,// user.Type.Value,
                     Pol = user.Pol,
                 };
 

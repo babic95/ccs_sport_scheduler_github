@@ -47,6 +47,7 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
                     Date = DateTime.Now,
                     TotalAmountString = "0",
                     Opis = string.Empty,
+                    TrenerskiVisibility = Visibility.Collapsed,
                 };
 
                 _currentViewModel.CurrentWindow = new AddNewClanarinaWindow(_currentViewModel);

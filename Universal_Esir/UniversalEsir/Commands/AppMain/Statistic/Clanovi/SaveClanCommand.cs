@@ -164,9 +164,10 @@ namespace UniversalEsir.Commands.AppMain.Clanovi
 
                     if (clanovi.Any())
                     {
+                        int rb = 1;
                         foreach (var clan in clanovi)
                         {
-                            _currentViewModel.Clanovi.Add(new Clan(clan));
+                            _currentViewModel.Clanovi.Add(new Clan(clan, rb++));
                         }
                     }
 
