@@ -156,20 +156,20 @@ namespace CcsSportScheduler_API.Controllers
                 };
                 reportUser.Items.Add(pozajmicaReport);
 
+                reportUser.TotalOtpis = reportUser.Items.Sum(i => i.Otpis);
+                reportUser.TotalRazduzenje = reportUser.Items.Sum(i => i.Razduzenje);
+                reportUser.TotalZaduzenje = reportUser.Items.Sum(i => i.Zaduzenje);
+                reportUser.TotalSaldo = reportUser.TotalRazduzenje + reportUser.TotalOtpis - reportUser.TotalZaduzenje;
+
                 RportUserItems otkazTerminaReport = new RportUserItems()
                 {
                     Name = "Otkaz termina:",
                     Zaduzenje = otkazTermina.Sum(c => c.Zaduzenje),
                     Otpis = otkazTermina.Sum(c => c.Otpis),
                     Razduzenje = otkazTermina.Sum(c => c.Razduzenje),
-                    Saldo = otkazTermina.Sum(c => c.Razduzenje) + otkazTermina.Sum(c => c.Otpis) - otkazTermina.Sum(c => c.Zaduzenje)
+                    Saldo = 0// otkazTermina.Sum(c => c.Razduzenje) + otkazTermina.Sum(c => c.Otpis) - otkazTermina.Sum(c => c.Zaduzenje)
                 };
                 reportUser.Items.Add(otkazTerminaReport);
-
-                reportUser.TotalOtpis = reportUser.Items.Sum(i => i.Otpis);
-                reportUser.TotalRazduzenje = reportUser.Items.Sum(i => i.Razduzenje);
-                reportUser.TotalZaduzenje = reportUser.Items.Sum(i => i.Zaduzenje);
-                reportUser.TotalSaldo = reportUser.TotalRazduzenje + reportUser.TotalOtpis - reportUser.TotalZaduzenje;
 
                 reportUsers.Add(reportUser);
             }
@@ -320,20 +320,20 @@ namespace CcsSportScheduler_API.Controllers
             };
             reportUser.Items.Add(pozajmicaReport);
 
-            RportUserItems otkazTerminaReport = new RportUserItems()
-            {
-                Name = "Pozajmice:",
-                Zaduzenje = otkazTermina.Sum(c => c.Zaduzenje),
-                Otpis = otkazTermina.Sum(c => c.Otpis),
-                Razduzenje = otkazTermina.Sum(c => c.Razduzenje),
-                Saldo = otkazTermina.Sum(c => c.Razduzenje) + otkazTermina.Sum(c => c.Otpis) - otkazTermina.Sum(c => c.Zaduzenje)
-            };
-            reportUser.Items.Add(otkazTerminaReport); 
-
             reportUser.TotalOtpis = reportUser.Items.Sum(i => i.Otpis);
             reportUser.TotalRazduzenje = reportUser.Items.Sum(i => i.Razduzenje);
             reportUser.TotalZaduzenje = reportUser.Items.Sum(i => i.Zaduzenje);
             reportUser.TotalSaldo = reportUser.TotalRazduzenje + reportUser.TotalOtpis - reportUser.TotalZaduzenje;
+
+            RportUserItems otkazTerminaReport = new RportUserItems()
+            {
+                Name = "Otkaz termina:",
+                Zaduzenje = otkazTermina.Sum(c => c.Zaduzenje),
+                Otpis = otkazTermina.Sum(c => c.Otpis),
+                Razduzenje = otkazTermina.Sum(c => c.Razduzenje),
+                Saldo = 0//otkazTermina.Sum(c => c.Razduzenje) + otkazTermina.Sum(c => c.Otpis) - otkazTermina.Sum(c => c.Zaduzenje)
+            };
+            reportUser.Items.Add(otkazTerminaReport); 
 
             reportUsers.Add(reportUser);
             var pdf = await CreatePdf(reportUsers, from, to);
