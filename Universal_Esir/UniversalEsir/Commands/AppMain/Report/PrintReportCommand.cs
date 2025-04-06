@@ -65,7 +65,7 @@ namespace UniversalEsir.Commands.AppMain.Report
                     endReport,
                     saleViewModel.LoggedCashier);
 
-                string reportString = FormatPos.CreateReport(report);
+                string reportString = FormatPos.CreateReportBlack(report);
 
                 PrinterManager.Instance.PrintReport(reportString);
             }

@@ -442,7 +442,7 @@ namespace CcsSportScheduler_API.Controllers
                         var freetermins = await _context.Termins.Where(t => t.UserId == userDB.Id &&
                         t.StartDateTime.Date >= startDate .Date && t.StartDateTime.Date <= endDate.Date).ToListAsync();
 
-                        if(freetermins.Count < 5)
+                        if(freetermins.Count < 4)
                         {
                             cenaTermina = 0;
                             //userDB.FreeTermin--;

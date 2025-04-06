@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\appmain\\auxiliarywindows\\statistic\\inventorystatus\\addedititemwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\appmain\\auxiliarywindows\\statistic\\inventorystatus\\addedititemwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\report\\printreportcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\appmain\\report\\printreportcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\appmain\\report\\reportcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\appmain\\report\\reportcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DF179683-CB9A-4C61-B7EE-F5336B7FE105}|UniversalEsir_Printer\\UniversalEsir_Printer.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir_printer\\paperformat\\formatpos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DF179683-CB9A-4C61-B7EE-F5336B7FE105}|UniversalEsir_Printer\\UniversalEsir_Printer.csproj|solutionrelative:universalesir_printer\\paperformat\\formatpos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\views\\sale\\saleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\views\\sale\\saleview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\sale\\openuplatakonobarcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\sale\\uplatakonobarcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\sale\\uplatakonobarcommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|c:\\git_private\\ccs_sport_scheduler\\universal_esir\\universalesir\\commands\\sale\\paycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3692A169-C834-424A-A8D7-DEF2A3DCAE1B}|UniversalEsir\\UniversalEsir.csproj|solutionrelative:universalesir\\commands\\sale\\paycommand.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,31 +39,44 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AddEditItemWindow.xaml",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\InventoryStatus\\AddEditItemWindow.xaml",
-              "RelativeDocumentMoniker": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\InventoryStatus\\AddEditItemWindow.xaml",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\InventoryStatus\\AddEditItemWindow.xaml",
-              "RelativeToolTip": "UniversalEsir\\Views\\AppMain\\AuxiliaryWindows\\Statistic\\InventoryStatus\\AddEditItemWindow.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-04-05T11:42:49.064Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PayCommand.cs",
-              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\PayCommand.cs",
-              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
-              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\PayCommand.cs",
-              "RelativeToolTip": "UniversalEsir\\Commands\\Sale\\PayCommand.cs",
-              "ViewState": "AgIAADoFAAAAAAAAAAAowFAFAAAAAAAAAAAAAA==",
+              "Title": "PrintReportCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Report\\PrintReportCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Report\\PrintReportCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Report\\PrintReportCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Report\\PrintReportCommand.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAmwEEAAAAxAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-05T10:36:41.443Z",
+              "WhenOpened": "2025-04-05T12:26:20.768Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "ReportCommand.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Report\\ReportCommand.cs",
+              "RelativeDocumentMoniker": "UniversalEsir\\Commands\\AppMain\\Report\\ReportCommand.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\AppMain\\Report\\ReportCommand.cs",
+              "RelativeToolTip": "UniversalEsir\\Commands\\AppMain\\Report\\ReportCommand.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAwwEAAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T12:25:42.598Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SaleView.xaml",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "RelativeDocumentMoniker": "UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "RelativeToolTip": "UniversalEsir\\Views\\Sale\\SaleView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-04-05T12:23:30.872Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "OpenUplataKonobarCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\OpenUplataKonobarCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\OpenUplataKonobarCommand.cs",
@@ -68,7 +89,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "UplataKonobarCommand.cs",
               "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir\\Commands\\Sale\\UplataKonobarCommand.cs",
               "RelativeDocumentMoniker": "UniversalEsir\\Commands\\Sale\\UplataKonobarCommand.cs",
@@ -77,6 +98,19 @@
               "ViewState": "AgIAAGgAAAAAAAAAAAAIwG4AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-05T10:37:58.662Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FormatPos.cs",
+              "DocumentMoniker": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\PaperFormat\\FormatPos.cs",
+              "RelativeDocumentMoniker": "UniversalEsir_Printer\\PaperFormat\\FormatPos.cs",
+              "ToolTip": "C:\\Git_Private\\ccs_sport_scheduler\\Universal_Esir\\UniversalEsir_Printer\\PaperFormat\\FormatPos.cs",
+              "RelativeToolTip": "UniversalEsir_Printer\\PaperFormat\\FormatPos.cs",
+              "ViewState": "AgIAAAkCAAAAAAAAAAAQwOUBAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-05T12:25:53.469Z",
               "EditorCaption": ""
             }
           ]
