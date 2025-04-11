@@ -60,8 +60,8 @@ namespace UniversalEsir.Commands.AppMain.Statistic.Clanovi
                         TotalAmount = _currentViewModel.CurrentZaduzenje.TotalAmount,
                         Type = (int)ZaduzenjeEnumeration.Clanarina,
                         NewTypeUser = (int)_currentViewModel.CurrentZaduzenje.ClanType,
-                        Dan = (int)_currentViewModel.CurrentDan,
-                        Sat = _currentViewModel.CurrentSatiTermina.Sat,
+                        Dan = _currentViewModel.CurrentZaduzenje.TrenerskiFiksniIsCheck ? (int)_currentViewModel.CurrentDan : null,
+                        Sat = _currentViewModel.CurrentZaduzenje.TrenerskiFiksniIsCheck ? _currentViewModel.CurrentSatiTermina.Sat : null,
                         Teren = _currentViewModel.CurrentZaduzenje.Teren,
                     };
 

@@ -64,6 +64,9 @@ const Schedule = ({ user }) => {
     const [loading, setLoading] = useState(true);
     const { startOfWeek, endOfWeek } = getWeekRange();
 
+    const [clickOnReservation, setClickOnReservation] = useState(false);
+    
+
     const [financialData, setFinancialData] = useState({
         totalZaduzenje: 0,
         totalRazduzenje: 0,
@@ -361,7 +364,12 @@ const Schedule = ({ user }) => {
     }; 
 
     const handleOtkaziNoFree = async () => {
+        if (clickOnReservation || !selectedEvent) {
+            return;
+        }
+
         if (selectedEvent) {
+            setClickOnReservation(true);
             try {
 
                 await axios.delete(`/api/termins/${user.id}/${selectedEvent.id}?isFree=false`);
@@ -376,10 +384,18 @@ const Schedule = ({ user }) => {
                 console.error('Error making otkazivanje:', error);
                 alert('Greška prilikom otkazivanja: ' + (error.response?.data?.message || error.message));
             }
+            finally {
+                setClickOnReservation(false);
+            }
         }
     };
     const handleOtkaziFiksni = async () => {
+        if (clickOnReservation || !selectedEvent) {
+            return;
+        }
+
         if (selectedEvent) {
+            setClickOnReservation(true);
             try {
                 const otkazivanjeData = {
                     TerenId: terenId,
@@ -399,10 +415,18 @@ const Schedule = ({ user }) => {
                 console.error('Error making otkazivanje fiksnog:', error);
                 alert('Greška prilikom otkazivanja fiksnog: ' + (error.response?.data?.message || error.message));
             }
+            finally {
+                setClickOnReservation(false);
+            }
         }
     };
     const handleOtkazi = async () => {
+        if (clickOnReservation || !selectedEvent) {
+            return;
+        }
+
         if (selectedEvent) {
+            setClickOnReservation(true);
             try {
 
                 await axios.delete(`/api/termins/${user.id}/${selectedEvent.id}`);
@@ -417,10 +441,18 @@ const Schedule = ({ user }) => {
                 console.error('Error making otkazivanje:', error);
                 alert('Greška prilikom otkazivanja: ' + (error.response?.data?.message || error.message));
             }
+            finally {
+                setClickOnReservation(false);
+            }
         }
     };
     const handleReservation = async () => {
+        if (clickOnReservation || !selectedEvent) {
+            return;
+        }
+
         if (selectedEvent) {
+            setClickOnReservation(true);
             try {
                 const reservationData = {
                     TerenId: terenId,
@@ -441,6 +473,9 @@ const Schedule = ({ user }) => {
             } catch (error) {
                 console.error('Error making reservation:', error);
                 alert('Greška prilikom rezervacije: ' + error.response.data.message);
+            }
+            finally {
+                setClickOnReservation(false);
             }
         }
     };

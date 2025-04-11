@@ -85,6 +85,7 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 }
                 else if (value == ClanEnumeration.Trenerski)
                 {
+                    TrenerskiFiksniIsCheck = false;
                     TrenerskiVisibility = Visibility.Visible;
                 }
                 else
