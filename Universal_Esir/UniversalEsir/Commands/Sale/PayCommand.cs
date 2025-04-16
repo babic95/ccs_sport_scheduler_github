@@ -1100,7 +1100,7 @@ namespace UniversalEsir.Commands.Sale
 
                             foreach (var item in racun.ItemInvoices)
                             {
-                                if (prodavnicaStaro.FirstOrDefault(i => i.Item.Id == item.ItemCode) != null)
+                                if (prodavnicaStaro.FirstOrDefault(i => i.Item.Id == item.ItemCode) == null)
                                 {
                                     racunRequestStaro.Items.Add(new ItemRacunRequest()
                                     {
@@ -1130,6 +1130,7 @@ namespace UniversalEsir.Commands.Sale
                                     if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequestStaro).Result)
                                     {
                                         MessageBox.Show("GREŠKA PRILIKOM slanja racuna za kafic na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        break;
                                     }
                                     else
                                     {
@@ -1144,6 +1145,7 @@ namespace UniversalEsir.Commands.Sale
                                     if (!sportSchedulerAPI_Manager.PostRacunAsync(prodavnicaRequestStaro).Result)
                                     {
                                         MessageBox.Show("GREŠKA PRILIKOM slanja racuna za prodavnicu na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                                        break;
                                     }
                                     else
                                     {
@@ -1224,8 +1226,9 @@ namespace UniversalEsir.Commands.Sale
 
                 if (!sportSchedulerAPI_Manager.PostZaduzenjeAsync(zaduzenjeRequest).Result)
                 {
-                    MessageBox.Show("GREŠKA PRILIKOM slanja zaduzenja za kotizaciju na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    Log.Error($"PayCommand -> Black -> GREŠKA PRILIKOM slanja zaduzenja za kotizaciju na server");
+                    //MessageBox.Show("GREŠKA PRILIKOM slanja zaduzenja za kotizaciju na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                    //return;
                 }
                 else
                 {
@@ -1321,8 +1324,9 @@ namespace UniversalEsir.Commands.Sale
                     {
                         if (!sportSchedulerAPI_Manager.PostRacunAsync(racunRequest).Result)
                         {
-                            MessageBox.Show("GREŠKA PRILIKOM slanja racuna za kafic na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            Log.Error($"PayCommand -> Black -> GREŠKA PRILIKOM slanja racuna za kafic na server");
+                            //MessageBox.Show("GREŠKA PRILIKOM slanja racuna za kafic na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //return;
                         }
                         else
                         {
@@ -1337,8 +1341,9 @@ namespace UniversalEsir.Commands.Sale
                         invoiceDB.IsSend = 0;
                         if (!sportSchedulerAPI_Manager.PostRacunAsync(prodavnicaRequest).Result)
                         {
-                            MessageBox.Show("GREŠKA PRILIKOM slanja racuna za prodavnicu na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            Log.Error($"PayCommand -> Black -> GREŠKA PRILIKOM slanja racuna za prodavnicu na server");
+                            //MessageBox.Show("GREŠKA PRILIKOM slanja racuna za prodavnicu na server!", "GREŠKA", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //return;
                         }
                         else
                         {

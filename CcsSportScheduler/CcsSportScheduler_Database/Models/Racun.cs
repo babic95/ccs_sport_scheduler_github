@@ -18,6 +18,7 @@ namespace CcsSportScheduler_Database.Models
         public DateTime Date { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal Placeno { get; set; }
+        public decimal Pretplata { get; set; }
         public decimal Otpis { get; set; }
 
         [JsonIgnore]

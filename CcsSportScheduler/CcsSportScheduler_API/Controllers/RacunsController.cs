@@ -126,19 +126,9 @@ namespace CcsSportScheduler_API.Controllers
 
                 if(racunRequest.Placeno == 0)
                 {
-                    decimal pretplata = await GetPretplata(userDB.Id);
+                    decimal pretplata = await GetPretplata(userDB.Id, racunRequest.TotalAmount);
 
-                    if (pretplata > 0)
-                    {
-                        if (pretplata >= racunRequest.TotalAmount)
-                        {
-                            racunRequest.Placeno = racunRequest.TotalAmount;
-                        }
-                        else
-                        {
-                            racunRequest.Placeno = pretplata;
-                        }
-                    }
+                    racunRequest.Pretplata = pretplata;
                 }
 
                 Racun racunDB = new Racun()
@@ -151,6 +141,7 @@ namespace CcsSportScheduler_API.Controllers
                     TotalAmount = racunRequest.TotalAmount,
                     UserId = userDB.Id,
                     Placeno = racunRequest.Placeno,
+                    Pretplata = racunRequest.Pretplata,
                     Otpis = 0,
                     Type = racunRequest.Type,
                 };
@@ -213,7 +204,7 @@ namespace CcsSportScheduler_API.Controllers
 
             return Ok();
         }
-        private async Task<decimal> GetPretplata(int userId)
+        private async Task<decimal> GetPretplata(int userId, decimal racunAmount)
         {
             try
             {
@@ -222,42 +213,81 @@ namespace CcsSportScheduler_API.Controllers
                 DateTime from = new DateTime(DateTime.Now.Year, 1, 1);
                 DateTime to = new DateTime(DateTime.Now.Year, 12, 31);
 
-                var clanarice = await GetAllClanarice(userId, from, to);
-                var termini = await GetAllTermins(userId, from, to);
-                var kafic = await GetAllKafic(userId, from, to);
-                var prodavnica = await GetAllProdavnica(userId, from, to);
-                var kotizacije = await GetAllKotizacija(userId, from, to);
-                var otpisPozajmice = await GetAllOtpisPozajmice(userId, from, to);
-                var uplate = await GetAllUplate(userId, from, to);
-                var pokloni = await GetAllPoklon(userId, from, to);
-                var pozajmica = await GetAllPozajmica(userId, from, to);
-                var otkazTermina = await GetAllOtkazTermina(userId, from, to); 
+                var uplate = await _context.Uplata.Where(u => u.UserId == userId &&
+                u.TotalAmount - u.Razduzeno > 0 &&
+                u.Date >= from && u.Date <= to).ToListAsync();
 
-                var items = new List<FinancialCardItemResponse>();
-                items.AddRange(clanarice);
-                items.AddRange(termini);
-                items.AddRange(kafic);
-                items.AddRange(prodavnica);
-                items.AddRange(kotizacije);
-                items.AddRange(otpisPozajmice);
-                items.AddRange(uplate);
-                items.AddRange(pokloni);
-                items.AddRange(pozajmica);
-                items.AddRange(otkazTermina);
+                if (uplate.Any())
+                {
+                    //pretplata += uplate.Sum(u => u.TotalAmount - u.Razduzeno);
 
-                decimal totalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
-                        i.Type == FinancialCardTypeEnumeration.Poklon ||
-                        i.Type == FinancialCardTypeEnumeration.Pozajmica ||
-                        i.Type == FinancialCardTypeEnumeration.OtkazTermina).Sum(u => u.Razduzenje);
+                    foreach (var uplata in uplate.OrderBy(u => u.Date))
+                    {
+                        if (racunAmount > 0)
+                        {
+                            if (uplata.TotalAmount - uplata.Razduzeno >= racunAmount)
+                            {
+                                uplata.Razduzeno += racunAmount;
+                                pretplata = racunAmount;
+                                racunAmount = 0;
+                            }
+                            else
+                            {
+                                racunAmount -= uplata.TotalAmount - uplata.Razduzeno;
+                                pretplata += uplata.TotalAmount - uplata.Razduzeno;
+                                uplata.Razduzeno = uplata.TotalAmount;
+                            }
+                            _context.Uplata.Update(uplata);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
 
-                decimal totalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
-                i.Type == FinancialCardTypeEnumeration.Termini ||
-                i.Type == FinancialCardTypeEnumeration.Kotizacije ||
-                i.Type == FinancialCardTypeEnumeration.Prodavnica ||
-                i.Type == FinancialCardTypeEnumeration.OtpisPozajmice ||
-                i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
+                return pretplata;
 
-                return totalRazduzenje - totalZaduzenje;
+
+                //var clanarice = await GetAllClanarice(userId, from, to);
+                //var termini = await GetAllTermins(userId, from, to);
+                //var kafic = await GetAllKafic(userId, from, to);
+                //var prodavnica = await GetAllProdavnica(userId, from, to);
+                //var kotizacije = await GetAllKotizacija(userId, from, to);
+                //var otpisPozajmice = await GetAllOtpisPozajmice(userId, from, to);
+                //var uplate = await GetAllUplate(userId, from, to);
+                //var pokloni = await GetAllPoklon(userId, from, to);
+                //var pozajmica = await GetAllPozajmica(userId, from, to);
+                //var otkazTermina = await GetAllOtkazTermina(userId, from, to); 
+
+                //var items = new List<FinancialCardItemResponse>();
+                //items.AddRange(clanarice);
+                //items.AddRange(termini);
+                //items.AddRange(kafic);
+                //items.AddRange(prodavnica);
+                //items.AddRange(kotizacije);
+                //items.AddRange(otpisPozajmice);
+                //items.AddRange(uplate);
+                //items.AddRange(pokloni);
+                //items.AddRange(pozajmica);
+                //items.AddRange(otkazTermina);
+
+                //decimal totalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
+                //        i.Type == FinancialCardTypeEnumeration.Poklon ||
+                //        i.Type == FinancialCardTypeEnumeration.Pozajmica ||
+                //        i.Type == FinancialCardTypeEnumeration.OtkazTermina ||
+                //        i.Type == FinancialCardTypeEnumeration.Kafic ||
+                //        i.Type == FinancialCardTypeEnumeration.Prodavnica ||
+                //        i.Type == FinancialCardTypeEnumeration.Kotizacije).Sum(u => u.Razduzenje);
+
+                //decimal totalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
+                //i.Type == FinancialCardTypeEnumeration.Termini ||
+                //i.Type == FinancialCardTypeEnumeration.Kotizacije ||
+                //i.Type == FinancialCardTypeEnumeration.Prodavnica ||
+                //i.Type == FinancialCardTypeEnumeration.OtpisPozajmice ||
+                //i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
+
+                //return totalRazduzenje - totalZaduzenje;
             }
             catch (Exception ex)
             {
@@ -408,13 +438,13 @@ namespace CcsSportScheduler_API.Controllers
 
             try
             {
-                var kafic = _context.Racuns.Where(r => r.UserId == id &&
+                var prodavnica = _context.Racuns.Where(r => r.UserId == id &&
                 r.Date >= from && r.Date <= to &&
                 r.Type == (int)FinancialCardTypeEnumeration.Prodavnica);
 
-                if (kafic.Any())
+                if (prodavnica.Any())
                 {
-                    foreach (var r in kafic)
+                    foreach (var r in prodavnica)
                     {
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
@@ -443,13 +473,13 @@ namespace CcsSportScheduler_API.Controllers
 
             try
             {
-                var kafic = _context.Zaduzenja.Where(r => r.UserId == id &&
+                var kotizacija = _context.Zaduzenja.Where(r => r.UserId == id &&
                 r.Date >= from && r.Date <= to &&
                 r.Type == (int)FinancialCardTypeEnumeration.Kotizacije);
 
-                if (kafic.Any())
+                if (kotizacija.Any())
                 {
-                    foreach (var r in kafic)
+                    foreach (var r in kotizacija)
                     {
                         FinancialCardItemResponse financialCardItemResponse = new FinancialCardItemResponse()
                         {
@@ -492,7 +522,7 @@ namespace CcsSportScheduler_API.Controllers
                             Type = FinancialCardTypeEnumeration.Uplate,
                             Date = u.Date,
                             Razduzenje = u.TotalAmount,
-                            Zaduzenje = 0,
+                            Zaduzenje = u.Razduzeno,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -526,7 +556,7 @@ namespace CcsSportScheduler_API.Controllers
                             Type = FinancialCardTypeEnumeration.Poklon,
                             Date = p.Date,
                             Razduzenje = p.TotalAmount,
-                            Zaduzenje = 0,
+                            Zaduzenje = p.Razduzeno,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -560,7 +590,7 @@ namespace CcsSportScheduler_API.Controllers
                             Type = FinancialCardTypeEnumeration.Pozajmica,
                             Date = p.Date,
                             Razduzenje = p.TotalAmount,
-                            Zaduzenje = 0,
+                            Zaduzenje = p.Razduzeno,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -594,7 +624,7 @@ namespace CcsSportScheduler_API.Controllers
                             Type = FinancialCardTypeEnumeration.OtkazTermina,
                             Date = p.Date,
                             Razduzenje = p.TotalAmount,
-                            Zaduzenje = 0,
+                            Zaduzenje = p.Razduzeno,
                         };
 
                         items.Add(financialCardItemResponse);

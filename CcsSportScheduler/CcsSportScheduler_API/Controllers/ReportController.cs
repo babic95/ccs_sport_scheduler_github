@@ -463,7 +463,7 @@ namespace CcsSportScheduler_API.Controllers
                             Id = r.Id,
                             Type = FinancialCardTypeEnumeration.Kafic,
                             Date = r.Date,
-                            Razduzenje = 0,//r.Placeno,
+                            Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
                             Otpis = 0,//r.Otpis,
                         };
@@ -498,7 +498,7 @@ namespace CcsSportScheduler_API.Controllers
                             Id = r.Id,
                             Type = FinancialCardTypeEnumeration.Prodavnica,
                             Date = r.Date,
-                            Razduzenje = 0,//r.Placeno,
+                            Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
                             Otpis = 0,//r.Otpis,
                         };
@@ -533,7 +533,7 @@ namespace CcsSportScheduler_API.Controllers
                             Id = r.Id,
                             Type = FinancialCardTypeEnumeration.Kotizacije,
                             Date = r.Date,
-                            Razduzenje = 0,//r.Placeno,
+                            Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
                             Otpis = 0,//r.Otpis,
                         };

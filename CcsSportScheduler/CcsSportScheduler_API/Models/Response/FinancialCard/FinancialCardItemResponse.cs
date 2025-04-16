@@ -13,6 +13,8 @@ namespace CcsSportScheduler_API.Models.Response.FinancialCard
         public decimal Zaduzenje { get; set; }
         [JsonProperty("razduzenje")]
         public decimal Razduzenje { get; set; }
+        [JsonProperty("pretplata")]
+        public decimal Pretplata { get; set; }
         [JsonProperty("otpis")]
         public decimal Otpis { get; set; }
         [JsonProperty("date")]

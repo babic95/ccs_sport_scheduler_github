@@ -90,6 +90,7 @@ namespace UniversalEsir.Models.AppMain.Statistic.Clanovi
                 }
                 else
                 {
+                    TrenerskiFiksniIsCheck = false;
                     FiksnoVisibility = Visibility.Collapsed;
                     TrenerskiVisibility = Visibility.Collapsed;
                 }

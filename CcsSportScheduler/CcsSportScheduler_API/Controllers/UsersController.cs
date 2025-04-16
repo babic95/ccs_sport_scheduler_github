@@ -510,7 +510,9 @@ namespace CcsSportScheduler_API.Controllers
                     financialCardResponse.TotalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
                     i.Type == FinancialCardTypeEnumeration.Poklon ||
                     i.Type == FinancialCardTypeEnumeration.Pozajmica ||
-                    i.Type == FinancialCardTypeEnumeration.OtkazTermina).Sum(u => u.Razduzenje);
+                    i.Type == FinancialCardTypeEnumeration.OtkazTermina ||
+                    i.Type == FinancialCardTypeEnumeration.Kafic ||
+                    i.Type == FinancialCardTypeEnumeration.Prodavnica).Sum(u => u.Razduzenje);
 
                     financialCardResponse.TotalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
                     i.Type == FinancialCardTypeEnumeration.Termini ||
@@ -595,10 +597,10 @@ namespace CcsSportScheduler_API.Controllers
 
                 financialCardResponse.TotalCount = items.Count;
 
-                var neplaceni = items.Where(i => i.Razduzenje != i.Zaduzenje);
-                var placeni = items.Where(i => i.Razduzenje == i.Zaduzenje);
+                var placeni = items.Where(i => i.Razduzenje == i.Zaduzenje || i.Zaduzenje == i.Pretplata);
+                var neplaceni = items.Except(placeni);
 
-                if(neplaceni.Any())
+                if (neplaceni.Any())
                 {
                     neplaceni = neplaceni.OrderByDescending(i => i.Date);
                 }
@@ -769,6 +771,7 @@ namespace CcsSportScheduler_API.Controllers
                             Type = FinancialCardTypeEnumeration.Kafic,
                             Date = r.Date,
                             Razduzenje = r.Placeno,
+                            Pretplata = r.Pretplata,
                             Zaduzenje = r.TotalAmount,
                             Otpis = r.Otpis,
                         };
@@ -804,6 +807,7 @@ namespace CcsSportScheduler_API.Controllers
                             Type = FinancialCardTypeEnumeration.Prodavnica,
                             Date = r.Date,
                             Razduzenje = r.Placeno,
+                            Pretplata = r.Pretplata,
                             Zaduzenje = r.TotalAmount,
                             Otpis = r.Otpis,
                         };

@@ -35,6 +35,7 @@ const FinancialCard = ({ user }) => {
         try {
             const response = await axios.get(`/api/users/financialCard/${userId}/${page}/20?fromDate=${fromDate}&toDate=${toDate}&type=${filterType}`);
             setFinancialData(response.data);
+            console.log(response.data);
             setTotalPages(Math.ceil(response.data.totalCount / 20));
         } catch (error) {
             console.error('Error fetching financial data:', error);
@@ -56,7 +57,7 @@ const FinancialCard = ({ user }) => {
                     <Typography>Datum: {new Date(racun.date).toLocaleDateString('sr-RS')}</Typography>
                     <Typography>Tip: Kafić"</Typography>
                     <Typography>Ukupan iznos: {racun.totalAmount} RSD</Typography>
-                    <Typography>Plaćeno: {racun.placeno} RSD</Typography>
+                    <Typography>Plaćeno: {racun.placeno === 0 ? racun.pretplata : racun.placeno} RSD</Typography>
                     <Typography>Otpisano: {racun.otpis} RSD</Typography>
                     <Typography>Stavke:</Typography>
                     <ul>
@@ -126,7 +127,7 @@ const FinancialCard = ({ user }) => {
                     <Typography>Datum: {new Date(racun.date).toLocaleDateString('sr-RS')}</Typography>
                     <Typography>Tip: Prodavnica</Typography>
                     <Typography>Ukupan iznos: {racun.totalAmount} RSD</Typography>
-                    <Typography>Plaćeno: {racun.placeno} RSD</Typography>
+                    <Typography>Plaćeno: {racun.placeno === 0 ? racun.pretplata : racun.placeno} RSD</Typography>
                     <Typography>Otpisano: {racun.otpis} RSD</Typography>
                     <Typography>Stavke:</Typography>
                     <ul>
@@ -200,7 +201,8 @@ const FinancialCard = ({ user }) => {
         const itemDate = new Date(item.date);
         const daysDifference = (currentDate - itemDate) / (1000 * 60 * 60 * 24);
 
-        if (item.zaduzenje === item.razduzenje) {
+        if (item.zaduzenje === item.razduzenje ||
+            item.zaduzenje === item.pretplata) {
             return 'green';
         } else {
             return 'red';
@@ -308,7 +310,7 @@ const FinancialCard = ({ user }) => {
                                         <Typography>{`Otpis: ${item.otpis} RSD`}</Typography>
                                     </>
                                 )}
-                                <Typography>{`Razduženje: ${item.razduzenje} RSD`}</Typography>
+                                <Typography>{`Razduženje: ${item.razduzenje === 0 ? item.pretplata : item.razduzenje} RSD`}</Typography>
                             </CardContent>
                         </Card>
                     ))}

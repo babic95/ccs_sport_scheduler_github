@@ -278,6 +278,10 @@ namespace CcsSportScheduler_Database
                     .HasPrecision(15, 2)
                     .HasColumnName("placeno");
 
+                entity.Property(e => e.Pretplata)
+                    .HasPrecision(15, 2)
+                    .HasColumnName("pretplata");
+
                 entity.Property(e => e.Otpis)
                     .HasPrecision(15, 2)
                     .HasColumnName("otpis");

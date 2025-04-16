@@ -8,5 +8,6 @@
         public decimal TotalAmount { get; set; }
         public ICollection<ItemRacunRequest> Items { get; set; }
         public decimal Placeno { get; set; }
+        public decimal Pretplata { get; set; }
     }
 }
