@@ -98,6 +98,8 @@ const FinancialCard = ({ user }) => {
         } else if (item.type === 3) {
             const response = await axios.get(`/api/uplatas/${item.id}`);
             const poklon = response.data;
+
+            console.log(poklon);
             setModalContent(
                 <div>
                     <Typography>Ukupan iznos: {poklon.totalAmount} RSD</Typography>

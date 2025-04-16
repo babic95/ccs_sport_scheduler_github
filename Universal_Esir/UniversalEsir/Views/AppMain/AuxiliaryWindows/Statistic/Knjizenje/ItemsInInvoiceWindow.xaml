@@ -105,7 +105,7 @@
                             </DataGridTextColumn.ElementStyle>
                         </DataGridTextColumn>
                         <DataGridTextColumn Header="Ukupan iznos" 
-                                            Binding="{Binding TotalAmoutString, Converter={StaticResource decimalToString}}">
+                                            Binding="{Binding TotalAmout, Converter={StaticResource decimalToString}}">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="HorizontalAlignment" Value="Center" />

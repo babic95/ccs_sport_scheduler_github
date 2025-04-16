@@ -11,6 +11,7 @@ namespace CcsSportScheduler_Database.Models
         public decimal Razduzeno { get; set; }
         public DateTime Date { get; set; }
         public int TypeUplata { get; set; }
+        public string? Description { get; set; }
 
         public virtual User User { get; set; } = null!;
     }

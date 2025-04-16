@@ -115,6 +115,7 @@ namespace CcsSportScheduler_API.Controllers
                     TotalAmount = uplataRequest.TotalAmount,
                     TypeUplata = uplataRequest.TypeUplata,
                     Razduzeno = 0,
+                    Description = uplataRequest.Description
                 };
 
                 var termini = _context.Termins.Where(t => t.UserId == uplataRequest.UserId &&
