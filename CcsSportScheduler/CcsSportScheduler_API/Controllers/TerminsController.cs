@@ -379,7 +379,7 @@ namespace CcsSportScheduler_API.Controllers
 
                 var neplaceniTermini = _context.Termins.Where(t => t.UserId != null &&
                 t.UserId == userDB.Id &&
-                t.Price != t.Placeno);
+                (t.Price != t.Placeno + t.Otpis));
 
                 if (neplaceniTermini.Any())
                 {
@@ -396,6 +396,28 @@ namespace CcsSportScheduler_API.Controllers
                             Code = ErrorEnumeration.BadRequest,
                             Action = "Post"
                         });
+                    }
+                }
+                else
+                {
+                    var neplacenaZaduzenja = _context.Zaduzenja.Where(z => z.UserId == userDB.Id &&
+                    z.TotalAmount != z.Otpis + z.Placeno);
+
+                    if (neplacenaZaduzenja.Any())
+                    {
+                        var prviNeplacenZaduzenje = await neplacenaZaduzenja.MinAsync(n => n.Date);
+                        int dani = TimeZoneInfo.ConvertTime(DateTime.Now,
+                            TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")).Subtract(prviNeplacenZaduzenje).Days;
+                        if (dani >= klubDB.DanaValute)
+                        {
+                            return NotFound(new ErrorResponse
+                            {
+                                Controller = "TerminsController",
+                                Message = "Ne možete da rezervišete termin jer niste izmirili vaš dug!",
+                                Code = ErrorEnumeration.BadRequest,
+                                Action = "Post"
+                            });
+                        }
                     }
                 }
 
@@ -464,24 +486,24 @@ namespace CcsSportScheduler_API.Controllers
                         cenaTermina = Decimal.Round(cenaTermina * ((100 - popustTermina.Popust) / 100), 2);
                     }
 
-                    decimal placeno = 0;
+                    decimal pretplata = 0;
                     if (terminRequest.Zaduzi == 1)
                     {
                         if (cenaTermina > 0)
                         {
-                            decimal pretplata = await GetPretplata(terminRequest.UserId);
+                            pretplata = await GetPretplata(terminRequest.UserId, cenaTermina);
 
-                            if (pretplata > 0)
-                            {
-                                if (pretplata >= cenaTermina)
-                                {
-                                    placeno = cenaTermina;
-                                }
-                                else
-                                {
-                                    placeno = pretplata;
-                                }
-                            }
+                            //if (pretplata > 0)
+                            //{
+                            //    if (pretplata >= cenaTermina)
+                            //    {
+                            //        placeno = cenaTermina;
+                            //    }
+                            //    else
+                            //    {
+                            //        placeno = pretplata;
+                            //    }
+                            //}
                         }
                     }
 
@@ -496,39 +518,39 @@ namespace CcsSportScheduler_API.Controllers
                         StartDateTime = terminRequest.StartDateTime,
                         EndDateTime = terminRequest.EndDateTime == null ? terminRequest.StartDateTime.AddHours(1) : terminRequest.EndDateTime,
                         Price = terminRequest.Zaduzi == 1 ? cenaTermina : 0,
-                        Placeno = placeno
+                        Placeno = pretplata
                     };
 
                     await _context.Termins.AddAsync(terminDB);
 
-                    if (placeno > 0)
-                    {
-                        var pretplate = _context.Uplata.Where(p => p.UserId == terminRequest.UserId &&
-                        p.Razduzeno != p.TotalAmount);
+                    //if (placeno > 0)
+                    //{
+                    //    var pretplate = _context.Uplata.Where(p => p.UserId == terminRequest.UserId &&
+                    //    p.Razduzeno != p.TotalAmount);
 
-                        if (pretplate.Any())
-                        {
-                            foreach (var pretplata in pretplate)
-                            {
-                                if (placeno <= 0)
-                                {
-                                    break;
-                                }
-                                if (pretplata.TotalAmount - pretplata.Razduzeno - placeno >= 0)
-                                {
-                                    pretplata.Razduzeno += placeno;
+                    //    if (pretplate.Any())
+                    //    {
+                    //        foreach (var pretplata in pretplate)
+                    //        {
+                    //            if (placeno <= 0)
+                    //            {
+                    //                break;
+                    //            }
+                    //            if (pretplata.TotalAmount - pretplata.Razduzeno - placeno >= 0)
+                    //            {
+                    //                pretplata.Razduzeno += placeno;
 
-                                    placeno = 0;
-                                }
-                                else
-                                {
-                                    placeno = (pretplata.Razduzeno + placeno) - pretplata.TotalAmount;
-                                    pretplata.Razduzeno = pretplata.TotalAmount;
-                                }
-                                _context.Uplata.Update(pretplata);
-                            }
-                        }
-                    }
+                    //                placeno = 0;
+                    //            }
+                    //            else
+                    //            {
+                    //                placeno = (pretplata.Razduzeno + placeno) - pretplata.TotalAmount;
+                    //                pretplata.Razduzeno = pretplata.TotalAmount;
+                    //            }
+                    //            _context.Uplata.Update(pretplata);
+                    //        }
+                    //    }
+                    //}
 
                     await _context.SaveChangesAsync();
                 }
@@ -827,7 +849,7 @@ namespace CcsSportScheduler_API.Controllers
 
             return Ok();
         }
-        private async Task<decimal> GetPretplata(int userId)
+        private async Task<decimal> GetPretplata(int userId, decimal racunAmount)
         {
             try
             {
@@ -836,48 +858,95 @@ namespace CcsSportScheduler_API.Controllers
                 DateTime from = new DateTime(DateTime.Now.Year, 1, 1);
                 DateTime to = new DateTime(DateTime.Now.Year, 12, 31);
 
-                var clanarice = await GetAllClanarice(userId, from, to);
-                var termini = await GetAllTermins(userId, from, to);
-                var kafic = await GetAllKafic(userId, from, to);
-                var prodavnica = await GetAllProdavnica(userId, from, to);
-                var kotizacije = await GetAllKotizacija(userId, from, to);
-                var otpisPozajmice = await GetAllOtpisPozajmice(userId, from, to);
-                var uplate = await GetAllUplate(userId, from, to);
-                var pokloni = await GetAllPoklon(userId, from, to);
-                var pozajmica = await GetAllPozajmica(userId, from, to);
-                var otkazTermina = await GetAllOtkazTermina(userId, from, to);
+                var uplate = await _context.Uplata.Where(u => u.UserId == userId &&
+                u.TotalAmount - u.Razduzeno > 0 &&
+                u.Date >= from && u.Date <= to).ToListAsync();
 
-                var items = new List<FinancialCardItemResponse>();
-                items.AddRange(clanarice);
-                items.AddRange(termini);
-                items.AddRange(kafic);
-                items.AddRange(prodavnica);
-                items.AddRange(kotizacije);
-                items.AddRange(otpisPozajmice);
-                items.AddRange(uplate);
-                items.AddRange(pokloni);
-                items.AddRange(pozajmica);
-                items.AddRange(otkazTermina);
+                if (uplate.Any())
+                {
+                    foreach (var uplata in uplate.OrderBy(u => u.Date))
+                    {
+                        if (racunAmount > 0)
+                        {
+                            if (uplata.TotalAmount - uplata.Razduzeno >= racunAmount)
+                            {
+                                uplata.Razduzeno += racunAmount;
+                                pretplata = racunAmount;
+                                racunAmount = 0;
+                            }
+                            else
+                            {
+                                racunAmount -= uplata.TotalAmount - uplata.Razduzeno;
+                                pretplata += uplata.TotalAmount - uplata.Razduzeno;
+                                uplata.Razduzeno = uplata.TotalAmount;
+                            }
+                            _context.Uplata.Update(uplata);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                }
 
-                decimal totalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
-                        i.Type == FinancialCardTypeEnumeration.Poklon ||
-                        i.Type == FinancialCardTypeEnumeration.Pozajmica ||
-                        i.Type == FinancialCardTypeEnumeration.OtkazTermina).Sum(u => u.Razduzenje);
-
-                decimal totalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
-                i.Type == FinancialCardTypeEnumeration.Termini ||
-                i.Type == FinancialCardTypeEnumeration.Kotizacije ||
-                i.Type == FinancialCardTypeEnumeration.Prodavnica ||
-                i.Type == FinancialCardTypeEnumeration.OtpisPozajmice ||
-                i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
-
-                return totalRazduzenje - totalZaduzenje;
+                return pretplata;
             }
             catch (Exception ex)
             {
                 return 0;
             }
         }
+        //private async Task<decimal> GetPretplata(int userId)
+        //{
+        //    try
+        //    {
+        //        decimal pretplata = 0;
+
+        //        DateTime from = new DateTime(DateTime.Now.Year, 1, 1);
+        //        DateTime to = new DateTime(DateTime.Now.Year, 12, 31);
+
+        //        var clanarice = await GetAllClanarice(userId, from, to);
+        //        var termini = await GetAllTermins(userId, from, to);
+        //        var kafic = await GetAllKafic(userId, from, to);
+        //        var prodavnica = await GetAllProdavnica(userId, from, to);
+        //        var kotizacije = await GetAllKotizacija(userId, from, to);
+        //        var otpisPozajmice = await GetAllOtpisPozajmice(userId, from, to);
+        //        var uplate = await GetAllUplate(userId, from, to);
+        //        var pokloni = await GetAllPoklon(userId, from, to);
+        //        var pozajmica = await GetAllPozajmica(userId, from, to);
+        //        var otkazTermina = await GetAllOtkazTermina(userId, from, to);
+
+        //        var items = new List<FinancialCardItemResponse>();
+        //        items.AddRange(clanarice);
+        //        items.AddRange(termini);
+        //        items.AddRange(kafic);
+        //        items.AddRange(prodavnica);
+        //        items.AddRange(kotizacije);
+        //        items.AddRange(otpisPozajmice);
+        //        items.AddRange(uplate);
+        //        items.AddRange(pokloni);
+        //        items.AddRange(pozajmica);
+        //        items.AddRange(otkazTermina);
+
+        //        decimal totalRazduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Uplate ||
+        //                i.Type == FinancialCardTypeEnumeration.Poklon ||
+        //                i.Type == FinancialCardTypeEnumeration.Pozajmica ||
+        //                i.Type == FinancialCardTypeEnumeration.OtkazTermina).Sum(u => u.Razduzenje);
+
+        //        decimal totalZaduzenje = items.Where(i => i.Type == FinancialCardTypeEnumeration.Kafic ||
+        //        i.Type == FinancialCardTypeEnumeration.Termini ||
+        //        i.Type == FinancialCardTypeEnumeration.Kotizacije ||
+        //        i.Type == FinancialCardTypeEnumeration.Prodavnica ||
+        //        i.Type == FinancialCardTypeEnumeration.OtpisPozajmice ||
+        //        i.Type == FinancialCardTypeEnumeration.Clanarina).Sum(t => t.Zaduzenje);
+
+        //        return totalRazduzenje - totalZaduzenje;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return 0;
+        //    }
+        //}
         private async Task<List<FinancialCardItemResponse>> GetAllClanarice(int id, DateTime from, DateTime to)
         {
             List<FinancialCardItemResponse> items = new List<FinancialCardItemResponse>();
