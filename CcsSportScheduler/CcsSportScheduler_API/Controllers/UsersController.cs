@@ -673,7 +673,8 @@ namespace CcsSportScheduler_API.Controllers
                             Date = c.Date,
                             Razduzenje = 0,//c.Placeno,
                             Zaduzenje = c.TotalAmount,
-                            Otpis = 0,//c.Otpis,
+                            Otpis = c.Otpis,
+                            Pretplata = c.Placeno
                         };
 
                         items.Add(financialCardItemResponse);
@@ -741,7 +742,8 @@ namespace CcsSportScheduler_API.Controllers
                             Date = t.StartDateTime,
                             Razduzenje = 0,//t.Placeno,
                             Zaduzenje = t.Price,
-                            Otpis = 0,//t.Otpis,
+                            Otpis = t.Otpis,
+                            Pretplata = t.Placeno,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -776,7 +778,8 @@ namespace CcsSportScheduler_API.Controllers
                             Date = r.Date,
                             Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
-                            Otpis = 0,//r.Otpis,
+                            Otpis = r.Otpis,
+                            Pretplata = r.Pretplata
                         };
 
                         items.Add(financialCardItemResponse);
@@ -811,7 +814,8 @@ namespace CcsSportScheduler_API.Controllers
                             Date = r.Date,
                             Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
-                            Otpis = 0,//r.Otpis,
+                            Otpis = r.Otpis,
+                            Pretplata = r.Pretplata
                         };
 
                         items.Add(financialCardItemResponse);
@@ -846,7 +850,8 @@ namespace CcsSportScheduler_API.Controllers
                             Date = r.Date,
                             Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
-                            Otpis = 0,//r.Otpis,
+                            Otpis = r.Otpis,
+                            Pretplata = r.Pretplata
                         };
 
                         items.Add(financialCardItemResponse);
