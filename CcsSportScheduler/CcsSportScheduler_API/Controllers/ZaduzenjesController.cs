@@ -214,7 +214,8 @@ namespace CcsSportScheduler_API.Controllers
 
                 var uplate = await _context.Uplata.Where(u => u.UserId == userId &&
                 u.TotalAmount - u.Razduzeno > 0 &&
-                u.Date >= from && u.Date <= to).ToListAsync();
+                u.Date >= from && u.Date <= to &&
+                u.SkidajSaStanja == 1).ToListAsync();
 
                 if (uplate.Any())
                 {
