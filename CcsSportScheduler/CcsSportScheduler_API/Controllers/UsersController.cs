@@ -851,7 +851,7 @@ namespace CcsSportScheduler_API.Controllers
                             Razduzenje = r.Placeno,
                             Zaduzenje = r.TotalAmount,
                             Otpis = r.Otpis,
-                            Pretplata = r.Pretplata
+                            Pretplata = 0
                         };
 
                         items.Add(financialCardItemResponse);
