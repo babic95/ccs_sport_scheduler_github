@@ -312,7 +312,7 @@ const FinancialCard = ({ user }) => {
                                         <Typography>{`Otpis: ${item.otpis} RSD`}</Typography>
                                     </>
                                 )}
-                                {item.type === 2 && item.type === 3 && item.type === 6 ? (
+                                {item.type === 2 || item.type === 3 || item.type === 6 ? (
                                     <Typography>{`Razduženje: ${item.totalAmount} RSD`}</Typography>
                                 ) : (
                                     <Typography>{`Razduženje: ${item.razduzenje === 0 ? item.pretplata : item.razduzenje} RSD`}</Typography>
