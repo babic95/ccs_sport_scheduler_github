@@ -671,7 +671,7 @@ namespace CcsSportScheduler_API.Controllers
                             Id = c.Id,
                             Type = FinancialCardTypeEnumeration.Clanarina,
                             Date = c.Date,
-                            Razduzenje = 0,//c.Placeno,
+                            Razduzenje = c.Placeno,
                             Zaduzenje = c.TotalAmount,
                             Otpis = c.Otpis,
                             Pretplata = c.Placeno
@@ -707,9 +707,9 @@ namespace CcsSportScheduler_API.Controllers
                             Id = c.Id,
                             Type = FinancialCardTypeEnumeration.OtpisPozajmice,
                             Date = c.Date,
-                            Razduzenje = 0,//c.Placeno,
+                            Razduzenje = c.Placeno,
                             Zaduzenje = c.TotalAmount,
-                            Otpis = 0,//c.Otpis,
+                            Otpis = c.Otpis,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -740,7 +740,7 @@ namespace CcsSportScheduler_API.Controllers
                             Id = t.Id,
                             Type = FinancialCardTypeEnumeration.Termini,
                             Date = t.StartDateTime,
-                            Razduzenje = 0,//t.Placeno,
+                            Razduzenje = t.Placeno,
                             Zaduzenje = t.Price,
                             Otpis = t.Otpis,
                             Pretplata = t.Placeno,
@@ -884,8 +884,9 @@ namespace CcsSportScheduler_API.Controllers
                             Id = u.Id,
                             Type = FinancialCardTypeEnumeration.Uplate,
                             Date = u.Date,
-                            Razduzenje = u.TotalAmount,
+                            Razduzenje = u.TotalAmount - u.Razduzeno,
                             Zaduzenje = 0,
+                            TotalAmount = u.TotalAmount,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -918,8 +919,9 @@ namespace CcsSportScheduler_API.Controllers
                             Id = p.Id,
                             Type = FinancialCardTypeEnumeration.Poklon,
                             Date = p.Date,
-                            Razduzenje = p.TotalAmount,
+                            Razduzenje = p.TotalAmount - p.Razduzeno,
                             Zaduzenje = 0,
+                            TotalAmount = p.TotalAmount,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -952,8 +954,9 @@ namespace CcsSportScheduler_API.Controllers
                             Id = p.Id,
                             Type = FinancialCardTypeEnumeration.Pozajmica,
                             Date = p.Date,
-                            Razduzenje = p.TotalAmount,
+                            Razduzenje = p.TotalAmount - p.Razduzeno,
                             Zaduzenje = 0,
+                            TotalAmount = p.TotalAmount,
                         };
 
                         items.Add(financialCardItemResponse);
@@ -986,8 +989,9 @@ namespace CcsSportScheduler_API.Controllers
                             Id = p.Id,
                             Type = FinancialCardTypeEnumeration.OtkazTermina,
                             Date = p.Date,
-                            Razduzenje = p.TotalAmount,
+                            Razduzenje = p.TotalAmount - p.Razduzeno,
                             Zaduzenje = 0,
+                            TotalAmount = p.TotalAmount,
                         };
 
                         items.Add(financialCardItemResponse);

@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using UniversalEsir.Commands.AppMain.Admin.Sync;
 
 namespace UniversalEsir.ViewModels.AppMain
 {
@@ -226,6 +227,7 @@ namespace UniversalEsir.ViewModels.AppMain
         public ICommand OpenWindowAddNewPaymentPlaceCommand => new OpenWindowAddNewPaymentPlaceCommand(this);
         public ICommand OpenWindowAddNewRoomCommand => new OpenWindowAddNewRoomCommand(this);
         public ICommand EditRoomCommand => new EditRoomCommand(this);
+        public ICommand SyncUsersCommand => new SyncUsersCommand(this);
         public ICommand DeleteRoomCommand => new DeleteRoomCommand(this);
         public ICommand SelectImageForRoomCommand => new SelectImageForRoomCommand(this);
         public ICommand SaveRoomCommand => new SaveRoomCommand(this);

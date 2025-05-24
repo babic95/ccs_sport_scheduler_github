@@ -51,6 +51,12 @@
                     <!--<MenuItem Header="Obriši trenutnu prostoriju"
                           Command="{Binding DeleteRoomCommand}"/>-->
                 </MenuItem>
+                <MenuItem Header="Uvezi">
+                    <MenuItem Header="Sinhronizuj sve članove"
+                          Command="{Binding SyncUsersCommand}"/>
+                    <!--<MenuItem Header="Obriši trenutnu prostoriju"
+                          Command="{Binding DeleteRoomCommand}"/>-->
+                </MenuItem>
             </Menu>
             <ItemsControl Grid.Row="1"
                           ItemsSource="{Binding Rooms}"

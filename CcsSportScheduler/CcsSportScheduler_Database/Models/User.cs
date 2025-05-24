@@ -29,6 +29,7 @@ namespace CcsSportScheduler_Database.Models
         public string? Email { get; set; }
         public string Jmbg { get; set; } = null!;
         public int FreeTermin { get; set; }
+        public int Valuta { get; set; }
         public string? ProfileImageUrl { get; set; }
 
         [JsonIgnore]

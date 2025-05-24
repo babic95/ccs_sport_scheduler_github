@@ -9,6 +9,8 @@ namespace CcsSportScheduler_API.Models.Response.FinancialCard
         public FinancialCardTypeEnumeration Type { get; set; }
         [JsonProperty("id")]
         public string Id { get; set; }
+        [JsonProperty("totalAmount")]
+        public decimal TotalAmount { get; set; }
         [JsonProperty("zaduzenje")]
         public decimal Zaduzenje { get; set; }
         [JsonProperty("razduzenje")]

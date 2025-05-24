@@ -701,6 +701,8 @@ namespace CcsSportScheduler_Database
 
                 entity.Property(e => e.Type).HasColumnName("type");
 
+                entity.Property(e => e.Valuta).HasColumnName("valuta");
+
                 entity.Property(e => e.Username)
                     .HasMaxLength(45)
                     .HasColumnName("username");

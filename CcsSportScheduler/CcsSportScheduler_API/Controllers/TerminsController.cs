@@ -387,7 +387,7 @@ namespace CcsSportScheduler_API.Controllers
                     int dani = TimeZoneInfo.ConvertTime(DateTime.Now,
                         TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")).Subtract(prviNeplacenTermin).Days;
 
-                    if (dani >= klubDB.DanaValute)
+                    if (dani >= klubDB.DanaValute + userDB.Valuta)
                     {
                         return NotFound(new ErrorResponse
                         {
@@ -408,7 +408,7 @@ namespace CcsSportScheduler_API.Controllers
                         var prviNeplacenZaduzenje = await neplacenaZaduzenja.MinAsync(n => n.Date);
                         int dani = TimeZoneInfo.ConvertTime(DateTime.Now,
                             TimeZoneInfo.FindSystemTimeZoneById("Central Europe Standard Time")).Subtract(prviNeplacenZaduzenje).Days;
-                        if (dani >= klubDB.DanaValute)
+                        if (dani >= klubDB.DanaValute + userDB.Valuta)
                         {
                             return NotFound(new ErrorResponse
                             {
@@ -425,17 +425,17 @@ namespace CcsSportScheduler_API.Controllers
                 {
                     var startTermin = new TimeOnly(terminRequest.StartDateTime.Hour, terminRequest.StartDateTime.Minute);
 
-                    int terminType = (int)UserEnumeration.Vanredni;
+                    int terminType = userDB.Type;// (int)UserEnumeration.Vanredni;
 
                     if (userDB.Type == (int)UserEnumeration.Moderator ||
                         userDB.Type == (int)UserEnumeration.Radnik)
                     {
                         terminType = (int)UserEnumeration.Neclanski;
                     }
-                    else if (terminRequest.Zaduzi == 0)
-                    {
-                        terminType = userDB.Type;
-                    }
+                    //else if (terminRequest.Zaduzi == 0)
+                    //{
+                    //    terminType = userDB.Type;
+                    //}
 
                     var naplataTermina = await _context.Naplataterminas.FirstOrDefaultAsync(n => n.Id == terminType);
 
