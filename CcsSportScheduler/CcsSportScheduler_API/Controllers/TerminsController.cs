@@ -425,12 +425,17 @@ namespace CcsSportScheduler_API.Controllers
                 {
                     var startTermin = new TimeOnly(terminRequest.StartDateTime.Hour, terminRequest.StartDateTime.Minute);
 
-                    int terminType = userDB.Type;// (int)UserEnumeration.Vanredni;
+                    int terminType = userDB.Type;
 
                     if (userDB.Type == (int)UserEnumeration.Moderator ||
                         userDB.Type == (int)UserEnumeration.Radnik)
                     {
                         terminType = (int)UserEnumeration.Neclanski;
+                    }
+                    else if(userDB.Type == (int)UserEnumeration.Fiksni ||
+                        userDB.Type == (int)UserEnumeration.Plivajuci)
+                    {
+                        terminType = (int)UserEnumeration.Vanredni;
                     }
                     //else if (terminRequest.Zaduzi == 0)
                     //{
