@@ -814,7 +814,8 @@ namespace CcsSportScheduler_API.Controllers
                         TotalAmount = terminDB.Placeno,
                         Razduzeno = 0,
                         UserId = terminDB.UserId.Value,
-                        TypeUplata = (int)UplataEnumeration.OtkazTermina
+                        TypeUplata = (int)UplataEnumeration.OtkazTermina,
+                        SkidajSaStanja = 1,
                     };
 
                     await _context.Uplata.AddAsync(uplata);
